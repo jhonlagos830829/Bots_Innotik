@@ -1,0 +1,22 @@
+[
+  {
+    "recibiendopedidos": "Si",
+    "autorizados": [
+      "3024004614",
+      "3102106136",
+      "3153420526"
+    ],
+    "dispositivos": [
+      {
+        "direccionip": "192.168.88.1",
+        "usuario": "admin",
+        "clave": "4dm1nInn0t1kWISP2o18"
+      },
+      {
+        "direccionip": "192.168.88.254",
+        "usuario": "admin",
+        "clave": "4dm1nInn0t1kWISP2o18"
+      }
+    ]
+  }
+]

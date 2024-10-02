@@ -1,0 +1,20 @@
+Fecha: 2024-4-4 0:19:49
+Pregunta:  Por favor realice el siguiente procedimiento:
+Respuesta:  Por favor realice el siguiente procedimiento:
+
+Fecha: 2024-4-4 0:19:53
+Pregunta: 1. Encuentre el inyector POE que hace parte de los equipos instalados, puede ser de color negro o blanco
+Respuesta: 1. Encuentre el inyector POE que hace parte de los equipos instalados, puede ser de color negro o blanco
+
+Fecha: 2024-4-4 0:20:0
+Pregunta: 2. Verifique que el LED del inyector POE esté encendido en color blanco.
+Respuesta: 2. Verifique que el LED del inyector POE esté encendido en color blanco.
+
+Fecha: 2024-4-4 0:20:10
+Pregunta: 3. Ajuste las 3 conexiones del inyector POE.
+Respuesta: 3. Ajuste las 3 conexiones del inyector POE.
+
+Fecha: 2024-4-4 0:20:16
+Pregunta: 4. Verifique que las conexiones se encuentran como se muestran en éste gráfico.
+Respuesta: 4. Verifique que las conexiones se encuentran como se muestran en éste gráfico.
+

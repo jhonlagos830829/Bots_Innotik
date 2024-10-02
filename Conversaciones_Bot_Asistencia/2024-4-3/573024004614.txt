@@ -1,0 +1,56 @@
+Fecha: 2024-4-3 9:33:8
+Pregunta: El flujo flujoFallaMasiva se disparó por el texto: No tengo servicio
+Respuesta: El flujo flujoFallaMasiva se disparó por el texto: No tengo servicio
+
+Fecha: 2024-4-3 9:33:10
+Pregunta: Un momento por favor, estoy consultando si tenemos una falla general...
+Respuesta: Un momento por favor, estoy consultando si tenemos una falla general...
+
+Fecha: 2024-4-3 9:33:10
+Pregunta: Cordial saludo.
+
+Apreciado usuario.
+
+En este momento estamos presentando interrupción de nuestros servicios en las veredas *Arnania, Villaverde y Tona* debido a una falla eléctrica que afectó a nuestros equipos.
+
+Nuestros técnicos se encuentran trabajando en la solución del incidente.
+
+Les informaremos cuando hayamos restablecido nuestros servicios.
+Respuesta: Cordial saludo.
+
+Apreciado usuario.
+
+En este momento estamos presentando interrupción de nuestros servicios en las veredas *Arnania, Villaverde y Tona* debido a una falla eléctrica que afectó a nuestros equipos.
+
+Nuestros técnicos se encuentran trabajando en la solución del incidente.
+
+Les informaremos cuando hayamos restablecido nuestros servicios.
+
+Fecha: 2024-4-3 10:16:38
+Pregunta: Cordial saludo.
+
+Apreciado usuario.
+
+En este momento estamos presentando interrupción de nuestros servicios en las veredas *Arnania, Villaverde y Tona* debido a una falla eléctrica que afectó a nuestros equipos.
+
+Nuestros técnicos se encuentran trabajando en la solución del incidente.
+
+Les informaremos cuando hayamos restablecido nuestros servicios.
+Respuesta: Cordial saludo.
+
+Apreciado usuario.
+
+En este momento estamos presentando interrupción de nuestros servicios en las veredas *Arnania, Villaverde y Tona* debido a una falla eléctrica que afectó a nuestros equipos.
+
+Nuestros técnicos se encuentran trabajando en la solución del incidente.
+
+Les informaremos cuando hayamos restablecido nuestros servicios.
+
+Fecha: 2024-4-3 10:56:1
+Pregunta: Es muy probable que la falla de su servicio esté relacionada con la falla masiva que tenemos en estos momentos
+Respuesta: Es muy probable que la falla de su servicio esté relacionada con la falla masiva que tenemos en estos momentos
+
+Fecha: 2024-4-3 10:56:9
+Pregunta: Le recomendamos contactarnos nuevamente cuando hayamos resuelto el incidente si aún no tiene servicio
+Respuesta: Le recomendamos contactarnos nuevamente cuando hayamos resuelto el incidente si aún no tiene servicio
+
