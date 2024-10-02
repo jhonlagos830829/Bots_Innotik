@@ -82,7 +82,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
         //Declaración de variables para identificar datos de corresponsal
         const ExpRegCorresponsal = new RegExp("[Redban]{6,}|[CORESPNAL]{10,}|[REMDS]{5,}", "i")
         const ExpRegFechaCorresponsal = new RegExp("[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}", "i")
-        const ExpRegValorCorresponsal = new RegExp("[Valor]{2,}[\n]*[\\$ 0-9.]{4,}\n", "i")
+        const ExpRegValorCorresponsal = new RegExp("[Valor]{3,}[\n]*[$ 0-9.]{4,}|\\$[ 0-9.]{4,}", "i")
         
         //Declaración de variables para identificar datos de Nequi
         const ExpRegNequi = new RegExp("De d[óo]nde sali[óo] la plata|Movimiento[ hecon:]+[\na-z]+[Nequi]*|Detalle del[\n ]+movimiento|[movement\\W]{6,}[receipt\\W]{5,}[bpody\\W]{3,}[title]{3,}", "i")
@@ -137,15 +137,15 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 //Extraer el texto del comprobante de pago
                 const { data: { text: texto } } = await worker.recognize(ctxFn.state.get('archivoComprobante'))
 
-                //Mostrar en la consola el texto obtenido 
-                console.log(texto)
+                // //Mostrar en la consola el texto obtenido 
+                // console.log(texto)
 
                 //Obtener el texto del comprobante
                 textoComprobante = texto
 
                 //Si el comprobante escaneado es de un corresponsal
                 if(ExpRegCorresponsal.test(textoComprobante) == true){
-                    
+                    console.log('Es de un corresponsal')
                     //Variables de Google vision para detectar el texto
                     const vision = require('@google-cloud/vision')
                     
@@ -162,11 +162,13 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
 
                     //Obtener el texto extraído del comprobante
                     textoComprobante = hallazgos[0].description
+
+                    console.log('textoComprobante' + textoComprobante)
                     
                     //Expresiones regulares para encontrar los datos de la consignación en el comprobante                    
                     const ExpRegFecha = new RegExp('[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}', "i")
                     const ExpRegCuenta = new RegExp('[Prducto:]{8,}[\\w]*[\\W]*[0-9]{10}', "i")
-                    const ExpRegValor = new RegExp('[0-9.]{4,}\n', "i")
+                    const ExpRegValor = new RegExp('[0-9.]{4,}[\n]*', "i")
                     const ExpRegCodigoUnico = new RegExp('[ .UNICO:]{4,}[\\w]*[\\W]*[0-9]{9,}', "i")
                     const ExpRegRecibo = new RegExp('[RECIBO: ]{6,}[0-9]{6}', "i")
                     const ExpRegTer = new RegExp('[TER: ]{4,}[0-9A-Z]{8}', "i")
@@ -229,7 +231,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                         }
 
                     }
-
+                    console.log('VA PARA EL VALOR')
                     //Si tiene al menos una coincidencia
                     if (ExpRegValorCorresponsal.test(textoComprobante) == true){
                         
