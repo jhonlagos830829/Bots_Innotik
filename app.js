@@ -47,7 +47,7 @@ var clienteSaludado = false
 const mainBotAsistenciaTecnica = async () => {
     const nombreBot = 'botAsistenciaTecnica'
     const adapterDB = new MockAdapter()
-    const adapterFlow = createFlow([/*flujoReportarFallaBuscarDeNuevo, flujoReportarFallaNombreTitular, flujoReportarFalla, flujoSaludo, flujoReportarFallaTipoFalla, flujoTextoFallaMasiva, flujoNotaDeVozEnviada, flujoAsistentePagos, flujoReportarFallaServicioLentoIntermitenteTiendaAplicaciones*/])
+    const adapterFlow = createFlow([/*flujoReportarFallaBuscarDeNuevo, flujoReportarFallaNombreTitular, flujoReportarFalla, flujoSaludo, flujoReportarFallaTipoFalla, flujoTextoFallaMasiva, flujoNotaDeVozEnviada, flujoAsistentePagos, flujoReportarFallaServicioLentoIntermitenteTiendaAplicaciones*/flujoAsistentePagos])
     const adapterProvider = createProvider(BaileysProvider, { name:nombreBot })
 
     createBot({

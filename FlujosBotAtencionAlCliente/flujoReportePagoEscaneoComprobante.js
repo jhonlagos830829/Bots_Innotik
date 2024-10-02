@@ -102,11 +102,10 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
 
         //Declaración de variables para identificar datos de Bancolombia
         const ExpRegDaviplata = new RegExp("[WViplat?]{6,}|[Transacción exitosa]{15,}|[Código QRparcnfmarsutc]{25,}|[Pasó lt]{6,}|[*+6136]{6,}|[Motiv]{5,}", "i")
-        // const ExpRegComprobanteBancolombia = new RegExp("[Comprbante .0-9]{20,}\n", "i")
-        // const ExpRegOrigenBancolombia = new RegExp("[Productigena ]{15,}[\n]+[Cuenta]{4,}[\n]+[AhorsCient]{4,}[\n]+[*0-9]{5}", "i")
-        // const ExpRegFechaBancolombia = new RegExp("\n[0-9]{1,2}[a-z ]{5}[0-9]{4}[ -]{2,}[0-9]{2}:[0-9]{2}[ amp.]{4,}\n", "i")
-        // const ExpRegValorBancolombia = new RegExp("[Valor eniad]{10,}[\n][$ 0-9.]+", "i")
-        // const ExpRegCuentaBancolombia = new RegExp("[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")
+        const ExpRegFechaDaviplata = new RegExp("[Fechayor: ]{10,}[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}[ amp]{3}", "i")
+        const ExpRegValorDaviplata = new RegExp("\\$[0-9 .]{4,}", "i")
+        const ExpRegCuentaDaviplata = new RegExp("[*+0-9]{8,}", "i")
+        const ExpRegMotivoDaviplata = new RegExp("[Motiv]{4,}[\n]*[a-záéíóúÁÉÍÓÚ0-9 ]{10,}[\n]", "i")
 
         //Registrar el inicio de la conversación
         try {
@@ -216,7 +215,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                         cuenta = lineaCuenta.substring(lineaCuenta.indexOf(' ') + 1).replaceAll(' ', '').trim()
 
                         //Buscar en la base de datos la cuenta en la cual se realizó el pago
-                        datosCuenta = await cuentaBancaria.obtenerCuenta(cuenta)
+                        datosCuenta = await cuentaBancaria.obtenerCuenta('', cuenta)
 
                         //Si la búsqueda de la cuenta no arrojó resultados
                         if (Object.keys(datosCuenta.data).length == 0){
@@ -391,7 +390,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                         cuenta = lineaCuenta.match(ExpRegCuenta)[0].replaceAll(' ', '')
 
                         //Buscar en la base de datos la cuenta en la cual se realizó el pago
-                        datosCuenta = await cuentaBancaria.obtenerCuenta(cuenta)
+                        datosCuenta = await cuentaBancaria.obtenerCuenta('', cuenta)
 
                         //Si la búsqueda de la cuenta no arrojó resultados
                         if (Object.keys(datosCuenta.data).length == 0){
@@ -490,7 +489,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                         cuenta = lineaCuenta.match(ExpRegCuenta)[0].replaceAll(' ', '')
 
                         //Buscar en la base de datos la cuenta en la cual se realizó el pago
-                        datosCuenta = await cuentaBancaria.obtenerCuenta(cuenta)
+                        datosCuenta = await cuentaBancaria.obtenerCuenta('', cuenta)
 
                         //Si la búsqueda de la cuenta no arrojó resultados
                         if (Object.keys(datosCuenta.data).length == 0){
@@ -517,70 +516,62 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 }
                 else if(ExpRegDaviplata.test(textoComprobante) == true){
                     console.log('Es de Daviplata')
+
+
+                    /////////////////PROCESAR EL COMPROBANTE CO GOOGLE///////////////////
+
+                    //Variables de Google vision para detectar el texto
+                    const vision = require('@google-cloud/vision')
+                    
+                    // Creates a client
+                    const cliente = new vision.ImageAnnotatorClient()
+
+                    //Archivo que se escaneará
+                    //const comprobante = nombreArchivo
+                    const comprobante = ctxFn.state.get('archivoComprobante')
+
+                    //Extraer el texto del archivo
+                    const [salida] = await cliente.textDetection(comprobante)
+                    const hallazgos = salida.textAnnotations
+
+                    //Obtener el texto extraído del comprobante
+                    textoComprobante = hallazgos[0].description
+
+                    console.log('textoComprobante' + textoComprobante)
+
+                    /////////////////////////////////////////////////////////////////////////
+
+
                     //Variables donde se guardarán los datos extraidos de las líneas de texto
                     //const ExpRegReferencia = new RegExp("[MS]+[0-9]{4,}", "i")
-                    const ExpRegCuenta = new RegExp("3[0-9 ]{9,}", "i")
-                    const ExpRegFecha = new RegExp("[Fechayor: ]{10,}[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}[ amp]{3}", "i")
+                    const ExpRegCuenta = new RegExp("[0-9]{4,}", "i")
+                    const ExpRegFecha = new RegExp("[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}[ amp]{3}", "i")
                     const ExpRegValor = new RegExp("\\$[0-9 .]+", "i")
                     const ExpRegConversacion = new RegExp("\\$[0-9 .]+", "i")
                     
                     //Configurar el medio por el cual realizaron el pago
-                    medio = 'Nequi'
-                    
-                    // //Si encontró al referencia de pago
-                    // if (ExpRegReferenciaNequi.test(textoComprobante) == true){
-                        
-                    //     //Extraer la referencia de la línea de referencia
-                    //     let lineaReferencia = textoComprobante.match(ExpRegReferenciaNequi)[0].replaceAll('\n', ' ')
-                    //     referencia = lineaReferencia.match(ExpRegReferencia)[0]
-
-                    // }
-                    
-                    //Si encontró la conversación
-                    if (ExpRegConversacionNequi.test(textoComprobante) == true){
-                        
-                        //Extraer la conversación de la línea de conversación
-                        let lineaConversacion = textoComprobante.match(ExpRegConversacionNequi)[0].replaceAll('\n', ' ').replaceAll('¿', '')
-                        conversacion = lineaConversacion.substring(lineaConversacion.indexOf(' ')).trim()
-
-                    }
-                    
+                    medio = 'Daviplata'
+                                        
                     //Si encontró la fecha
-                    if (ExpRegFechaNequi.test(textoComprobante) == true){
+                    if (ExpRegFechaDaviplata.test(textoComprobante) == true){
 
                         //Extraer la fecha de la línea de fecha
-                        let lineaFecha = textoComprobante.match(ExpRegFechaNequi)[0].replaceAll('\n', ' ')
+                        let lineaFecha = textoComprobante.match(ExpRegFechaDaviplata)[0].replaceAll('\n', ' ')
                         let fechaCadena = lineaFecha.match(ExpRegFecha)[0].replaceAll('a. m.', 'a.m.').replaceAll('p. m.', 'p.m.').replaceAll(' Mm.', 'm.').trim()
-                        let horaAmPm = ''
 
-                        //Otener la hora de la fecha
-                        horaAmPm = fechaCadena.substring(fechaCadena.lastIndexOf(' '))
-                        
-                        console.log('lineaFecha=' + lineaFecha)
-                        console.log('fechaCadena=' + fechaCadena)
-                        console.log('horaAmPm=' + horaAmPm)
-                        
-                        //Si la hora incluye a.
-                        if(horaAmPm.includes('a.')){
+                        //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
+                        fecha = new Date(fechaCadena)
 
-                            //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
-                            fecha = new Date(fechas.extraerFecha(fechaCadena.replaceAll(horaAmPm, ' a.m.')))
-
-                        }
-                        else if(horaAmPm.includes('p.')){
-
-                            //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
-                            fecha = new Date(fechas.extraerFecha(fechaCadena.replaceAll(horaAmPm, ' p.m.')))
-
-                        }
+                        //Agregar 5 horas a la fecha para que conincida con la zona horaria de colombia
+                        fecha = new Date(fecha.setHours(fecha.getHours() - 5))
 
                     }
                     
                     //Si encontró el valor del movimiento
-                    if (ExpRegValorNequi.test(textoComprobante) == true){
+                    if (ExpRegValorDaviplata.test(textoComprobante) == true){
                         
                         //Extraer el valor de la linea de valor encontrada
-                        let lineaValor = textoComprobante.match(ExpRegValorNequi)[0].replaceAll('\n', ' ')
+                        let lineaValor = textoComprobante.match(ExpRegValorDaviplata)[0].replaceAll('\n', ' ')
                         console.log('Valor antes:|' + lineaValor + '|')
                         valor = lineaValor.match(ExpRegValor)[0].replaceAll('$', '').replaceAll('.', '').trim()
                         console.log('Valor despues:|' + valor + '|')
@@ -588,14 +579,19 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     }
                     
                     //Si encontró el número de la cuenta
-                    if (ExpRegCuentaNequi.test(textoComprobante) == true){
+                    if (ExpRegCuentaDaviplata.test(textoComprobante) == true){
                         
                         //Extraer la cuenta de la linea de cuenta encontrada
-                        let lineaCuenta = textoComprobante.match(ExpRegCuentaNequi)[0].replaceAll('\n', ' ')
+                        let lineaCuenta = textoComprobante.match(ExpRegCuentaDaviplata)[0].replaceAll('\n', ' ')
+
+                        console.log('lineaCuenta |' + lineaCuenta + '|')
+
                         cuenta = lineaCuenta.match(ExpRegCuenta)[0].replaceAll(' ', '')
 
+                        console.log('cuenta |' + cuenta + '|')
+
                         //Buscar en la base de datos la cuenta en la cual se realizó el pago
-                        datosCuenta = await cuentaBancaria.obtenerCuenta(cuenta)
+                        datosCuenta = await cuentaBancaria.obtenerCuenta('Daviplata', cuenta)
 
                         //Si la búsqueda de la cuenta no arrojó resultados
                         if (Object.keys(datosCuenta.data).length == 0){
@@ -616,6 +612,17 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                             idCuenta = datosCuenta.data[0].id
 
                         }
+
+                    }
+
+                    //Si encontró la conversación
+                    if (ExpRegMotivoDaviplata.test(textoComprobante) == true){
+                        
+                        //Extraer la conversación de la línea de conversación
+                        let lineaMotivo = textoComprobante.match(ExpRegMotivoDaviplata)[0].replaceAll('\n', ' ').replaceAll('¿', '')
+
+                        //Obtener el motivo del pago en el comprobante
+                        conversacion = lineaMotivo.substring(lineaMotivo.indexOf(' ')).trim()
 
                     }
 

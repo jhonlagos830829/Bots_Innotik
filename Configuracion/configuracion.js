@@ -23,7 +23,7 @@ module.exports = Object.freeze({
     TABLA_CUENTAS: 'cuentas',
     TABLA_CAJAS: 'cajas',
     TABLA_MOVIMIENTOS: 'movimientos',
-    URL_BUSCAR_CUENTA: 'cuentas?filters[numero][$contains]=',
+    URL_BUSCAR_CUENTA: 'cuentas?filters[banco][$contains]={BANCO}&filters[numero][$contains]={NUMERO}&populate=*',
     URL_BUSCAR_MOVIMIENTO: 'movimientos?filters[numero][$contains]=',
     URL_BUSCAR_CLIENTE: 'clientes?filters[numero][$contains]=',
     URL_BUSCAR_MEDIOS_PAGO: 'medios-de-pagos',

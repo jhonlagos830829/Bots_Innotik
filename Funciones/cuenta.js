@@ -45,7 +45,7 @@ async function Guardar (banco, tipo, numero, titular, identificacion){
  * @param {*} numero - Número de la cuenta
  * @returns 
  */
-async function obtenerCuenta(numero){
+async function obtenerCuenta(banco, numero){
     
     //Variable para obtener los resultados de la búsqueda
     var datosCliente
@@ -54,7 +54,7 @@ async function obtenerCuenta(numero){
     try {
   
       //Guardar en la base de datos
-      datosCliente = await basedatos.Buscar(configuracion.URL_BUSCAR_CUENTA, numero + '&populate=*')
+      datosCliente = await basedatos.Buscar(configuracion.URL_BUSCAR_CUENTA.replace('{BANCO}', banco).replace('{NUMERO}', numero), '')
   
       //console.log('Dele -> ' + datosCliente)
   
