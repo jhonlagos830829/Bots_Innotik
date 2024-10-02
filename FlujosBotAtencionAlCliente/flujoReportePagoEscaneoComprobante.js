@@ -517,57 +517,108 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 }
                 else if(ExpRegDaviplata.test(textoComprobante) == true){
                     console.log('Es de Daviplata')
-                    // //Variables de Google vision para detectar el texto
-                    // const vision = require('@google-cloud/vision')
+                    //Variables donde se guardarán los datos extraidos de las líneas de texto
+                    //const ExpRegReferencia = new RegExp("[MS]+[0-9]{4,}", "i")
+                    const ExpRegCuenta = new RegExp("3[0-9 ]{9,}", "i")
+                    const ExpRegFecha = new RegExp("[Fechayor: ]{10,}[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}[ amp]{3}", "i")
+                    const ExpRegValor = new RegExp("\\$[0-9 .]+", "i")
+                    const ExpRegConversacion = new RegExp("\\$[0-9 .]+", "i")
                     
-                    // // Creates a client
-                    // const cliente = new vision.ImageAnnotatorClient()
-
-                    // //Archivo que se escaneará
-                    // //const comprobante = nombreArchivo
-                    // const comprobante = ctxFn.state.get('archivoComprobante')
-
-                    // //Extraer el texto del archivo
-                    // const [salida] = await cliente.textDetection(comprobante)
-                    // const hallazgos = salida.textAnnotations
-
-                    // //Obtener el texto extraído del comprobante
-                    // textoComprobante = hallazgos[0].description
-
-                    // console.log('textoComprobante' + textoComprobante)
+                    //Configurar el medio por el cual realizaron el pago
+                    medio = 'Nequi'
                     
-                    // //Expresiones regulares para encontrar los datos de la consignación en el comprobante                    
-                    // const ExpRegFecha = new RegExp('[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}', "i")
-                    // const ExpRegCuenta = new RegExp('[Prducto:]{8,}[\\w]*[\\W]*[0-9]{10}', "i")
-                    // const ExpRegValor = new RegExp('[0-9.]{4,}[\n]*', "i")
-                    // const ExpRegCodigoUnico = new RegExp('[ .UNICO:]{4,}[\\w]*[\\W]*[0-9]{9,}', "i")
-                    // const ExpRegRecibo = new RegExp('[RECIBO: ]{6,}[0-9]{6}', "i")
-                    // const ExpRegTer = new RegExp('[TER: ]{4,}[0-9A-Z]{8}', "i")
-                    // const ExpRegRrn = new RegExp('[RN: ]{4,}[0-9]{6}', "i")
-                    // const ExpRegApro = new RegExp('[APRO: ]{4,}[0-9]{6}', "i")
-                    
-                    // //Configurar el medio por el cual realizaron el pago
-                    // medio = 'Corresponsal'
-
-                    // //Si tiene al menos una coincidencia
-                    // if (ExpRegFecha.test(textoComprobante) == true){
+                    // //Si encontró al referencia de pago
+                    // if (ExpRegReferenciaNequi.test(textoComprobante) == true){
                         
-                    //     //Extraer la fecha de la línea de fecha
-                    //     let lineaFecha = textoComprobante.match(ExpRegFechaCorresponsal)[0].replaceAll('\n', ' ')
-                        
-                    //     //Extraer el mes de la fecha
-                    //     let mes = lineaFecha.substring(0, lineaFecha.indexOf(' ') + 1).replace('ENE','JAN').replace('ABR','APR').replace('AGO','AUG').replace('DEC','DIC').replace('¿UN', 'JUN')
-
-                    //     //Remover el mes del principio de la línea para formatearla correctamente
-                    //     lineaFecha = lineaFecha.replace(mes, '')
-
-                    //     //Agregar el mes a la fecha
-                    //     lineaFecha = lineaFecha.slice(0, lineaFecha.indexOf(' ') + 1) + mes.trim() + lineaFecha.slice(lineaFecha.indexOf(' '))
-
-                    //     //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
-                    //     fecha = new Date( lineaFecha)
+                    //     //Extraer la referencia de la línea de referencia
+                    //     let lineaReferencia = textoComprobante.match(ExpRegReferenciaNequi)[0].replaceAll('\n', ' ')
+                    //     referencia = lineaReferencia.match(ExpRegReferencia)[0]
 
                     // }
+                    
+                    //Si encontró la conversación
+                    if (ExpRegConversacionNequi.test(textoComprobante) == true){
+                        
+                        //Extraer la conversación de la línea de conversación
+                        let lineaConversacion = textoComprobante.match(ExpRegConversacionNequi)[0].replaceAll('\n', ' ').replaceAll('¿', '')
+                        conversacion = lineaConversacion.substring(lineaConversacion.indexOf(' ')).trim()
+
+                    }
+                    
+                    //Si encontró la fecha
+                    if (ExpRegFechaNequi.test(textoComprobante) == true){
+
+                        //Extraer la fecha de la línea de fecha
+                        let lineaFecha = textoComprobante.match(ExpRegFechaNequi)[0].replaceAll('\n', ' ')
+                        let fechaCadena = lineaFecha.match(ExpRegFecha)[0].replaceAll('a. m.', 'a.m.').replaceAll('p. m.', 'p.m.').replaceAll(' Mm.', 'm.').trim()
+                        let horaAmPm = ''
+
+                        //Otener la hora de la fecha
+                        horaAmPm = fechaCadena.substring(fechaCadena.lastIndexOf(' '))
+                        
+                        console.log('lineaFecha=' + lineaFecha)
+                        console.log('fechaCadena=' + fechaCadena)
+                        console.log('horaAmPm=' + horaAmPm)
+                        
+                        //Si la hora incluye a.
+                        if(horaAmPm.includes('a.')){
+
+                            //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
+                            fecha = new Date(fechas.extraerFecha(fechaCadena.replaceAll(horaAmPm, ' a.m.')))
+
+                        }
+                        else if(horaAmPm.includes('p.')){
+
+                            //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
+                            fecha = new Date(fechas.extraerFecha(fechaCadena.replaceAll(horaAmPm, ' p.m.')))
+
+                        }
+
+                    }
+                    
+                    //Si encontró el valor del movimiento
+                    if (ExpRegValorNequi.test(textoComprobante) == true){
+                        
+                        //Extraer el valor de la linea de valor encontrada
+                        let lineaValor = textoComprobante.match(ExpRegValorNequi)[0].replaceAll('\n', ' ')
+                        console.log('Valor antes:|' + lineaValor + '|')
+                        valor = lineaValor.match(ExpRegValor)[0].replaceAll('$', '').replaceAll('.', '').trim()
+                        console.log('Valor despues:|' + valor + '|')
+
+                    }
+                    
+                    //Si encontró el número de la cuenta
+                    if (ExpRegCuentaNequi.test(textoComprobante) == true){
+                        
+                        //Extraer la cuenta de la linea de cuenta encontrada
+                        let lineaCuenta = textoComprobante.match(ExpRegCuentaNequi)[0].replaceAll('\n', ' ')
+                        cuenta = lineaCuenta.match(ExpRegCuenta)[0].replaceAll(' ', '')
+
+                        //Buscar en la base de datos la cuenta en la cual se realizó el pago
+                        datosCuenta = await cuentaBancaria.obtenerCuenta(cuenta)
+
+                        //Si la búsqueda de la cuenta no arrojó resultados
+                        if (Object.keys(datosCuenta.data).length == 0){
+
+                            //Enviar comprobante del problema
+                            await ctxFn.provider.sendImage(configuracion.NUMERO_NOTIFICAR, nombreArchivo, mensajes.MENSAJE_NOTIFICAR_PAGO_A_CUENTA_INEXISTENTE)
+
+                            //Enviar datos extraidos del comprobante
+                            await ctxFn.provider.sendText(configuracion.NUMERO_NOTIFICAR, mensajes.MENSAJE_NOTIFICAR_TEXTO_ESCANEADO + textoComprobante)
+
+                            //Informar al cliente que la cuenta está errada
+                            return ctxFn.fallBack(mensajes.MENSAJE_CUENTA_NO_EXISTE.replaceAll('{CUENTA}', cuenta))
+                            
+                        }
+                        else{
+
+                            //Obtener el id de la cuenta en la cual se realizó el pago
+                            idCuenta = datosCuenta.data[0].id
+
+                        }
+
+                    }
+
 
                     // //Si tiene al menos una coincidencia
                     // if (ExpRegCuenta.test(textoComprobante) == true){
