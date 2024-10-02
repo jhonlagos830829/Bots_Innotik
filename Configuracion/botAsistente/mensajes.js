@@ -10,7 +10,7 @@ module.exports = Object.freeze({
     ////////////// MENSAJES PARA BOT DE ATENCIÓN AL CLIENTE 
 
     //Mensajes flujo flujoSaludo
-    SALUDO_INICIAL_ATENCION_AL_CLIENTE: '👩🏻 Hola *{NOMBRE_CLIENTE}* bienvenido(a) a la *línea de asistencia* de *Innotik*.\n\nEn esta línea solo puedo atender reportes de *temas administrativos*.',
+    SALUDO_INICIAL_ASISTENCIA: '👩🏻 Hola *{NOMBRE_CLIENTE}* bienvenido(a) a la *línea de asistencia* de *Innotik*.\n\nEn esta línea solo puedo atender reportes de *temas administrativos*.',
     MENSAJE_NO_AUTORIZADO: '👩🏻 Usted *no está autorizado* para interactuar conmigo, por favor póngase en contacto con el administrador.',
     MENSAJE_LINEA_REPORTE_FALLAS_ATENCION_AL_CLIENTE: '👩🏻 Si desea reportar *un problema con su servicio por favor pulse sobre este número 👉🏼 +57 310 2106136*\n\nY luego seleccione la opción:\n\n*Chatear con +57 310 2106136*',
     MENSAJE_TEMAS_ASISTENTE: '👩🏻 *¿Que desea hacer?*\n\n_Por favor envíeme el número de la opción que desee:_\n\n 1️⃣ Reportar pago de cliente.\n 2️⃣ Reportar un gasto.\n 3️⃣ Transferir dinero.\n 4️⃣ Reportar nueva instalación.\n 5️⃣ Reportar traslado.\n 6️⃣ Reportar horas extras.',

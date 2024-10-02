@@ -4,7 +4,7 @@ require('dotenv').config()
 
 //////////////////////////////////////// FUNCIONES ELABORADAS
 
-const mensajes = require('../Configuracion/botAtencionAlCliente/mensajes.js')
+const mensajes = require('../Configuracion/botAsistente/mensajes.js')
 const temporizador = require('../Funciones/temporizador.js')
 const caja = require('../Funciones/caja.js')
 

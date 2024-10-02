@@ -100,6 +100,14 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
         const ExpRegValorBancolombia = new RegExp("[Valor eniad]{10,}[\n][$ 0-9.]+", "i")
         const ExpRegCuentaBancolombia = new RegExp("[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")
 
+        //Declaración de variables para identificar datos de Bancolombia
+        const ExpRegDaviplata = new RegExp("[WViplat?]{6,}|[Transacción exitosa]{15,}|[Código QRparcnfmarsutc]{25,}|[Pasó lt]{6,}|[*+6136]{6,}|[Motiv]{5,}", "i")
+        // const ExpRegComprobanteBancolombia = new RegExp("[Comprbante .0-9]{20,}\n", "i")
+        // const ExpRegOrigenBancolombia = new RegExp("[Productigena ]{15,}[\n]+[Cuenta]{4,}[\n]+[AhorsCient]{4,}[\n]+[*0-9]{5}", "i")
+        // const ExpRegFechaBancolombia = new RegExp("\n[0-9]{1,2}[a-z ]{5}[0-9]{4}[ -]{2,}[0-9]{2}:[0-9]{2}[ amp.]{4,}\n", "i")
+        // const ExpRegValorBancolombia = new RegExp("[Valor eniad]{10,}[\n][$ 0-9.]+", "i")
+        // const ExpRegCuentaBancolombia = new RegExp("[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")
+
         //Registrar el inicio de la conversación
         try {
 
@@ -137,8 +145,8 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 //Extraer el texto del comprobante de pago
                 const { data: { text: texto } } = await worker.recognize(ctxFn.state.get('archivoComprobante'))
 
-                // //Mostrar en la consola el texto obtenido 
-                // console.log(texto)
+                //Mostrar en la consola el texto obtenido 
+                console.log(texto)
 
                 //Obtener el texto del comprobante
                 textoComprobante = texto
@@ -505,6 +513,165 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                         }
 
                     }
+
+                }
+                else if(ExpRegDaviplata.test(textoComprobante) == true){
+                    console.log('Es de Daviplata')
+                    // //Variables de Google vision para detectar el texto
+                    // const vision = require('@google-cloud/vision')
+                    
+                    // // Creates a client
+                    // const cliente = new vision.ImageAnnotatorClient()
+
+                    // //Archivo que se escaneará
+                    // //const comprobante = nombreArchivo
+                    // const comprobante = ctxFn.state.get('archivoComprobante')
+
+                    // //Extraer el texto del archivo
+                    // const [salida] = await cliente.textDetection(comprobante)
+                    // const hallazgos = salida.textAnnotations
+
+                    // //Obtener el texto extraído del comprobante
+                    // textoComprobante = hallazgos[0].description
+
+                    // console.log('textoComprobante' + textoComprobante)
+                    
+                    // //Expresiones regulares para encontrar los datos de la consignación en el comprobante                    
+                    // const ExpRegFecha = new RegExp('[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}', "i")
+                    // const ExpRegCuenta = new RegExp('[Prducto:]{8,}[\\w]*[\\W]*[0-9]{10}', "i")
+                    // const ExpRegValor = new RegExp('[0-9.]{4,}[\n]*', "i")
+                    // const ExpRegCodigoUnico = new RegExp('[ .UNICO:]{4,}[\\w]*[\\W]*[0-9]{9,}', "i")
+                    // const ExpRegRecibo = new RegExp('[RECIBO: ]{6,}[0-9]{6}', "i")
+                    // const ExpRegTer = new RegExp('[TER: ]{4,}[0-9A-Z]{8}', "i")
+                    // const ExpRegRrn = new RegExp('[RN: ]{4,}[0-9]{6}', "i")
+                    // const ExpRegApro = new RegExp('[APRO: ]{4,}[0-9]{6}', "i")
+                    
+                    // //Configurar el medio por el cual realizaron el pago
+                    // medio = 'Corresponsal'
+
+                    // //Si tiene al menos una coincidencia
+                    // if (ExpRegFecha.test(textoComprobante) == true){
+                        
+                    //     //Extraer la fecha de la línea de fecha
+                    //     let lineaFecha = textoComprobante.match(ExpRegFechaCorresponsal)[0].replaceAll('\n', ' ')
+                        
+                    //     //Extraer el mes de la fecha
+                    //     let mes = lineaFecha.substring(0, lineaFecha.indexOf(' ') + 1).replace('ENE','JAN').replace('ABR','APR').replace('AGO','AUG').replace('DEC','DIC').replace('¿UN', 'JUN')
+
+                    //     //Remover el mes del principio de la línea para formatearla correctamente
+                    //     lineaFecha = lineaFecha.replace(mes, '')
+
+                    //     //Agregar el mes a la fecha
+                    //     lineaFecha = lineaFecha.slice(0, lineaFecha.indexOf(' ') + 1) + mes.trim() + lineaFecha.slice(lineaFecha.indexOf(' '))
+
+                    //     //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
+                    //     fecha = new Date( lineaFecha)
+
+                    // }
+
+                    // //Si tiene al menos una coincidencia
+                    // if (ExpRegCuenta.test(textoComprobante) == true){
+                        
+                    //     //Obtener la línea de la cuenta
+                    //     let lineaCuenta = textoComprobante.match(ExpRegCuenta)[0]
+
+                    //     //Obtener la cuenta
+                    //     cuenta = lineaCuenta.substring(lineaCuenta.indexOf(' ') + 1).replaceAll(' ', '').trim()
+
+                    //     //Buscar en la base de datos la cuenta en la cual se realizó el pago
+                    //     datosCuenta = await cuentaBancaria.obtenerCuenta(cuenta)
+
+                    //     //Si la búsqueda de la cuenta no arrojó resultados
+                    //     if (Object.keys(datosCuenta.data).length == 0){
+
+                    //         //Enviar comprobante del problema
+                    //         await ctxFn.provider.sendImage(configuracion.NUMERO_NOTIFICAR, nombreArchivo, mensajes.MENSAJE_NOTIFICAR_PAGO_A_CUENTA_INEXISTENTE)
+
+                    //         //Enviar datos extraidos del comprobante
+                    //         await ctxFn.provider.sendText(configuracion.NUMERO_NOTIFICAR, mensajes.MENSAJE_NOTIFICAR_TEXTO_ESCANEADO + textoComprobante)
+
+                    //         //Informar al cliente que la cuenta está errada
+                    //         return ctxFn.fallBack(mensajes.MENSAJE_CUENTA_NO_EXISTE.replaceAll('{CUENTA}', cuenta))
+                            
+                    //     }
+                    //     else{
+
+                    //         //Obtener el id de la cuenta en la cual se realizó el pago
+                    //         idCuenta = datosCuenta.data[0].id
+
+                    //     }
+
+                    // }
+                    // console.log('VA PARA EL VALOR')
+                    // //Si tiene al menos una coincidencia
+                    // if (ExpRegValorCorresponsal.test(textoComprobante) == true){
+                        
+                    //     //Obtener la línea del valor
+                    //     let lineaValor = textoComprobante.match(ExpRegValorCorresponsal)[0]
+
+                    //     console.log('lineaValor ' + lineaValor)
+                        
+                    //     //Obtener el valor de la línea
+                    //     //valor = lineaValor.replaceAll('$', '').replaceAll('\n', '').replaceAll(' ', '').replaceAll('.', '')
+                    //     valor = lineaValor.match(ExpRegValor)[0].replaceAll('.', '').replaceAll('\n', '')
+
+                    // }
+
+                    // //Si tiene al menos una coincidencia
+                    // if (ExpRegCodigoUnico.test(textoComprobante) == true){
+                        
+                    //     //Obtener la línea del valor
+                    //     let lineaCunico = textoComprobante.match(ExpRegCodigoUnico)[0]
+
+                    //     //Obtener el cunico de la línea
+                    //     cunico = lineaCunico.substring(lineaCunico.lastIndexOf(' ') + 1)
+
+                    // }
+
+                    // //Si tiene al menos una coincidencia
+                    // if (ExpRegRecibo.test(textoComprobante) == true){
+                        
+                    //     //Obtener la línea del valor
+                    //     let lineaRecibo = textoComprobante.match(ExpRegRecibo)[0]
+
+                    //     //Obtener el cunico de la línea
+                    //     recibo = lineaRecibo.substring(lineaRecibo.lastIndexOf(' ') + 1)
+
+                    // }
+
+                    
+                    // //Si tiene al menos una coincidencia
+                    // if (ExpRegTer.test(textoComprobante) == true){
+                        
+                    //     //Obtener la línea del valor
+                    //     let lineaTer = textoComprobante.match(ExpRegTer)[0]
+
+                    //     //Obtener el cunico de la línea
+                    //     ter = lineaTer.substring(lineaTer.lastIndexOf(' ') + 1)
+
+                    // }
+
+                    // //Si tiene al menos una coincidencia
+                    // if (ExpRegRrn.test(textoComprobante) == true){
+                        
+                    //     //Obtener la línea del valor
+                    //     let lineaRrn = textoComprobante.match(ExpRegRrn)[0]
+
+                    //     //Obtener el cunico de la línea
+                    //     rrn = lineaRrn.substring(lineaRrn.lastIndexOf(' ') + 1)
+
+                    // }
+
+                    // //Si tiene al menos una coincidencia
+                    // if (ExpRegApro.test(textoComprobante) == true){
+                        
+                    //     //Obtener la línea del valor
+                    //     let lineaApro = textoComprobante.match(ExpRegApro)[0]
+
+                    //     //Obtener el cunico de la línea
+                    //     apro = lineaApro.substring(lineaApro.lastIndexOf(' ') + 1)
+
+                    // }
 
                 }
                 // console.log('Creo que va aca')
