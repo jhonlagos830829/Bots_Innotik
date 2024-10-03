@@ -23,7 +23,7 @@ const { constants } = require('node:buffer')
 
 ////////////////////////////////////////////////////////////////////////////////
 
-const ExpRegFlujo = '/[2]{1}/gmi'
+const ExpRegFlujo = '/^2$/gmi'
 const ExpRegRespuestas = new RegExp("[a-z]{4,}", "i")
 
 module.exports = flujoFacturasPendientesOtroNombre = addKeyword('ExpRegFlujo, { regex: true }')
@@ -140,7 +140,7 @@ module.exports = flujoFacturasPendientesOtroNombre = addKeyword('ExpRegFlujo, { 
         
         //Intentar
         try {
-            
+            console.log('Opciones para elegir ' + ctxFn.state.get('posicionElegir'))
             //Expresión regular para las opciones de pago
             const ExpRegEleccionCliente = new RegExp(ctxFn.state.get('posicionElegir'), "i")
 

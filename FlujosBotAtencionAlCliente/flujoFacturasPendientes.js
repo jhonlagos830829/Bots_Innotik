@@ -22,11 +22,10 @@ const flujoFacturasPendientesOtroNombre = require('./flujoFacturasPendientesOtro
 
 ////////////////////////////////////////////////////////////////////////////////
 
-//const ExpRegFlujo = '/[1]{1}/gmi'
 const ExpRegFlujo = '/^1$/gmi'
-const ExpRegRespuestas = new RegExp("[1-2]{1}", "i")
-const ExpRegRespuestaUno = new RegExp("[1]{1}", "i")
-const ExpRegRespuestaDos = new RegExp("[2]{1}", "i")
+const ExpRegRespuestas = new RegExp("^[1-2]{1}$", "i")
+const ExpRegRespuestaUno = new RegExp("^1$", "i")
+const ExpRegRespuestaDos = new RegExp("^2$", "i")
 
 module.exports = flujoFacturasPendientes = addKeyword(ExpRegFlujo, { regex: true })
     .addAnswer(mensajes.MENSAJE_FACTURAS_PENDIENTES_A_NOMBRE, {capture:true}, async (ctx, ctxFn) => {
