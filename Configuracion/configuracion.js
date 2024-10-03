@@ -2,7 +2,7 @@ module.exports = Object.freeze({
     
     //Constantes de configuración
     NOMBRE_BOT: 'Innotik Aistencia Técnica',
-    TIEMPO_ESPERA_RESPUESTA: 120, //PODUCCION 1200 //PRUEBAS 30
+    TIEMPO_ESPERA_RESPUESTA: 180, //PODUCCION 1200 //PRUEBAS 30
     NUMERO_NOTIFICAR: '573013584693' + '@s.whatsapp.net',
 
     //Configuración CRM
