@@ -19,7 +19,7 @@ const { constants } = require('node:buffer')
 
 //////////////////////////////////////// IMPORTACION DE LOS FLUJOS QUE SE USARAN
 
-//const flujoTipoFalla = require('./flujoReportarFallaTipoFalla')
+//const flujoFacturasPendientesOtroNombre = require('./flujoReportarFallaTipoFalla')
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -79,12 +79,35 @@ module.exports = flujoFacturasPendientesOtroNombre = addKeyword('ExpRegFlujo, { 
                     await ctxFn.fallBack(mensajes.MENSAJE_CLIENTE_NO_ENCONTRADO)
 
                 }
-                else{
+                else if (Object.keys(clientes.data).length == 1){
 
                     //Filtrar la estructura de datos a patir del número que escribe
                     let consultados = clientesConsultados.datos.filter(clientes => clientes.consultor === ctx.from)
 
-                    console.log(JSON.stringify(consultados))
+                    //Variables para el mensaje de resumen
+                    let posicion = 1
+                    let posicionElegir = ''
+
+                    //Agregar a la lista de clientes consultados el cliente actual
+                    consultados[0].clientes.push({posicion: posicion, id: clientes.data[0].id, identificacion: clientes.data[0].attributes.identificacion, nombre: clientes.data[0].attributes.nombre/*, idCuenta: datosCliente.attributes.cuenta.id*/})
+
+                    //Agregar las opciones para que acepte Si o No en la expresion regular
+                    posicionElegir = posicionElegir + '^S[íiÍI]$|^N[oOóÓ]$'
+
+                    //Guardar en el estado de la conversación los valores para la expresión regular que evalue la opción seleccionada
+                    ctxFn.state.update({posicionElegir: posicionElegir})
+
+                    //Guardar en el estado el mensaje enviado para reenviarlo en el siguiente fallbask en caso de no responder correctamente
+                    ctxFn.state.update({mensajePreguntaActual: mensajes.MENSAJE_TITULAR_ENCONTRADO.replace("{NOMBRE_CLIENTE}", clientes.data[0].attributes.nombre)})
+
+                    //Enviar el mensaje de resumen de las clientes
+                    await ctxFn.flowDynamic(mensajes.MENSAJE_TITULAR_ENCONTRADO.replace("{NOMBRE_CLIENTE}", clientes.data[0].attributes.nombre))
+
+                }
+                else{
+
+                    //Filtrar la estructura de datos a patir del número que escribe
+                    let consultados = clientesConsultados.datos.filter(clientes => clientes.consultor === ctx.from)
 
                     //Variables para el mensaje de resumen
                     let posicion = 1
@@ -97,7 +120,7 @@ module.exports = flujoFacturasPendientesOtroNombre = addKeyword('ExpRegFlujo, { 
                         //Reinicializar la variable que contendrá los clientes consultados con los que se realizará la expresión regular
                         posicionElegir = posicionElegir + '^' + posicion + '$|'
 
-                        //console.log(JSON.stringify(datosCliente))
+                        //Armar el exto de resumen
                         resumenClientes = resumenClientes + '👉🏼  *' + posicion + '* ' + datosCliente.attributes.nombre + '\n'
 
                         //Agregar a la lista de clientes consultados el cliente actual
@@ -117,6 +140,9 @@ module.exports = flujoFacturasPendientesOtroNombre = addKeyword('ExpRegFlujo, { 
                     //Guardar en el estado el mensaje enviado para reenviarlo en el siguiente fallbask en caso de no responder correctamente
                     ctxFn.state.update({mensajePosiciones: resumenClientes.substring(0, resumenClientes.length - 1)})
 
+                    //Guardar en el estado el mensaje enviado para reenviarlo en el siguiente fallbask en caso de no responder correctamente
+                    ctxFn.state.update({mensajePreguntaActual: mensajes.MENSAJE_CUAL_ES_TITULAR_SERVICIO.replace('{LISTA_CLIENTES}', resumenClientes.substring(0, resumenClientes.length - 1))})
+
                     //Enviar el mensaje de resumen de las clientes
                     await ctxFn.flowDynamic(mensajes.MENSAJE_CUAL_ES_TITULAR_SERVICIO.replace('{LISTA_CLIENTES}', resumenClientes.substring(0, resumenClientes.length - 1)))
 
@@ -127,7 +153,7 @@ module.exports = flujoFacturasPendientesOtroNombre = addKeyword('ExpRegFlujo, { 
         } catch (error) {
 
             //Solicitar una respuesta valida
-            console.log('Error al registrar la conversación en el flujo flujoTipoFalla, el sistema respondió: ' + error)
+            console.log('Error al registrar la conversación en el flujo flujoFacturasPendientesOtroNombre, el sistema respondió: ' + error)
 
         }
         
@@ -140,11 +166,10 @@ module.exports = flujoFacturasPendientesOtroNombre = addKeyword('ExpRegFlujo, { 
         
         //Intentar
         try {
-            console.log('Opciones para elegir ' + ctxFn.state.get('posicionElegir'))
-            //Expresión regular para las opciones de pago
+            
+            //Expresiones regulares a usar
             const ExpRegEleccionCliente = new RegExp(ctxFn.state.get('posicionElegir'), "i")
-
-            //Expresión regular para las opciones de pago
+            const ExpRegSi = new RegExp("^S[íiÍI]$", "i")
             const ExpRegNinguno = new RegExp('^N[oOóÓ]$|Ning[uUúÚnoa]+', "i")
 
             //Evaluar si el usuario envió una nota de voz
@@ -157,33 +182,55 @@ module.exports = flujoFacturasPendientesOtroNombre = addKeyword('ExpRegFlujo, { 
                 await delay(1000)
 
                 //Retorar la respuesta a opción incorrecta
-                return ctxFn.fallBack(mensajes.MENSAJE_CUAL_ES_TITULAR_SERVICIO)
+                return ctxFn.fallBack(ctxFn.state.get('mensajePreguntaActual'))
                 
             }
             else if(ExpRegEleccionCliente.test(ctx.body) == false){
 
                 //Solicitar una respuesta valida
-                return ctxFn.fallBack(mensajes.ARGUMENTO_RESPUESTA_INVALIDA + '\n\n' + mensajes.MENSAJE_CUAL_ES_TITULAR_SERVICIO.replace('{LISTA_CLIENTES}', ctxFn.state.get('mensajePosiciones')))
+                return ctxFn.fallBack(mensajes.ARGUMENTO_RESPUESTA_INVALIDA + '\n\n' + ctxFn.state.get('mensajePreguntaActual'))
                 
             }
             else{
                 
-                //Informar al cliente que espere un momento que va a consultar el sistema
-                await ctxFn.flowDynamic(mensajes.MENSAJE_FACTURAS_PENDIENTES_CONSULTANDO)
-
-                //Si el cliente respondió algo diferente a ninguno
+                //Si la respuesta del cliente es diferente a ninguno
                 if(ExpRegNinguno.test(ctx.body) == false){
+                    
+                    //Declaración de variable local
+                    var clienteElegido
 
-                    //Obtener los clientes consultados por el número
-                    let todoConsultado = clientesConsultados.datos.filter(clientes => clientes.consultor === ctx.from)
+                    //Si el técnico eligió el único titular resutante de la búsqueda
+                    if(ExpRegSi.test(ctx.body) == true){
 
-                    //console.log('Todo ' + JSON.stringify(todoConsultado))
+                        //Informar al cliente que espere un momento que va a consultar el sistema
+                        await ctxFn.flowDynamic(mensajes.MENSAJE_FACTURAS_PENDIENTES_CONSULTANDO)
 
-                    //Obtener el cliente elegido
-                    const clienteElegido = todoConsultado[0].clientes.find(cliente => cliente.posicion == ctx.body)
+                        //Hacer una pausa de 1 segundo
+                        await delay(1000)
 
-                    //console.log('Escogió ' + JSON.stringify(clienteElegido))
+                        //Obtener los clientes consultados por el número
+                        let todoConsultado = clientesConsultados.datos.filter(clientes => clientes.consultor === ctx.from)
 
+                        //Obtener el cliente elegido
+                        clienteElegido = todoConsultado[0].clientes[0]
+
+                    }
+                    else if(ExpRegNinguno.test(ctx.body) == false){
+
+                        //Informar al cliente que espere un momento que va a consultar el sistema
+                        await ctxFn.flowDynamic(mensajes.MENSAJE_FACTURAS_PENDIENTES_CONSULTANDO)
+                        
+                        //Hacer una pausa de 1 segundo
+                        await delay(1000)
+
+                        //Obtener los clientes consultados por el número
+                        let todoConsultado = clientesConsultados.datos.filter(clientes => clientes.consultor === ctx.from)
+
+                        //Obtener el cliente elegido
+                        clienteElegido = todoConsultado[0].clientes.find(cliente => cliente.posicion == ctx.body)
+
+                    }
+                
                     //Consultar al CRM las facturas del cliente
                     let facturas = await crm.ObtenerFacturasCliente(clienteElegido.identificacion)
                     let resumenFacturas = ''
@@ -255,13 +302,14 @@ module.exports = flujoFacturasPendientesOtroNombre = addKeyword('ExpRegFlujo, { 
                     ctxFn.gotoFlow(require('./flujoFacturasPendientesOtroNombre.js'))
                     
                 }
+                
 
             }
 
         } catch (error) {
 
             //Solicitar una respuesta valida
-            console.log('Error al registrar la conversación en el flujo flujoTipoFalla, el sistema respondió: ' + error)
+            console.log('Error al registrar la conversación en el flujo flujoFacturasPendientesOtroNombre, el sistema respondió: ' + error)
 
         }
 

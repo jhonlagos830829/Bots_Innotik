@@ -111,7 +111,7 @@ module.exports = flujoFacturasPendientesNombrePropio = addKeyword('ExpRegFlujo, 
         } catch (error) {
 
             //Solicitar una respuesta valida
-            console.log('Error al registrar la conversación en el flujo flujoTipoFalla, el sistema respondió: ' + error)
+            console.log('Error al registrar la conversación en el flujo flujoFacturasPendientesNombrePropio, el sistema respondió: ' + error)
 
         } 
 

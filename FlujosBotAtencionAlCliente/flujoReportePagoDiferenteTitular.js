@@ -187,25 +187,25 @@ module.exports = flujoReportePagoDiferenteTitular = addKeyword('EVENTS.MEDIA')
         const ExpRegSi = new RegExp("^S[íiÍI]$", "i")
         const ExpRegNinguno = new RegExp("^N[oOóÓ]$|Ning[uUúÚnoa]+", "i")
 
-        //Declaración de variables para identificar datos de corresponsal
-        const ExpRegCorresponsal = new RegExp("[Redban]{6,}|[CORESPNAL]{10,}|[REMDS]{5,}", "i")
-        const ExpRegFechaCorresponsal = new RegExp("[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}", "i")
+        // //Declaración de variables para identificar datos de corresponsal
+        // const ExpRegCorresponsal = new RegExp("[Redban]{6,}|[CORESPNAL]{10,}|[REMDS]{5,}", "i")
+        // const ExpRegFechaCorresponsal = new RegExp("[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}", "i")
         
-        //Declaración de variables para identificar datos de Nequi
-        const ExpRegNequi = new RegExp("De d[óo]nde sali[óo] la plata|Movimiento[ hecon:]+[\na-z]+[Nequi]*|Detalle del[\n ]+movimiento", "i")
-        const ExpRegReferenciaNequi = new RegExp("[Rfencia ]{6,}[\n]*[MS]*[0-9]{4,}", "i")
-        const ExpRegCuentaNequi = new RegExp("[Núumeroeqi ]{4,}[\n]*3[0-9 ]{9,}", "i")
-        const ExpRegFechaNequi = new RegExp("[Fecha ]{3,}[\n]*[ -a-z]*[0-9]+ de [a-z]+ de [0-9]{4}[, als]*[0-9]{1,}:[0-9]{2}[amp .\n]+", "i")
-        const ExpRegValorNequi = new RegExp("[Cuaánto\\?]{6}[\n]*\\$[0-9 .]+", "i")
-        const ExpRegConversacionNequi = new RegExp("[Conversaió]{10,}[\na-z 0-9]+\\¿", "i")
+        // //Declaración de variables para identificar datos de Nequi
+        // const ExpRegNequi = new RegExp("De d[óo]nde sali[óo] la plata|Movimiento[ hecon:]+[\na-z]+[Nequi]*|Detalle del[\n ]+movimiento", "i")
+        // const ExpRegReferenciaNequi = new RegExp("[Rfencia ]{6,}[\n]*[MS]*[0-9]{4,}", "i")
+        // const ExpRegCuentaNequi = new RegExp("[Núumeroeqi ]{4,}[\n]*3[0-9 ]{9,}", "i")
+        // const ExpRegFechaNequi = new RegExp("[Fecha ]{3,}[\n]*[ -a-z]*[0-9]+ de [a-z]+ de [0-9]{4}[, als]*[0-9]{1,}:[0-9]{2}[amp .\n]+", "i")
+        // const ExpRegValorNequi = new RegExp("[Cuaánto\\?]{6}[\n]*\\$[0-9 .]+", "i")
+        // const ExpRegConversacionNequi = new RegExp("[Conversaió]{10,}[\na-z 0-9]+\\¿", "i")
 
-        //Declaración de variables para identificar datos de Bancolombia
-        const ExpRegBancolombia = new RegExp("[Transfeci Exto]{20,}|[Comprbante .0-9]{20,}|[Productigen ]{15,}|[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")
-        const ExpRegComprobanteBancolombia = new RegExp("[Comprbante .0-9]{20,}\n", "i")
-        const ExpRegOrigenBancolombia = new RegExp("[Productigen ]{15,}[\n]+[Cuenta]{4,}[\n]+[AhorsCient]{4,}[\n]+[*0-9]{5}", "i")
-        const ExpRegFechaBancolombia = new RegExp("\n[0-9]{1,2}[a-z ]{5}[0-9]{4}[ -]{2,}[0-9]{2}:[0-9]{2}[ amp.]{4,}\n", "i")
-        const ExpRegValorBancolombia = new RegExp("[Valor eniad]{10,}[\n][$ 0-9.]+", "i")
-        const ExpRegCuentaBancolombia = new RegExp("[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")
+        // //Declaración de variables para identificar datos de Bancolombia
+        // const ExpRegBancolombia = new RegExp("[Transfeci Exto]{20,}|[Comprbante .0-9]{20,}|[Productigen ]{15,}|[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")
+        // const ExpRegComprobanteBancolombia = new RegExp("[Comprbante .0-9]{20,}\n", "i")
+        // const ExpRegOrigenBancolombia = new RegExp("[Productigen ]{15,}[\n]+[Cuenta]{4,}[\n]+[AhorsCient]{4,}[\n]+[*0-9]{5}", "i")
+        // const ExpRegFechaBancolombia = new RegExp("\n[0-9]{1,2}[a-z ]{5}[0-9]{4}[ -]{2,}[0-9]{2}:[0-9]{2}[ amp.]{4,}\n", "i")
+        // const ExpRegValorBancolombia = new RegExp("[Valor eniad]{10,}[\n][$ 0-9.]+", "i")
+        // const ExpRegCuentaBancolombia = new RegExp("[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")
 
         //Registrar el inicio de la conversación
         try {
