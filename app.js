@@ -23,7 +23,7 @@ const flujoReportarFallaServicioLentoIntermitenteTiendaAplicaciones = require('.
 
 ///////////// IMPORTACION DE LOS FLUJOS QUE SE USARAN EN EL BOT DE ATENCIÓN AL CLIENTE /////////////
 
-const flujoSaludoServicioAlCliente = require('./FlujosBotAtencionAlCliente/flujoSaludoAtencionAlCliente')
+const flujoSaludoAtencionAlCliente = require('./FlujosBotAtencionAlCliente/flujoSaludoAtencionAlCliente')
 const flujoReportePagoAtencionAlCliente = require('./FlujosBotAtencionAlCliente/flujoReportePago')
 const flujoReportePagoDiferenteTitular = require('./FlujosBotAtencionAlCliente/flujoReportePagoDiferenteTitular')
 const flujoReportePagoEscaneoComprobante = require('./FlujosBotAtencionAlCliente/flujoReportePagoEscaneoComprobante')
@@ -32,7 +32,7 @@ const flujoFacturasPendientesNombrePropio = require('./FlujosBotAtencionAlClient
 const flujoFacturasPendientesOtroNombre = require('./FlujosBotAtencionAlCliente/flujoFacturasPendientesOtroNombre')
 const flujoNumeroNoRegistrado = require('./FlujosBotAtencionAlCliente/flujoNumeroNoRegistrado')
 const flujoCuentaParaPagarOtroNombre = require('./FlujosBotAtencionAlCliente/flujoCuentaParaPagarOtroNombre')
-
+const flujoNotaDeVozEnviadaAtencionAlCliente = require('./FlujosBotAtencionAlCliente/flujoNotaDeVozEnviada')
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////// IMPORTACION DE LOS FLUJOS QUE SE USARAN EN EL BOT ASISTENTE /////////////
@@ -62,7 +62,7 @@ const mainBotAsistenciaTecnica = async () => {
 const mainBotServicioAlCliente = async () => {
     const nombreBot = 'botServicioAlCliente'
     const adapterDB = new MockAdapter()
-    const adapterFlow = createFlow([flujoSaludoServicioAlCliente, flujoReportePagoAtencionAlCliente, flujoReportePagoDiferenteTitular, flujoReportePagoEscaneoComprobante, flujoAlgoMasAtencionAlCliente, flujoFacturasPendientesNombrePropio, flujoFacturasPendientesOtroNombre, flujoNumeroNoRegistrado, flujoCuentaParaPagarOtroNombre])
+    const adapterFlow = createFlow([flujoNotaDeVozEnviadaAtencionAlCliente, flujoSaludoAtencionAlCliente, flujoReportePagoAtencionAlCliente, flujoReportePagoDiferenteTitular, flujoReportePagoEscaneoComprobante, flujoAlgoMasAtencionAlCliente, flujoFacturasPendientesNombrePropio, flujoFacturasPendientesOtroNombre, flujoNumeroNoRegistrado, flujoCuentaParaPagarOtroNombre])
     const adapterProvider = createProvider(BaileysProvider, { name:nombreBot })
 
     createBot({

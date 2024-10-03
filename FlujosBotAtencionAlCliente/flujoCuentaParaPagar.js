@@ -20,7 +20,7 @@ const { constants } = require('node:buffer')
 
 ////////////////////////////////////////////////////////////////////////////////
 
-const ExpRegFlujo = '/[2]{1}/gmi'
+const ExpRegFlujo = '/^2$/gmi'
 
 module.exports = flujoCuentaParaPagar = addKeyword(ExpRegFlujo, { regex: true })
     .addAction({capture:false}, async (ctx, ctxFn) => {

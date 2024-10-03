@@ -22,7 +22,7 @@ const flujoCuentaParaPagar = require('./flujoCuentaParaPagar.js')
 
 ////////////////////////////////////////////////////////////////////////////////
 
-const ExpRegFlujo = '/[4]{1}/gmi'
+const ExpRegFlujo = '/^4$/gmi'
 const ExpRegRespuesta = new RegExp("[a-zA-ZñÑáéíóúÁÉÍÓÚ ]{6,}", "i")
 
 module.exports = flujoInformacionServicios = addKeyword(ExpRegFlujo, { regex: true })

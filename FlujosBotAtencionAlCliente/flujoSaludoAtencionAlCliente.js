@@ -99,7 +99,7 @@ module.exports = flujoSaludoAtencionAlCliente = addKeyword(EVENTS.WELCOME)
         temporizador.iniciarTemporizador(ctx, ctxFn, '../FlujosBotAtencionAlCliente/flujoNoTengoRespuestaAtencionAlCliente')
 
     })
-    .addAnswer(mensajes.MENSAJE_TEMAS_ATENCION_AL_CLIENTE, {capture:true}, async (ctx, ctxFn) => {
+    .addAnswer(mensajes.MENSAJE_TEMAS_ATENCION_AL_CLIENTE, {delay:1000, capture:true}, async (ctx, ctxFn) => {
 
         //Registrar el inicio de la conversación
         try {
@@ -114,7 +114,7 @@ module.exports = flujoSaludoAtencionAlCliente = addKeyword(EVENTS.WELCOME)
                 await delay(1000)
 
                 //Retorar la respuesta a opción incorrecta
-                return ctxFn.fallBack(mensajes.MENSAJE_TEMAS_ATENCION_AL_CLIENTE)
+                ctxFn.fallBack(mensajes.MENSAJE_TEMAS_ATENCION_AL_CLIENTE)
                 
             }
             else if(ExpRegRespuestas.test(ctx.body) == false){
