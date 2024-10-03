@@ -89,8 +89,8 @@ const mainBotAsistente = async () => {
     QRPortalWeb({port:3005})
 }
 
-mainBotAsistenciaTecnica()
+//mainBotAsistenciaTecnica()
 
 mainBotServicioAlCliente()
 
-mainBotAsistente()
+//mainBotAsistente()

@@ -1,19 +1,19 @@
 const configuracion = require('../configuracion')
 module.exports = Object.freeze({
 
-    //Mensajes flujo flujoSaludo
-    SALUDO_INICIAL: '👩🏻 *¿Hola, qué tal?*\n\nEsta es nuestra línea de *asistencia técnica*, por aquí solo podemos atender solicitudes o reportes de temas técnicos',
-    ARGUMENTO_FLUJO_BIENVENIDA: '👩🏻 Esta es nuestra línea de *asistencia técnica*, por aquí solo podemos atender solicitudes o reportes de temas técnicos',
-    PREGUNTA_FLUJO_BIENVENIDA: '👩🏻 *¿Qué desea hacer?*\n\n_Por favor responda con una de las siguientes opciones:_\n\n👉🏼 Reportar una falla\n👉🏼 Cambiar la clave del wifi\n👉🏼 Solicitar algo diferente',
-    ARGUMENTO_FLUJO_SOLICITUDES_OTRO_TIPO: '👩🏻 Para solicitudes de otro tipo por favor escríbanos al siguiente número',
+    // //Mensajes flujo flujoSaludo
+    // SALUDO_INICIAL: '👩🏻 *¿Hola, qué tal?*\n\nEsta es nuestra línea de *asistencia técnica*, por aquí solo podemos atender solicitudes o reportes de temas técnicos',
+    // ARGUMENTO_FLUJO_BIENVENIDA: '👩🏻 Esta es nuestra línea de *asistencia técnica*, por aquí solo podemos atender solicitudes o reportes de temas técnicos',
+    // PREGUNTA_FLUJO_BIENVENIDA: '👩🏻 *¿Qué desea hacer?*\n\n_Por favor responda con una de las siguientes opciones:_\n\n👉🏼 Reportar una falla\n👉🏼 Cambiar la clave del wifi\n👉🏼 Solicitar algo diferente',
+    // ARGUMENTO_FLUJO_SOLICITUDES_OTRO_TIPO: '👩🏻 Para solicitudes de otro tipo por favor escríbanos al siguiente número',
 
     ////////////// MENSAJES PARA BOT DE ATENCIÓN AL CLIENTE 
 
     //Mensajes flujo flujoSaludo
-    SALUDO_INICIAL_ATENCION_AL_CLIENTE: '👩🏻 Hola *{NOMBRE_CLIENTE}* bienvenido(a) a la *línea de asistencia* de *Innotik*.\n\nEn esta línea solo puedo atender reportes de *temas administrativos*.',
-    MENSAJE_NO_AUTORIZADO: '👩🏻 Usted *no está autorizado* para interactuar conmigo, por favor póngase en contacto con el administrador.',
+    SALUDO_INICIAL_ATENCION_AL_CLIENTE: '👩🏻 Hola *{NOMBRE_CLIENTE}* bienvenido(a) a la *línea de atención al cliente* de *Innotik*.\n\nEn esta línea solo puedo atender reportes de *temas administrativos*.',
+    //MENSAJE_NO_AUTORIZADO: '👩🏻 Usted *no está autorizado* para interactuar conmigo, por favor póngase en contacto con el administrador.',
     MENSAJE_LINEA_REPORTE_FALLAS_ATENCION_AL_CLIENTE: '👩🏻 Si desea reportar *un problema con su servicio por favor pulse sobre este número 👉🏼 +57 310 2106136*\n\nY luego seleccione la opción:\n\n*Chatear con +57 310 2106136*',
-    MENSAJE_TEMAS_ASISTENTE: '👩🏻 *¿Que desea hacer?*\n\n_Por favor envíeme el número de la opción que desee:_\n\n 1️⃣ Reportar pago de cliente.\n 2️⃣ Reportar un gasto.\n 3️⃣ Transferir dinero.\n 4️⃣ Reportar nueva instalación.\n 5️⃣ Reportar traslado.\n 6️⃣ Reportar horas extras.',
+    MENSAJE_TEMAS_ATENCION_AL_CLIENTE: '👩🏻 Le puedo apoyar con los siguientes temas:\n\n_Por favor envíeme el número de la opción que desee:_\n\n 1️⃣ Facturas pendientes por pagar.\n 2️⃣ Cuenta para pagar.\n 3️⃣ Enviar comprobante de pago.\n 4️⃣ Información de nuestros servicios.',
 
     //Mensajes flujo flujoReportarPagoCliente
     MENSAJE_TITULAR_ENCONTRADO: '👩🏻 ¿El titular del servicio es *{NOMBRE_CLIENTE}*?\n\n_Por favor responda con una de las siguientes opciones:_\n\n\👉🏼 Si\n👉🏼 No',
