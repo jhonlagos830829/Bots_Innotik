@@ -82,7 +82,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
         //Declaración de variables para identificar datos de corresponsal
         const ExpRegCorresponsal = new RegExp("[Redban]{6,}|[CORESPNAL]{10,}|[REMDS]{5,}", "i")
         const ExpRegFechaCorresponsal = new RegExp("[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}", "i")
-        const ExpRegValorCorresponsal = new RegExp("[Valor]{3,}[\n]*[$ 0-9.]{4,}|\\$[ 0-9.]{4,}", "i")
+        const ExpRegValorCorresponsal = new RegExp("[Valor]{3,}[\n]*[$ 0-9.]{4,}|\\$[\n]*[ 0-9.]{4,}", "i")
         
         //Declaración de variables para identificar datos de Nequi
         const ExpRegNequi = new RegExp("De d[óo]nde sali[óo] la plata|Movimiento[ hecon:]+[\na-z]+[Nequi]*|Detalle del[\n ]+movimiento|[movement\\W]{6,}[receipt\\W]{5,}[bpody\\W]{3,}[title]{3,}", "i")
@@ -140,13 +140,13 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     //logger: m => console.log(m),
                 })
 
-                console.log('El archivo es: ' + ctxFn.state.get('archivoComprobante'))
+                //console.log('El archivo es: ' + ctxFn.state.get('archivoComprobante'))
 
                 //Extraer el texto del comprobante de pago
                 const { data: { text: texto } } = await worker.recognize(ctxFn.state.get('archivoComprobante'))
 
-                //Mostrar en la consola el texto obtenido 
-                console.log(texto)
+                // //Mostrar en la consola el texto obtenido 
+                // console.log(texto)
 
                 //Obtener el texto del comprobante
                 textoComprobante = texto
