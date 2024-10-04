@@ -95,11 +95,11 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
         //Declaración de variables para identificar datos de Bancolombia
         const ExpRegBancolombia = new RegExp("[Transfeci Exto]{20,}|[¡Transfeci lzd!]{20,}|[Comprbante .0-9]{20,}|[Productigen ]{15,}|[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")
         const ExpRegComprobanteBancolombia = new RegExp("[Comprbante N.0-9]{20,}\n", "i")
-        const ExpRegOrigenBancolombia = new RegExp("[Productigenav ]{15,}[\n]*[a-z ]{4,}[\n]+[AhorsCient]{4,}[\n]+[*0-9]{5}", "i")
+        const ExpRegOrigenBancolombia = new RegExp("[Productigenavy ]{15,}[\n]*[a-z ]{4,}[\n]+[AhorsCient]{4,}[\n]*[*0-9\-]{5,}", "i")
         const ExpRegFechaBancolombia = new RegExp("\n[0-9]{1,2}[a-z ]{5}[0-9]{4}[ -]*[0-9]{2}:[0-9]{2}[ amp.]{4,}\n", "i")
         const ExpRegValorBancolombia = new RegExp("[Valor eniad]{10,}[\n]*[$ 0-9.]+", "i")
         const ExpRegCuentaBancolombia = new RegExp("[Productdesin ]{15,}[\n]+[a-z ]+[\n]+[a-z \n]*[0-9\-]{10,}[\n]*", "i")
-        const ExpRegDescripcionBancolombia = new RegExp("[Descripón]{8,}[\n]+[a-z \w\n]*", "i")
+        const ExpRegDescripcionBancolombia = new RegExp("[Descripón]{8,}[\n]*[a-z0-9 \w\n]*", "i")
 
         //Declaración de variables para identificar datos de Bancolombia
         const ExpRegDaviplata = new RegExp("[WViplat?]{6,}|[Transacción exitosa]{15,}|[Código QRparcnfmarsutc]{25,}|[Pasó lt]{6,}|[*+6136]{6,}|[Motiv]{5,}", "i")
@@ -410,10 +410,11 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     
                     //Variables donde se guardarán los datos extraidos de las líneas de texto
                     const ExpRegComprobante = new RegExp("[0-9]+", "i")
-                    const ExpRegOrigen = new RegExp("[Cuenta]*[\n]*[AhorsCient ]{6,}[\n]*[*0-9]{5}", "i")
+                    const ExpRegOrigen = new RegExp("[Cuenta\n]*[AhorsCient ]{6,}[\n]*[*0-9\-]{5,}", "i")
                     const ExpRegFecha = new RegExp("[0-9]{1,2}[a-z ]{5}[0-9]{4}[ -]{2,}[0-9]{2}:[0-9]{2}[ amp.]{4,}", "i")
                     const ExpRegValor = new RegExp("[0-9.]+", "i")
                     const ExpRegCuenta = new RegExp("[0-9\-]{10,}", "i")
+                    const ExpRegDescripcion = new RegExp("[a-z0-9áéíóúÁÉÍÓÚñÑ \w\n]*", "i")
                     
                     //Configurar el medio por el cual realizaron el pago
                     medio = 'Bancolombia'
@@ -429,9 +430,10 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     
                     //Si encontró la conversación
                     if (ExpRegOrigenBancolombia.test(textoComprobante) == true){
-                        
-                        //Extraer la conversación de la línea de conversación
+                        console.log('Entro al procesamiento del origen')
+                        //Extraer el origen de la línea de origen
                         let lineaOrigen = textoComprobante.match(ExpRegOrigenBancolombia)[0].replaceAll('\n', ' ').replaceAll('¿', '').trim()
+                        console.log('lineaOrigen:|' + lineaOrigen + '|')
                         origen = lineaOrigen.match(ExpRegOrigen)[0]
                         
                     }
@@ -474,11 +476,12 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     
                     //Si encontró el valor del movimiento
                     if (ExpRegDescripcionBancolombia.test(textoComprobante) == true){
-                        
+                        console.log('Entró en conversacion')
                         //Extraer el valor de la linea de valor encontrada
                         let lineaDescripcion = textoComprobante.match(ExpRegDescripcionBancolombia)[0].replaceAll('\n', ' ')
-                        conversacion = lineaDescripcion.match(ExpRegValor)[0].replaceAll('$', '').replaceAll('.', '').trim()
-
+                        console.log('lineaDescripcion:|' + lineaDescripcion + '|')
+                        conversacion = lineaDescripcion.match(ExpRegDescripcion)[0].replace(/\b(Descripción|Referencia)\b/g, '').trim()
+                        console.log('Terminó en conversacion')
                     }
                     
                     //Si encontró el número de la cuenta
@@ -635,6 +638,17 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 console.log(fecha)
                 console.log(idCuenta)
                 console.log(valor)
+                console.log('Los opcionales son:')
+                console.log(medio)
+                console.log(referencia)
+                console.log(conversacion)
+                console.log(ter)
+                console.log(rrn)
+                console.log(apro)
+                console.log(cunico)
+                console.log(recibo)
+                console.log(comprobante)
+                console.log(origen)
 
                 //Si los datos básicos del movimiento están completos
                 if(fecha != '' && idCuenta != '' && valor != '' && fecha != 'Invalid Date'){
