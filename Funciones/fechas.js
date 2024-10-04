@@ -83,7 +83,6 @@ function extraerFecha(texto) {
         // console.log('El tiempo -> ' + tiempo);
 
     }
-
     //console.log('El tiempo -> ' + tiempo);
 
     //Extraer los datos de la hora a partir de la expresion regular
