@@ -98,7 +98,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
         const ExpRegOrigenBancolombia = new RegExp("[Productigenavy ]{15,}[\n]*[a-z ]{4,}[\n]+[AhorsCient]{4,}[\n]*[*0-9\-]{5,}", "i")
         const ExpRegFechaBancolombia = new RegExp("\n[0-9]{1,2}[a-z ]{5}[0-9]{4}[ -]*[0-9]{2}:[0-9]{2}[ amp.]{4,}\n", "i")
         const ExpRegValorBancolombia = new RegExp("[Valor eniad]{10,}[\n]*[$ 0-9.]+", "i")
-        const ExpRegCuentaBancolombia = new RegExp("[Productdesin ]{15,}[\n]+[a-z ]+[\n]+[a-z \n]*[0-9\-]{10,}[\n]*", "i")
+        const ExpRegCuentaBancolombia = new RegExp("[Productdesin ]{15,}[\n]+[a-záéíóúÁÉÍÓÚ ]+[\n]+[a-z \n]*[0-9\-]{10,}[\n]*", "i")
         const ExpRegDescripcionBancolombia = new RegExp("[Descripón]{8,}[\n]*[a-z0-9 \w\n]*", "i")
 
         //Declaración de variables para identificar datos de Bancolombia
