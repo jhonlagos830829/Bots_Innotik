@@ -79,7 +79,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
         const ExpRegNinguno = new RegExp("^N[oOóÓ]$|Ning[uUúÚnoa]+", "i")
 
         //Declaración de variables para identificar datos de corresponsal
-        const ExpRegCorresponsal = new RegExp("[Redban]{6,}|[CORESPNAL]{10,}|[RBMDES]{6,}", "i")
+        const ExpRegCorresponsal = new RegExp("[Redban]{7,}|[CORESPNAL]{10,}|[RBMDES]{6,}", "i")
         const ExpRegFechaCorresponsal = new RegExp("[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}", "i")
         const ExpRegValorCorresponsal = new RegExp("[Valor]{3,}[\n]*[$ 0-9.]{4,}|\\$[\n]*[ 0-9.]{4,}", "i")
         

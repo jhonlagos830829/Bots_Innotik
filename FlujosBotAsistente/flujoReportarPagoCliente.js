@@ -37,14 +37,14 @@ const ExpRegRespuestasMismo = new RegExp("^S[íiÍ]", "i")
 const ExpRegRespuestasOtro = new RegExp("[a-zA-ZñÑáéíóúÁÉÍÓÚ ]{3,}", "i")
 var nombreArchivo = ''
 let primerNombre
-let idClientePago
+//let idClientePago
 
 module.exports = flujoReportarPagoCliente = addKeyword('ExpRegFlujo, { regex: true }')
     .addAnswer(mensajes.MENSAJE_COMPROBANTE_NOMBRE_TITULAR, {capture:true}, async (ctx, ctxFn) => {
 
         //Registrar el inicio de la conversación
         try {
-            
+            console.log('Pregunta por ' + ctx.body)
             //Evaluar si el usuario envió una nota de voz
             if(ctx.body.includes('event_voice_note')==true){
 
@@ -182,7 +182,7 @@ module.exports = flujoReportarPagoCliente = addKeyword('ExpRegFlujo, { regex: tr
 
         //Registrar el inicio de la conversación
         try {
-
+            
             //Evaluar si el usuario envió una nota de voz
             if(ctx.body.includes('event_voice_note')==true){
 
@@ -210,13 +210,13 @@ module.exports = flujoReportarPagoCliente = addKeyword('ExpRegFlujo, { regex: tr
                     //Obtener los clientes consultados por el número
                     let todoConsultado = clientesConsultados.datos.filter(clientes => clientes.consultor === ctx.from)
 
-                    //console.log('todo lo consultado ' + JSON.stringify(todoConsultado))
+                    // console.log('todo lo consultado ' + JSON.stringify(todoConsultado))
                     
-                    //Obtener el id del cliente al cual pertenece el pago
-                    idClientePago = todoConsultado[0].clientes[0].id
+                    // //Obtener el id del cliente al cual pertenece el pago
+                    // idClientePago = todoConsultado[0].clientes[0].id
                     
                     //Guardar en la variable de estado el id del cliente al cual se le cagará el pago
-                    ctxFn.state.update({idCliente: todoConsultado[0].clientes[0].id})
+                    ctxFn.state.update({idClientePago: todoConsultado[0].clientes[0].id})
                     
                     //Guardar en la variable de estado el nombre del cliente al cual se debe cargar el pago
                     ctxFn.state.update({nombreClientePago: todoConsultado[0].clientes[0].nombre})
@@ -249,9 +249,9 @@ module.exports = flujoReportarPagoCliente = addKeyword('ExpRegFlujo, { regex: tr
                 }
                 else{
 
-                    //Ir al flujo de despedida
-                    ctxFn.gotoFlow(require('./flujoReportePagoDiferenteTitular.js'))
-                    
+                    //Volver a la primera parte del flujo
+                    ctxFn.gotoFlow(require('./flujoReportarPagoCliente'))
+                
                 }
 
             }
