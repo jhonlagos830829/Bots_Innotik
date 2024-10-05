@@ -2,8 +2,8 @@ module.exports = Object.freeze({
     
     //Constantes de configuración
     NOMBRE_BOT: 'Innotik Aistencia Técnica',
-    TIEMPO_ESPERA_RESPUESTA: 180, //PODUCCION 1200 //PRUEBAS 30
-    NUMERO_NOTIFICAR: '573013584693' + '@s.whatsapp.net',
+    TIEMPO_ESPERA_RESPUESTA: 180, //PRODUCCION 1200 //PRUEBAS 30
+    NUMERO_NOTIFICAR: '573102106136' + '@s.whatsapp.net', //PRODUCCION 573024004614 //PRUEBAS 573102106136
 
     //Configuración CRM
     URL_API_CRM: 'https://ameizyn.unmsapp.com/crm/api/v1.0/',

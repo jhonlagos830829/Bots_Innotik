@@ -13,7 +13,7 @@ module.exports = Object.freeze({
     SALUDO_INICIAL_ASISTENCIA: '👩🏻 Hola *{NOMBRE_CLIENTE}* bienvenido(a) a la *línea de asistencia* de *Innotik*.\n\nEn esta línea solo puedo atender reportes de *temas administrativos*.',
     MENSAJE_NO_AUTORIZADO: '👩🏻 Usted *no está autorizado* para interactuar conmigo, por favor póngase en contacto con el administrador.',
     MENSAJE_LINEA_REPORTE_FALLAS_ATENCION_AL_CLIENTE: '👩🏻 Si desea reportar *un problema con su servicio por favor pulse sobre este número 👉🏼 +57 310 2106136*\n\nY luego seleccione la opción:\n\n*Chatear con +57 310 2106136*',
-    MENSAJE_TEMAS_ASISTENTE: '👩🏻 *¿Que desea hacer?*\n\n_Por favor envíeme el número de la opción que desee:_\n\n 1️⃣ Reportar pago de cliente.\n 2️⃣ Reportar un gasto.\n 3️⃣ Transferir dinero.\n 4️⃣ Reportar nueva instalación.\n 5️⃣ Reportar traslado.\n 6️⃣ Reportar horas extras.',
+    MENSAJE_TEMAS_ASISTENTE: '👩🏻 *¿Que desea hacer?*\n\n_Por favor envíeme el número de la opción que desee:_\n\n 1️⃣ Reportar pago de cliente\n 2️⃣ Reportar un gasto\n 3️⃣ Transferir dinero\n 4️⃣ Reportar nueva instalación\n 5️⃣ Reportar traslado\n 6️⃣ Reportar horas extras',
 
     //Mensajes flujo flujoReportarPagoCliente
     MENSAJE_TITULAR_ENCONTRADO: '👩🏻 ¿El titular del servicio es *{NOMBRE_CLIENTE}*?\n\n_Por favor responda con una de las siguientes opciones:_\n\n\👉🏼 Si\n👉🏼 No',
@@ -44,7 +44,7 @@ module.exports = Object.freeze({
     MENSAJE_COMPROBANTE_TITULAR_ESCRIBE: '👩🏻 ¿Debemos aplicar este pago al servicio de *{NOMBRE_CLIENTE}*?\n\n_Por favor responda con una de las siguientes opciones:_\n\n👉🏼 Sí\n👉🏼 No',
     MENSAJE_REVISANDO_COMPROBANTE: '👩🏻 Un momento por favor, voy a *revisar el comprobante* que me está enviando',
     MENSAJE_COMPROBANTE_CONFIRMACION: '👩🏻 ¿Desea que cargue este comprobante de pago a nombre de *{NOMBRE_CLIENTE}*?\n\n_Por favor responda con una de las siguientes opciones:_\n\n👉🏼 Sí\n👉🏼 No',
-    MENSAJE_COMPROBANTE_NOMBRE_TITULAR: '👩🏻 Por favor envíeme el *nombre* del titular del servicio',
+    MENSAJE_COMPROBANTE_NOMBRE_TITULAR: '👩🏻 Por favor envíeme el *nombre del cliente*',
     MENSAJE_COMPROBANTE_RECIBIDO: '👩🏻 Hemos recibido su comprobante de pago, *vamos a verificar que el dinero haya ingresado a nuestra cuenta*.\n\nEl proceso puede tomar algunas horas o un par de días.\n\nLe informaremos si efectivamente el dinero ingresó a nuestra cuenta o *si se presentó algún problema con su pago*.',
     MENSAJE_CUENTA_NO_EXISTE: '👩🏻 He identificado que el pago se realizó a una cuenta con número *{CUENTA}*.\n\nDebo informarle que *esa cuenta no pertenece a nosotros*.\n\nPor favor *verifique si lo que le estoy informando es correcto*.\n\nAdicionalmente reportaré el caso para que sea revisado por nuestro personal.',
     MENSAJE_DATOS_INCOMPLETOS: '👩🏻 *No logré identificar algunos de los datos de su comprobante de pago*.\n\nNormalmente sucede porque *la foto que envió está incompleta o muy borrosa*.\n\nPor favor *envíeme una nueva foto* donde se pueda *ver con claridad todos los datos del comprobante*.',

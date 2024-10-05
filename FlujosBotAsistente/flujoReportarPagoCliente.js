@@ -9,7 +9,7 @@ require('dotenv').config()
 //////////////////////////////////////// FUNCIONES ELABORADAS
 
 //const registrarConversacion = require('../Funciones/registrarConversacion.js')
-const mensajes = require('../Configuracion/botAtencionAlCliente/mensajes.js')
+const mensajes = require('../Configuracion/botAsistente/mensajes.js')
 const cliente = require('../Funciones/cliente.js')
 const cuentaBancaria = require('../Funciones/cuenta.js')
 const movimiento = require('../Funciones/movimiento.js')
@@ -28,7 +28,7 @@ const { ESLint } = require('eslint')
 ////////////////////////////////////////////////////////////////////////////////
 
 const clientesConsultados = JSON.parse('{"datos":[]}')
-const ExpRegFlujo = '/[1]{1}/gmi'
+const ExpRegFlujo = '/^1$/gmi'
 const ExpRegRespuestas = new RegExp("^S[íiÍ]|^N[oóÓ]", "i")
 const ExpRegRespuestaNo = new RegExp("^N[oóÓ]", "i")
 const ExpRegRespuestaSi = new RegExp("^S[íiÍ]", "i")
@@ -44,7 +44,7 @@ module.exports = flujoReportarPagoCliente = addKeyword('ExpRegFlujo, { regex: tr
 
         //Registrar el inicio de la conversación
         try {
-
+            
             //Evaluar si el usuario envió una nota de voz
             if(ctx.body.includes('event_voice_note')==true){
 
@@ -62,7 +62,7 @@ module.exports = flujoReportarPagoCliente = addKeyword('ExpRegFlujo, { regex: tr
                 
             }
             else{
-
+                
                 //Eliminar los datos consultados anteriormente por el número que escribe
                 for (const consultadosCliente of clientesConsultados.datos){
 

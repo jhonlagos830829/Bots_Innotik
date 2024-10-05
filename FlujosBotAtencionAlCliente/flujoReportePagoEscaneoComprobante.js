@@ -34,7 +34,6 @@ const ExpRegRespuestaSi = new RegExp("^S[íiÍ]", "i")
 const ExpRegRespuestasTitular = new RegExp("^S[íiÍ]|[a-zA-ZñÑáéíóúÁÉÍÓÚ ]{3,}", "i")
 const ExpRegRespuestasMismo = new RegExp("^S[íiÍ]", "i")
 const ExpRegRespuestasOtro = new RegExp("[a-zA-ZñÑáéíóúÁÉÍÓÚ ]{3,}", "i")
-var nombreArchivo = ''
 let primerNombre
 let idClientePago
 let medio = ''
@@ -160,7 +159,6 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     const cliente = new vision.ImageAnnotatorClient()
 
                     //Archivo que se escaneará
-                    //const comprobante = nombreArchivo
                     const comprobante = ctxFn.state.get('archivoComprobante')
 
                     //Extraer el texto del archivo
@@ -221,7 +219,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                         if (Object.keys(datosCuenta.data).length == 0){
 
                             //Enviar comprobante del problema
-                            await ctxFn.provider.sendImage(configuracion.NUMERO_NOTIFICAR, nombreArchivo, mensajes.MENSAJE_NOTIFICAR_PAGO_A_CUENTA_INEXISTENTE)
+                            await ctxFn.provider.sendImage(configuracion.NUMERO_NOTIFICAR, ctxFn.state.get('archivoComprobante'), mensajes.MENSAJE_NOTIFICAR_PAGO_A_CUENTA_INEXISTENTE)
 
                             //Enviar datos extraidos del comprobante
                             await ctxFn.provider.sendText(configuracion.NUMERO_NOTIFICAR, mensajes.MENSAJE_NOTIFICAR_TEXTO_ESCANEADO + textoComprobante)
@@ -387,7 +385,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                         if (Object.keys(datosCuenta.data).length == 0){
 
                             //Enviar comprobante del problema
-                            await ctxFn.provider.sendImage(configuracion.NUMERO_NOTIFICAR, nombreArchivo, mensajes.MENSAJE_NOTIFICAR_PAGO_A_CUENTA_INEXISTENTE)
+                            await ctxFn.provider.sendImage(configuracion.NUMERO_NOTIFICAR, ctxFn.state.get('archivoComprobante'), mensajes.MENSAJE_NOTIFICAR_PAGO_A_CUENTA_INEXISTENTE.replace('{NUMERO_ENVIA}', ctx.from))
 
                             //Enviar datos extraidos del comprobante
                             await ctxFn.provider.sendText(configuracion.NUMERO_NOTIFICAR, mensajes.MENSAJE_NOTIFICAR_TEXTO_ESCANEADO + textoComprobante)
@@ -498,7 +496,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                         if (Object.keys(datosCuenta.data).length == 0){
 
                             //Enviar comprobante del problema
-                            await ctxFn.provider.sendImage(configuracion.NUMERO_NOTIFICAR, nombreArchivo, mensajes.MENSAJE_NOTIFICAR_PAGO_A_CUENTA_INEXISTENTE)
+                            await ctxFn.provider.sendImage(configuracion.NUMERO_NOTIFICAR, ctxFn.state.get('archivoComprobante'), mensajes.MENSAJE_NOTIFICAR_PAGO_A_CUENTA_INEXISTENTE)
 
                             //Enviar datos extraidos del comprobante
                             await ctxFn.provider.sendText(configuracion.NUMERO_NOTIFICAR, mensajes.MENSAJE_NOTIFICAR_TEXTO_ESCANEADO + textoComprobante)
@@ -528,7 +526,6 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     const cliente = new vision.ImageAnnotatorClient()
 
                     //Archivo que se escaneará
-                    //const comprobante = nombreArchivo
                     const comprobante = ctxFn.state.get('archivoComprobante')
 
                     //Extraer el texto del archivo
@@ -594,7 +591,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                         if (Object.keys(datosCuenta.data).length == 0){
 
                             //Enviar comprobante del problema
-                            await ctxFn.provider.sendImage(configuracion.NUMERO_NOTIFICAR, nombreArchivo, mensajes.MENSAJE_NOTIFICAR_PAGO_A_CUENTA_INEXISTENTE)
+                            await ctxFn.provider.sendImage(configuracion.NUMERO_NOTIFICAR, ctxFn.state.get('archivoComprobante'), mensajes.MENSAJE_NOTIFICAR_PAGO_A_CUENTA_INEXISTENTE)
 
                             //Enviar datos extraidos del comprobante
                             await ctxFn.provider.sendText(configuracion.NUMERO_NOTIFICAR, mensajes.MENSAJE_NOTIFICAR_TEXTO_ESCANEADO + textoComprobante)

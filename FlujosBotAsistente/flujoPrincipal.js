@@ -12,12 +12,13 @@ const caja = require('../Funciones/caja.js')
 
 //////////////////////////////////////// IMPORTACION DE LOS FLUJOS QUE SE USARAN
 
-const flujoReportarPagoCliente = require('../FlujosBotAsistente/flujoReportarPagoCliente.js')
+const flujoReportarPagoCliente = require('./flujoReportarPagoCliente.js')
 const vale = require('./flujoNoTengoRespuesta.js')
 
 ////////////////////////////////////////////////////////////////////////////////
 
-const ExpRegRespuestas = new RegExp("^[1-4]{1}$", "i")
+const ExpRegRespuestas = new RegExp("^[1-6]{1}$", "i")
+const ExpRegRespuesta1 = new RegExp("^1$", "i")
 
 module.exports = flujoPrincipal = addKeyword(EVENTS.WELCOME)
     .addAction(async (ctx, ctxFn) => {
@@ -54,12 +55,6 @@ module.exports = flujoPrincipal = addKeyword(EVENTS.WELCOME)
                 
             }
 
-            //Hacer una pausa de 1 segundos
-            await delay(1000)
-            
-            //Enviar mensaje de recordatorio de la línea de soporte
-            await ctxFn.flowDynamic(mensajes.MENSAJE_LINEA_REPORTE_FALLAS_ATENCION_AL_CLIENTE)
-            
         } catch (error) {
 
             //Solicitar una respuesta valida
@@ -96,14 +91,14 @@ module.exports = flujoPrincipal = addKeyword(EVENTS.WELCOME)
                 return ctxFn.fallBack(mensajes.ARGUMENTO_RESPUESTA_INVALIDA + '\n\n' + ctxFn.state.get('mensajePreguntaActual'))
                 
             }
-            else{
+            else if(ExpRegRespuesta1.test(ctx.body) == true){
                 
                 //Iniciar el temporizador de espera de respuesta del cliente
                 temporizador.detenerTemporizador(ctx)
                 temporizador.iniciarTemporizador(ctx, ctxFn, '../FlujosBotAsistente/flujoNoTengoRespuesta')
                 
                 //Ir al flujo de escaneo del comprobante
-                ctxFn.gotoFlow(require('../FlujosBotAsistente/flujoReportarPagoCliente.js'))
+                ctxFn.gotoFlow(require('./flujoReportarPagoCliente.js'))
 
             }
             
