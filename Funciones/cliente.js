@@ -12,7 +12,7 @@ const basedatos = require('./basedatos')
  * @returns 
  */
 async function Guardar (identificacion, nombre, numeroWhatsapp, numeroTelefonico, direccion, email){
-    console.log('Me paso ' + nombre)
+
     //Configurar los datos a almacenar
     try {
 

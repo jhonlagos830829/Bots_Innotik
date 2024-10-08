@@ -12,7 +12,7 @@ const caja = require('../Funciones/caja.js')
 
 //////////////////////////////////////// IMPORTACION DE LOS FLUJOS QUE SE USARAN
 
-const flujoReportarPagoCliente = require('./flujoReportarPagoCliente.js')
+const flujoReportarPagoCliente = require('./flujoReportarPagoClienteNombre.js')
 const vale = require('./flujoNoTengoRespuesta.js')
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,7 +98,7 @@ module.exports = flujoPrincipal = addKeyword(EVENTS.WELCOME)
                 temporizador.iniciarTemporizador(ctx, ctxFn, '../FlujosBotAsistente/flujoNoTengoRespuesta')
                 
                 //Ir al flujo de escaneo del comprobante
-                ctxFn.gotoFlow(require('./flujoReportarPagoCliente.js'))
+                ctxFn.gotoFlow(require('./flujoReportarPagoClienteNombre.js'))
 
             }
             

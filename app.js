@@ -38,7 +38,7 @@ const flujoNotaDeVozEnviadaAtencionAlCliente = require('./FlujosBotAtencionAlCli
 ///////////// IMPORTACION DE LOS FLUJOS QUE SE USARAN EN EL BOT ASISTENTE /////////////
 
 const flujoPrincipal = require('./FlujosBotAsistente/flujoPrincipal')
-const flujoReportarPagoCliente = require('./FlujosBotAsistente/flujoReportarPagoCliente')
+const flujoReportarPagoCliente = require('./FlujosBotAsistente/flujoReportarPagoClienteNombre')
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

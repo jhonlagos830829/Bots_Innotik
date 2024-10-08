@@ -15,10 +15,13 @@
         "@bot-whatsapp/portal": "^0.1.38",
         "@bot-whatsapp/provider": "^0.1.38",
         "@google-cloud/vision": "^4.3.2",
+        "@langchain/community": "^0.2.4",
+        "@langchain/openai": "^0.0.33",
         "@whiskeysockets/baileys": "^6.4.0",
         "axios": "^1.6.2",
         "dotenv": "^16.4.5",
         "node-routeros": "^1.6.9",
+        "langchain": "^0.2.3",
         "tesseract.js": "5.0.3",
         "wa-sticker-formatter": "4.3.2"
     },

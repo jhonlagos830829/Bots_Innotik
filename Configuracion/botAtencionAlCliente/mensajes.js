@@ -177,4 +177,32 @@ module.exports = Object.freeze({
     //Mensajes flujo flujoReportarFallaServicioLentoIntermitente
     MENSAJE_FLUJO_FALLA_SERVICIO_INTERMITENTE_LENTO: 'Normalmente la *intermitencia o lentitud* en el servicio se debe a que se satura por la *cantidad de dispositivos conectados* o el tipo de actividades que se realicen.\nMientras *más dispositivos* tenga conectados a su servicio *menos velocidad* disponible tendrá y por lo tanto más lento se pondrá.\nPor otra parte, *las actividades* que realice también influyen en *la velocidad* del servicio.\nPues mientras actividades como enviar *mensajes de texto por WhatsApp* pueden consumir la décima parte de 1 mega, ver *un video en YouTube o Netflix consume entre 3 y 8 megas*, respectivamente.',
 
+    //PROMPTS para clasificación de los comprobantes
+    PROMPT_CLASIFICADOR_COMPROBANTE: `Por favor clasifica el siguiente texto teniendo en cuenta las indicaciones a continuación:
+    1. Si encuentras palabras como Redban, RBMDES o CORRESPONSAL debes responder, [CORRESPONSAL].
+    2. Si encuentras fases como “¡Transferencia exitosa!”, “Producto origen” o “Producto destino” debes responder, [BANCOLOMBIA].
+    3. Si encuentras fases como “Detalles del movimiento”, “Número Nequi” o “¿De dónde salió la plata?” debes responder, [NEQUI].
+    4. Si encuentras fases como “Transacción exitosa”, “Código QR para confirmar su transacción” o “Pasó plata” debes responder, [DAVIPLATA].
+    5. Si no encuentras ninguna de las anteriores debes responder [OTRO].`,
+
+    PROMPT_EXTRACTOR_DATOS_CORRESPONSAL: `Por favor analice el siguiente texto y extraiga los siguientes datos: 
+    1. Fecha y hora (debes ponerlo en un solo campo).
+    2. C. único (es un número compuesto por 10 dígitos).
+    3. Recibo (es un número compuesto por 6 dígitos).
+    4. TER (es un código compuesto por 8 caracteres, letras y números).
+    5. RRN (es un número compuesto por 6 dígitos).
+    6. Producto (es un número compuesto por 10 dígitos).
+    7. Valor (es un número que encontrará precedido del signo de moneda). 
+    Esos datos extraídos por favor devuélvalos en formato JSON.
+    `,
+
+    PROMPT_EXTRACTOR_DATOS_BANCOLOMBIA: `Por favor analice el siguiente texto y extraiga los siguientes datos: 
+    1. Comprobante (es un número compuesto por 10 dígitos).
+    2. Fecha y hora (debes ponerlo en un solo campo).
+    3. Producto origen (compuesto por las palabras, cuenta, ahorros o corriente un asterisco y un número de 4 dígitos).
+    4. Producto destino (es un número compuesto por una palabra que representa el nombre del banco y un número de 10 dígitos).
+    5. Valor enviado (es un número que encontrará precedido del signo de moneda).
+    Esos datos extraídos por favor devuélvalos en formato JSON.
+    `,
+
 });
