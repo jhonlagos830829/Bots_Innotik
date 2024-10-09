@@ -193,7 +193,7 @@ module.exports = Object.freeze({
     5. RRN (es un número compuesto por 6 dígitos).
     6. Producto (es un número compuesto por 10 dígitos).
     7. Valor (es un número que encontrará precedido del signo de moneda). 
-    Esos datos extraídos por favor devuélvalos en formato JSON.
+    Esos datos extraídos por favor devuélvalos en formato JSON, respoda de manera muy corta.
     `,
 
     PROMPT_EXTRACTOR_DATOS_BANCOLOMBIA: `Por favor analice el siguiente texto y extraiga los siguientes datos: 
@@ -202,7 +202,7 @@ module.exports = Object.freeze({
     3. Producto origen (compuesto por las palabras, cuenta, ahorros o corriente un asterisco y un número de 4 dígitos).
     4. Producto destino (es un número compuesto por una palabra que representa el nombre del banco y un número de 10 dígitos).
     5. Valor enviado (es un número que encontrará precedido del signo de moneda).
-    Esos datos extraídos por favor devuélvalos en formato JSON.
+    Esos datos extraídos por favor devuélvalos en formato JSON respoda de manera muy corta.
     `,
 
 });

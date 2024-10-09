@@ -5,6 +5,7 @@
     "main": "app.js",
     "scripts": {
         "pre-copy": "cd .. && npm run  copy.lib base-baileys-memory",
+        "prestartTOTE": "rm -Rf botAsistenciaTecnica_sessions/session-* sender-key-* pre-key-* baileys_store.json && rm -Rf botAsistenciaTecnica_sessions/session-* sender-key-* pre-key-* baileys_store.json && rm -Rf botServicioAlCliente_sessions/session-* sender-key-* pre-key-* baileys_store.json",
         "start": "node app.js"
     },
     "keywords": [],
