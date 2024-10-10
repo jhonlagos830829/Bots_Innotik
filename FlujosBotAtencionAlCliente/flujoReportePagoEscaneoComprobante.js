@@ -138,107 +138,110 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
             }
             else{
 
-                // ///////////////////////////////////////////////////////////////////////////
-                // ///////////////  CON ESCANEO EN UNA FUNCION APARTE  ///////////////
-                // /////////////// FUNCIONANDO PERFECTAMENTE //////////////////////////////
+                ///////////////////////////////////////////////////////////////////////////
+                ///////////////  CON ESCANEO EN UNA FUNCION APARTE  ///////////////
+                /////////////// FUNCIONANDO PERFECTAMENTE //////////////////////////////
 
-                // let contenido = await escanearComprobante.clasificar(ctxFn.state.get('archivoComprobante'))
+                let contenido = await escanearComprobante.clasificar(ctxFn.state.get('archivoComprobante'))
+
+                // //Mostrar el mediod el comprobante
+                // console.log('El comprobante es de: ' + contenido)
                 
-                // //Si el comprobante es de un corresponsal
-                // if(contenido.includes('CORRESPONSAL')){
+                //Si el comprobante es de un corresponsal
+                if(contenido.includes('CORRESPONSAL')){
 
-                //     contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
-                //     datosComprobante = await escanearComprobante.extraerDatosCorresponsal(contenido)
+                    contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
+                    datosComprobante = await escanearComprobante.extraerDatosCorresponsal(contenido)
 
-                // }
-                // else if(contenido.includes('NEQUI')){
+                }
+                else if(contenido.includes('NEQUI')){
 
-                //     contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
-                //     datosComprobante = await escanearComprobante.extraerDatosNequi(contenido)
+                    contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
+                    datosComprobante = await escanearComprobante.extraerDatosNequi(contenido)
 
-                //     //Si no se obtuvo alguno de los datos obligatorios
-                //     if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta != '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
+                    //Si no se obtuvo alguno de los datos obligatorios
+                    if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta != '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
 
-                //         //Informar que alguno datos obligatorios no se obtuvo
-                //         console.log('NO SE OBTUVO ALGUNO DE LOS DATOS OBLIGATORIOS, SE PROBARÁ ESCANEANDO EL COMPROBANTE CON GOOGLE')
+                        //Informar que alguno datos obligatorios no se obtuvo
+                        console.log('NO SE OBTUVO ALGUNO DE LOS DATOS OBLIGATORIOS, SE PROBARÁ ESCANEANDO EL COMPROBANTE CON GOOGLE')
                         
-                //         contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
-                //         datosComprobante = await escanearComprobante.extraerDatosNequi(contenido)
+                        contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
+                        datosComprobante = await escanearComprobante.extraerDatosNequi(contenido)
 
 
-                //     }
+                    }
 
-                // }
-                // else if(contenido.includes('BANCOLOMBIA')){
+                }
+                else if(contenido.includes('BANCOLOMBIA')){
                     
-                //     contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
-                //     datosComprobante = await escanearComprobante.extraerDatosBancolombia(contenido)
+                    contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
+                    datosComprobante = await escanearComprobante.extraerDatosBancolombia(contenido)
 
-                //     //Si no se obtuvo alguno de los datos obligatorios
-                //     if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta != '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
+                    //Si no se obtuvo alguno de los datos obligatorios
+                    if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta != '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
 
-                //         //Informar que alguno datos obligatorios no se obtuvo
-                //         console.log('NO SE OBTUVO ALGUNO DE LOS DATOS OBLIGATORIOS, SE PROBARÁ ESCANEANDO EL COMPROBANTE CON GOOGLE')
+                        //Informar que alguno datos obligatorios no se obtuvo
+                        console.log('NO SE OBTUVO ALGUNO DE LOS DATOS OBLIGATORIOS, SE PROBARÁ ESCANEANDO EL COMPROBANTE CON GOOGLE')
                         
-                //         contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
-                //         datosComprobante = await escanearComprobante.extraerDatosBancolombia(contenido)
+                        contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
+                        datosComprobante = await escanearComprobante.extraerDatosBancolombia(contenido)
 
 
-                //     }
+                    }
 
-                // }
-                // else if(contenido.includes('DAVIPLATA')){
+                }
+                else if(contenido.includes('DAVIPLATA')){
 
-                //     contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
-                //     datosComprobante = await escanearComprobante.extraerDatosDaviplata(contenido)
+                    contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
+                    datosComprobante = await escanearComprobante.extraerDatosDaviplata(contenido)
 
-                //     //Si no se obtuvo alguno de los datos obligatorios
-                //     if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta == '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
+                    //Si no se obtuvo alguno de los datos obligatorios
+                    if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta == '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
 
-                //         //Informar que alguno datos obligatorios no se obtuvo
-                //         console.log('NO SE OBTUVO ALGUNO DE LOS DATOS OBLIGATORIOS, SE PROBARÁ ESCANEANDO EL COMPROBANTE CON GOOGLE')
+                        //Informar que alguno datos obligatorios no se obtuvo
+                        console.log('NO SE OBTUVO ALGUNO DE LOS DATOS OBLIGATORIOS, SE PROBARÁ ESCANEANDO EL COMPROBANTE CON GOOGLE')
                         
-                //         contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
-                //         datosComprobante = await escanearComprobante.extraerDatosDaviplata(contenido)
+                        contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
+                        datosComprobante = await escanearComprobante.extraerDatosDaviplata(contenido)
 
 
-                //     }
+                    }
 
-                //     //Configurar el nombre del banco de la cuenta
-                //     bancoCuenta = 'Daviplata'
+                    //Configurar el nombre del banco de la cuenta
+                    bancoCuenta = 'Daviplata'
 
-                // }
+                }
                 
-                // //Si se obtuvo una cuenta del comprobante
-                // if(datosComprobante.cuenta != '' || datosComprobante.cuenta != undefined){
+                //Si se obtuvo una cuenta del comprobante
+                if(datosComprobante.cuenta != '' || datosComprobante.cuenta != undefined){
 
-                //     //Buscar en la base de datos la cuenta en la cual se realizó el pago
-                //     datosCuenta = await cuentaBancaria.obtenerCuenta(bancoCuenta, datosComprobante.cuenta)
+                    //Buscar en la base de datos la cuenta en la cual se realizó el pago
+                    datosCuenta = await cuentaBancaria.obtenerCuenta(bancoCuenta, datosComprobante.cuenta)
 
-                //     //Si la búsqueda de la cuenta no arrojó resultados
-                //     if (Object.keys(datosCuenta.data).length == 0){
+                    //Si la búsqueda de la cuenta no arrojó resultados
+                    if (Object.keys(datosCuenta.data).length == 0){
 
-                //         //Enviar comprobante del problema
-                //         await ctxFn.provider.sendImage(configuracion.NUMERO_NOTIFICAR, ctxFn.state.get('archivoComprobante'), mensajes.MENSAJE_NOTIFICAR_PAGO_A_CUENTA_INEXISTENTE.replace('{NUMERO_ENVIA}', ctx.from))
+                        //Enviar comprobante del problema
+                        await ctxFn.provider.sendImage(configuracion.NUMERO_NOTIFICAR, ctxFn.state.get('archivoComprobante'), mensajes.MENSAJE_NOTIFICAR_PAGO_A_CUENTA_INEXISTENTE.replace('{NUMERO_ENVIA}', ctx.from))
 
-                //         //Enviar datos extraidos del comprobante
-                //         await ctxFn.provider.sendText(configuracion.NUMERO_NOTIFICAR, mensajes.MENSAJE_NOTIFICAR_TEXTO_ESCANEADO + textoComprobante)
+                        //Enviar datos extraidos del comprobante
+                        await ctxFn.provider.sendText(configuracion.NUMERO_NOTIFICAR, mensajes.MENSAJE_NOTIFICAR_TEXTO_ESCANEADO + textoComprobante)
 
-                //         //Informar al cliente que la cuenta está errada
-                //         return ctxFn.fallBack(mensajes.MENSAJE_CUENTA_NO_EXISTE.replaceAll('{CUENTA}', cuenta))
+                        //Informar al cliente que la cuenta está errada
+                        return ctxFn.fallBack(mensajes.MENSAJE_CUENTA_NO_EXISTE.replaceAll('{CUENTA}', cuenta))
                         
-                //     }
-                //     else{
+                    }
+                    else{
                         
-                //         //Obtener el id de la cuenta en la cual se realizó el pago
-                //         idCuenta = datosCuenta.data[0].id
+                        //Obtener el id de la cuenta en la cual se realizó el pago
+                        idCuenta = datosCuenta.data[0].id
                         
-                //     }
+                    }
 
 
-                // }
+                }
 
-                // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
                 // /////////////////////////////////////////////////////////////////////////

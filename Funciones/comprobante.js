@@ -29,7 +29,7 @@ async function clasificar(archivo){
         const ExpRegBancolombia = new RegExp("[Transfeci Exto]{20,}|[¡Transfeci lzd!]{20,}|[Comprbante .0-9]{20,}|[Productigen ]{15,}|[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")
         
         //Declaración de variables para identificar datos de Bancolombia
-        const ExpRegDaviplata = new RegExp("[WViplat?]{6,}|[Transacción exitosa]{15,}|[Código QRparcnfmarsutc]{25,}|[Pasó lt]{6,}|[*+6136]{6,}|[Motiv]{5,}", "i")
+        const ExpRegDaviplata = new RegExp("[WViplat?]{8,}|[Transacción exitosa]{15,}|[Código QRparcnfmarsutc]{25,}|[Pasó lt]{6,}|[*+6136]{6,}|[Motiv]{5,}", "i")
 
         //Mostrar en consola el proceso
         console.log('-----INICIANDO ESCANEO CON TESSERACT-----')
