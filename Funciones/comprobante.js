@@ -23,7 +23,7 @@ async function clasificar(archivo){
         const ExpRegCorresponsal = new RegExp("[Redban]{7,}|[CORESPNAL]{10,}|[RBMDES]{6,}", "i")
         
         //Declaración de variables para identificar datos de Nequi
-        const ExpRegNequi = new RegExp("De d[óo]nde sali[óo] la plata|Movimiento[ hecon:]+[\na-z]+[Nequi]*|Detalle del[\n ]+movimiento|[movement\\W]{6,}[receipt\\W]{5,}[bpody\\W]{3,}[title]{3,}", "i")
+        const ExpRegNequi = new RegExp("[Enviío ]{4,}[Realizdo]{7,}|De d[óo]nde sali[óo] la plata|Movimiento[ hecon:]+[\na-z]+[Nequi]*|Detalle del[\n ]+movimiento|[movement\\W]{6,}[receipt\\W]{5,}[bpody\\W]{3,}[title]{3,}", "i")
         
         //Declaración de variables para identificar datos de Bancolombia
         const ExpRegBancolombia = new RegExp("[Transfeci Exto]{20,}|[¡Transfeci lzd!]{20,}|[Comprbante .0-9]{20,}|[Productigen ]{15,}|[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")

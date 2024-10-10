@@ -144,8 +144,8 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
 
                 let contenido = await escanearComprobante.clasificar(ctxFn.state.get('archivoComprobante'))
 
-                // //Mostrar el mediod el comprobante
-                // console.log('El comprobante es de: ' + contenido)
+                //Mostrar el mediod el comprobante
+                console.log('El comprobante es de: ' + contenido)
                 
                 //Si el comprobante es de un corresponsal
                 if(contenido.includes('CORRESPONSAL')){
@@ -213,7 +213,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 }
                 
                 //Si se obtuvo una cuenta del comprobante
-                if(datosComprobante.cuenta != '' || datosComprobante.cuenta != undefined){
+                if(datosComprobante.cuenta != '' && datosComprobante.cuenta != undefined){
 
                     //Buscar en la base de datos la cuenta en la cual se realizó el pago
                     datosCuenta = await cuentaBancaria.obtenerCuenta(bancoCuenta, datosComprobante.cuenta)
@@ -832,21 +832,21 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     
                 // }
                 
-                // console.log('Los datos necesarios son:')
-                // console.log(datosComprobante.fecha)
-                // console.log(datosComprobante.cuenta)
-                // console.log(datosComprobante.valor)
-                // console.log('Los opcionales son:')
-                // console.log(datosComprobante.medio)
-                // console.log(datosComprobante.referencia)
-                // console.log(datosComprobante.conversacion)
-                // console.log(datosComprobante.ter)
-                // console.log(datosComprobante.rrn)
-                // console.log(datosComprobante.apro)
-                // console.log(datosComprobante.cunico)
-                // console.log(datosComprobante.recibo)
-                // console.log(datosComprobante.comprobante)
-                // console.log(datosComprobante.origen)
+                console.log('Los datos necesarios son:')
+                console.log(datosComprobante.fecha)
+                console.log(datosComprobante.cuenta)
+                console.log(datosComprobante.valor)
+                console.log('Los opcionales son:')
+                console.log(datosComprobante.medio)
+                console.log(datosComprobante.referencia)
+                console.log(datosComprobante.conversacion)
+                console.log(datosComprobante.ter)
+                console.log(datosComprobante.rrn)
+                console.log(datosComprobante.apro)
+                console.log(datosComprobante.cunico)
+                console.log(datosComprobante.recibo)
+                console.log(datosComprobante.comprobante)
+                console.log(datosComprobante.origen)
 
                 //Configurar los parámetros del movimiento
                 medio = datosComprobante.medio
