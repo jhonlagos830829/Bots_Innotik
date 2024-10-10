@@ -17,7 +17,8 @@ const vale = require('./flujoNoTengoRespuesta.js')
 
 ////////////////////////////////////////////////////////////////////////////////
 
-const ExpRegRespuestas = new RegExp("^[1-6]{1}$", "i")
+const ExpRegRespuestas = new RegExp("^[1-6]{1}$|[CK]an[cs]el[aeo]", "i")
+const ExpRegRespuestaCancelar = new RegExp("[CK]an[cs]el[aeo]", "i")
 const ExpRegRespuesta1 = new RegExp("^1$", "i")
 
 module.exports = flujoPrincipal = addKeyword(EVENTS.WELCOME)
@@ -91,6 +92,15 @@ module.exports = flujoPrincipal = addKeyword(EVENTS.WELCOME)
                 return ctxFn.fallBack(mensajes.ARGUMENTO_RESPUESTA_INVALIDA + '\n\n' + ctxFn.state.get('mensajePreguntaActual'))
                 
             }
+            else if(ExpRegRespuestaCancelar.test(ctx.body) == true){
+                
+                //Iniciar el temporizador de espera de respuesta del cliente
+                temporizador.detenerTemporizador(ctx)
+                
+                //Ir al flujo de escaneo del comprobante
+                ctxFn.gotoFlow(require('./flujoNoTengoRespuesta.js'), 1)
+
+            }
             else if(ExpRegRespuesta1.test(ctx.body) == true){
                 
                 //Iniciar el temporizador de espera de respuesta del cliente
@@ -98,7 +108,7 @@ module.exports = flujoPrincipal = addKeyword(EVENTS.WELCOME)
                 temporizador.iniciarTemporizador(ctx, ctxFn, '../FlujosBotAsistente/flujoNoTengoRespuesta')
                 
                 //Ir al flujo de escaneo del comprobante
-                ctxFn.gotoFlow(require('./flujoReportarPagoClienteNombre.js'))
+                ctxFn.gotoFlow(require('./flujoNuevoCliente.js'))
 
             }
             

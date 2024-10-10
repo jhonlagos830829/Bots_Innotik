@@ -35,7 +35,7 @@ module.exports = flujoNoTengoRespuesta = addKeyword(['Sí', 'Si', 'Ya tengo', 'Y
         } 
         
     })
-    .addAnswer(mensajes.MENSAJE_FLUJO_DESPEDIDA, {delay:2000}, async (ctx, { endFlow }) => {
+    .addAnswer(mensajes.MENSAJE_FLUJO_DESPEDIDA, {delay:1000}, async (ctx, { endFlow }) => {
     
         //Declaracion de variables
         idConversacion = ctx.key.id

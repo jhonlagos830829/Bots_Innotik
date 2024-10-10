@@ -13,7 +13,7 @@ module.exports = Object.freeze({
     SALUDO_INICIAL_ASISTENCIA: '👩🏻 Hola *{NOMBRE_CLIENTE}* bienvenido(a) a la *línea de asistencia* de *Innotik*.\n\nEn esta línea solo puedo atender reportes de *temas administrativos*.',
     MENSAJE_NO_AUTORIZADO: '👩🏻 Usted *no está autorizado* para interactuar conmigo, por favor póngase en contacto con el administrador.',
     MENSAJE_LINEA_REPORTE_FALLAS_ATENCION_AL_CLIENTE: '👩🏻 Si desea reportar *un problema con su servicio por favor pulse sobre este número 👉🏼 +57 310 2106136*\n\nY luego seleccione la opción:\n\n*Chatear con +57 310 2106136*',
-    MENSAJE_TEMAS_ASISTENTE: '👩🏻 *¿Que desea hacer?*\n\n_Por favor envíeme el número de la opción que desee:_\n\n 1️⃣ Reportar pago de cliente\n 2️⃣ Reportar un gasto\n 3️⃣ Transferir dinero\n 4️⃣ Reportar nueva instalación\n 5️⃣ Reportar traslado\n 6️⃣ Reportar horas extras',
+    MENSAJE_TEMAS_ASISTENTE: '👩🏻 *¿Que desea hacer?*\n\n_Por favor envíeme el número de la opción que desee:_\n\n 1️⃣ Reportar nuevo cliente\n 2️⃣ Reportar pago de cliente\n 3️⃣ Reportar un gasto\n 4️⃣ Transferir dinero\n 5️⃣ Reportar traslado\n 6️⃣ Reportar horas extras\n\n_O si desea abandonar el proceso responda *Cancelar*_',
 
     //Mensajes flujo flujoReportarPagoCliente
     MENSAJE_TITULAR_ENCONTRADO: '👩🏻 ¿El titular del servicio es *{NOMBRE_CLIENTE}*?\n\n_Por favor responda con una de las siguientes opciones:_\n\n\👉🏼 Si\n👉🏼 No',
@@ -54,8 +54,9 @@ module.exports = Object.freeze({
     MENSAJE_COMPROBANTE_YA_EXISTE: '👩🏻 El comprobante que está enviando *no podemos recibirlo debido a que ya lo recibimos anteriormente*.\n\nSi cree que se trata de un error por favor *tome una nueva foto y envíela de nuevo*.\n\nSin embargo le sugerimos tener precaución con los comprobantes que envía, ya que se podría interpretar como un *intento de fraude* y perdería el beneficio de *reactivación inmediata* de su servicio.\n\nDe esa forma tendría que *esperar a que nuestro personal en horario de oficina verifique su pago* para que procedan con la *reactivación del servicio*.',
     MENSAJE_SIN_DATOS_NECESARIOS: '👩🏻 Si lo que está enviando es *el comprobante de pago* de un servicio *no podré cargarlo en el sistema*.\n\nDebido a que *no me ha proporcionado los datos necesarios*.',
 
-    //Mensajes flujo flujoInformacionServicios
-    MENSAJE_SERVICIOS_PRESTADOS: '👩🏻 Prestamos servicios de *internet, telefonía fija y televisión* haciendo uso tecnologías en *fibra óptica y microondas* en zonas donde los proveedores como Movistar, Claro o Tigo no prestan sus servicios.\n\n¿Podría indicarme su *nombre completo* por favor?',
+    //Mensajes flujo flujoNuevoCliente
+    MENSAJE_NUEVO_CLIENTE_NOMBRE: '👩🏻 Por favor envíeme el *nombre completo del cliente*.\n\nEn lo posible los *dos nombres y dos apellidos* con el fin de evitar homónimos.\n\n_O si desea abandonar el proceso responda *Cancelar*_',
+    MENSAJE_NUEVO_CLIENTE_YA_EXISTE: '👩🏻 Ya existe un cliente con el nombre *{NOMBRE_CLIENTE}*.\n\n¿Está seguro que desea crearlo de nuevo?.\n\n_Por favor responda con una de las siguientes opciones:_\n\n👉🏼 Sí\n👉🏼 No\n\n_O si desea abandonar el proceso responda *Cancelar*_',
 
     //Mensajes respuesta inválida
     ARGUMENTO_RESPUESTA_INVALIDA: '👩🏻 *No entendí su respuesta*\n\n¿Podría repetirme por favor?',
