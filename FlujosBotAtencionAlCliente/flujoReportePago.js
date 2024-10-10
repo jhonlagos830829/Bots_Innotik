@@ -140,6 +140,9 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
             }
             else if(ExpRegRespuestas.test(ctx.body) == false){
 
+                //Hacer una pausa de 2 segundos
+                await delay(1000)
+
                 //Solicitar una respuesta valida
                 return ctxFn.fallBack(mensajes.ARGUMENTO_RESPUESTA_INVALIDA + '\n\n' + ctxFn.state.get('mensajePreguntaActual'))
                 
@@ -155,7 +158,10 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
                     //Iniciar el temporizador de espera de respuesta del cliente
                     temporizador.detenerTemporizador(ctx)
                     temporizador.iniciarTemporizador(ctx, ctxFn, '../FlujosBotAtencionAlCliente/flujoNoTengoRespuestaAtencionAlCliente', mensajes.MENSAJE_SIN_DATOS_NECESARIOS)
-
+                    
+                    //Hacer una pausa de 2 segundos
+                    await delay(1000)
+                
                     //Ir al flujo de algo más
                     ctxFn.gotoFlow(require('./flujoAlgoMasAtencionAlCliente.js'))
                 
@@ -166,7 +172,10 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
                     
                     //Preguntar si el servicio está a nombre de quien escribe
                     if(ctxFn.state.get('identificacion') != undefined){
-
+                        
+                        //Hacer una pausa de 2 segundos
+                        await delay(1000)
+                
                         //Preguntar al cliente si el plan está a nombre propio
                         await ctxFn.flowDynamic(mensajes.MENSAJE_COMPROBANTE_TITULAR_ESCRIBE.replace('{NOMBRE_CLIENTE}', ctxFn.state.get('nombre')))
                         
@@ -187,6 +196,9 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
                         temporizador.detenerTemporizador(ctx)
                         temporizador.iniciarTemporizador(ctx, ctxFn, '../FlujosBotAtencionAlCliente/flujoNoTengoRespuestaAtencionAlCliente', mensajes.MENSAJE_SIN_DATOS_NECESARIOS)
 
+                        //Hacer una pausa de 2 segundos
+                        await delay(1000)
+                
                         //Ir al flujo de algo más
                         ctxFn.gotoFlow(require('./flujoReportePagoDiferenteTitular.js'))
                 
@@ -229,6 +241,9 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
             }
             else if(ExpRegRespuestasMismo.test(ctx.body) == false){
 
+                //Hacer una pausa de 2 segundos
+                await delay(1000)
+                
                 //Solicitar una respuesta valida
                 return ctxFn.fallBack(mensajes.ARGUMENTO_RESPUESTA_INVALIDA + '\n\n' + ctxFn.state.get('mensajePreguntaActual'))
                 
@@ -250,7 +265,10 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
                     //Iniciar el temporizador de espera de respuesta del cliente
                     temporizador.detenerTemporizador(ctx)
                     temporizador.iniciarTemporizador(ctx, ctxFn, '../FlujosBotAtencionAlCliente/flujoNoTengoRespuestaAtencionAlCliente', mensajes.MENSAJE_SIN_DATOS_NECESARIOS)
-
+                    
+                    //Hacer una pausa de 2 segundos
+                    await delay(1000)
+                
                     //Ir al flujo de escaneo del comprobante
                     ctxFn.gotoFlow(require('./flujoReportePagoEscaneoComprobante.js'))
                         
@@ -263,6 +281,9 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
                     temporizador.detenerTemporizador(ctx)
                     temporizador.iniciarTemporizador(ctx, ctxFn, '../FlujosBotAtencionAlCliente/flujoNoTengoRespuestaAtencionAlCliente', mensajes.MENSAJE_SIN_DATOS_NECESARIOS)
                     
+                    //Hacer una pausa de 2 segundos
+                    await delay(1000)
+                
                     //Ir al flujo de escaneo del comprobante
                     ctxFn.gotoFlow(require('./flujoReportePagoDiferenteTitular.js'))
                         
