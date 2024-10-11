@@ -69,9 +69,9 @@ module.exports = flujoCuentaParaPagarOtroNombre = addKeyword('ExpRegFlujo, { reg
 
                 //Armar la estructura de datos donde se almacenarán los clientes consultados identificados por el número que escribe
                 clientesConsultados.datos.push({consultor: ctx.from, clientes: []})
-
+                
                 //Buscar el cliente por el nombre proporcionado
-                let clientes = await cliente.obtenerCliente('', ctx.body, '')
+                let clientes = await cliente.obtenerCliente('', ctx.body.replaceAll('á', 'a').replaceAll('é', 'e').replaceAll('í', 'i').replaceAll('ó', 'o').replaceAll('ú', 'u').replaceAll('Á', 'A').replaceAll('É', 'E').replaceAll('Í', 'I').replaceAll('Ó', 'o').replaceAll('Ú', 'U').trim().toLowerCase().replace(/\b[a-záéíóúñ]+/gi, (palabra) => palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase()), '')
                 
                 //Si la consulta arrojó resultados
                 if (Object.keys(clientes.data).length == 0){
