@@ -13,7 +13,7 @@ module.exports = Object.freeze({
     SALUDO_INICIAL_ATENCION_AL_CLIENTE: '👩🏻 Hola *{NOMBRE_CLIENTE}* bienvenido(a) a la *línea de atención al cliente* de *Innotik*.\n\nEn esta línea solo puedo atender reportes de *temas administrativos*.',
     //MENSAJE_NO_AUTORIZADO: '👩🏻 Usted *no está autorizado* para interactuar conmigo, por favor póngase en contacto con el administrador.',
     MENSAJE_LINEA_REPORTE_FALLAS_ATENCION_AL_CLIENTE: '👩🏻 Si desea reportar *un problema con su servicio por favor pulse sobre este número 👉🏼 +57 310 2106136*\n\nY luego seleccione la opción:\n\n*Chatear con +57 310 2106136*',
-    MENSAJE_TEMAS_ATENCION_AL_CLIENTE: '👩🏻 Le puedo apoyar con los siguientes temas:\n\n_Por favor envíeme el número de la opción que desee:_\n\n 1️⃣ Facturas pendientes por pagar\n 2️⃣ Cuenta para pagar\n 3️⃣ Enviar comprobante de pago\n 4️⃣ Información de nuestros servicios',
+    MENSAJE_TEMAS_ATENCION_AL_CLIENTE: '👩🏻 Le puedo apoyar con los siguientes temas:\n\n_Por favor envíeme el número de la opción que desee:_\n\n 1️⃣ Facturas pendientes por pagar\n 2️⃣ Cuenta para pagar\n 3️⃣ Enviar comprobante de pago\n 4️⃣ Información de nuestros servicios\n\n_O si ya no desea ser atendido responda *Cancelar*_',
 
     //Mensajes flujo flujoReportarPagoCliente
     MENSAJE_TITULAR_ENCONTRADO: '👩🏻 ¿El titular del servicio es *{NOMBRE_CLIENTE}*?\n\n_Por favor responda con una de las siguientes opciones:_\n\n\👉🏼 Si\n👉🏼 No',

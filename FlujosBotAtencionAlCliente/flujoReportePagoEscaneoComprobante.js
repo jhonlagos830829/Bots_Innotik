@@ -177,8 +177,10 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
                     datosComprobante = await escanearComprobante.extraerDatosBancolombia(contenido)
 
+                    console.log('Los datosComprobante son: ' + JSON.stringify(datosComprobante))
+
                     //Si no se obtuvo alguno de los datos obligatorios
-                    if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta != '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
+                    if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta == '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
 
                         //Informar que alguno datos obligatorios no se obtuvo
                         console.log('NO SE OBTUVO ALGUNO DE LOS DATOS OBLIGATORIOS, SE PROBARÁ ESCANEANDO EL COMPROBANTE CON GOOGLE')
