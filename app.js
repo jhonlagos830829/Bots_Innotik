@@ -94,7 +94,16 @@ const mainBotAsistenciaTecnica = async () => {
 const mainBotServicioAlCliente = async () => {
     const nombreBot = 'botServicioAlCliente'
     const adapterDB = new MockAdapter()
+
+    // FLUJOS PARA ATENCION AL CLIENTE
     const adapterFlow = createFlow([flujoNotaDeVozEnviadaAtencionAlCliente, flujoSaludoAtencionAlCliente, flujoReportePagoAtencionAlCliente, flujoReportePagoDiferenteTitular, flujoReportePagoEscaneoComprobante, flujoAlgoMasAtencionAlCliente, flujoFacturasPendientesNombrePropio, flujoFacturasPendientesOtroNombre, flujoNumeroNoRegistrado, flujoCuentaParaPagarOtroNombre])
+    
+    // // FLUJOS PARA ATENCION AL ASISTENTE
+    // const adapterFlow = createFlow([flujoPrincipal, flujoNuevoCliente, flujoReportarPagoCliente])
+
+    // // FLUJOS PARA EL ASISTENTE
+    // const adapterFlow = createFlow([flujoAsistentePagos])
+
     const adapterProvider = createProvider(BaileysProvider, { name:nombreBot })
 
     const bot = await createBot({
@@ -104,180 +113,180 @@ const mainBotServicioAlCliente = async () => {
     })
 
     
-    ////////////////////////// ELEMENTOS NECESARIOS PARA CHATWOOT ////////////////////////////////////
+    // ////////////////////////// ELEMENTOS NECESARIOS PARA CHATWOOT ////////////////////////////////////
 
 
-    //Obtener los números de la lista negra local
-    const listaNegra = configuracionBot.LeerListaNegra()
+    // //Obtener los números de la lista negra local
+    // const listaNegra = configuracionBot.LeerListaNegra()
 
-    //Recorrer la lista negra local
-    for(const numero of listaNegra){
+    // //Recorrer la lista negra local
+    // for(const numero of listaNegra){
 
-        //Agregar el número del cliente a la lista negra para que el bot no le responda
-        bot.dynamicBlacklist.add(numero);
+    //     //Agregar el número del cliente a la lista negra para que el bot no le responda
+    //     bot.dynamicBlacklist.add(numero);
 
-    }
+    // }
 
-    serverHttp.initialization(bot)
+    // serverHttp.initialization(bot)
 
-    //Envento que se dispara cuando ingresa un mensaje
-    adapterProvider.on('message', (payload) => {
+    // //Envento que se dispara cuando ingresa un mensaje
+    // adapterProvider.on('message', (payload) => {
         
-        //Obtener los archivos adjuntos
-        const getAttachments = async () => {
+    //     //Obtener los archivos adjuntos
+    //     const getAttachments = async () => {
 
-            //Declaración de variables
-            const attachment = []
+    //         //Declaración de variables
+    //         const attachment = []
 
-            //Si el mensaje contiene algún archivo adjunto
-            if (payload?.body.includes('_event_')) {
+    //         //Si el mensaje contiene algún archivo adjunto
+    //         if (payload?.body.includes('_event_')) {
                 
-                //Obtener el archivo adjunto
-                const mime = payload?.message?.imageMessage?.mimetype ?? payload?.message?.videoMessage?.mimetype ?? payload?.message?.documentMessage?.mimetype ?? payload?.message?.audioMessage?.mimetype;
+    //             //Obtener el archivo adjunto
+    //             const mime = payload?.message?.imageMessage?.mimetype ?? payload?.message?.videoMessage?.mimetype ?? payload?.message?.documentMessage?.mimetype ?? payload?.message?.audioMessage?.mimetype;
 
-                //Obtener la extensión del archivo
-                const extension = mimeType.extension(mime);
+    //             //Obtener la extensión del archivo
+    //             const extension = mimeType.extension(mime);
                 
-                //Descargar el archivo adjunto
-                const buffer = await downloadMediaMessage(payload, "buffer", {});
+    //             //Descargar el archivo adjunto
+    //             const buffer = await downloadMediaMessage(payload, "buffer", {});
                 
-                //Configurar el nombre del archivo y la extensión
-                const fileName = `file-${Date.now()}.${extension}`
+    //             //Configurar el nombre del archivo y la extensión
+    //             const fileName = `file-${Date.now()}.${extension}`
                 
-                //Elaborar el nombde del directorio donde se guardarán las imagenes
-                const nombreDirectorioAdjuntos = 'Archivos/Adjuntos/' + fechaBruta.getFullYear() + '-' + (fechaBruta.getMonth() + 1) + '-' + fechaBruta.getDate() + '/' + payload.from
+    //             //Elaborar el nombde del directorio donde se guardarán las imagenes
+    //             const nombreDirectorioAdjuntos = 'Archivos/Adjuntos/' + fechaBruta.getFullYear() + '-' + (fechaBruta.getMonth() + 1) + '-' + fechaBruta.getDate() + '/' + payload.from
                 
-                //Si el directorio no existe
-                if (!fs.existsSync(nombreDirectorioAdjuntos)){
+    //             //Si el directorio no existe
+    //             if (!fs.existsSync(nombreDirectorioAdjuntos)){
                     
-                    //Crear el directorio
-                    fs.mkdirSync(nombreDirectorioAdjuntos, { recursive: true });
+    //                 //Crear el directorio
+    //                 fs.mkdirSync(nombreDirectorioAdjuntos, { recursive: true });
                     
-                }
+    //             }
 
-                //Configurar la ruta completa para el archivo
-                const pathFile = nombreDirectorioAdjuntos + '/' + fileName
+    //             //Configurar la ruta completa para el archivo
+    //             const pathFile = nombreDirectorioAdjuntos + '/' + fileName
 
-                //Guardar el archivo adjunto en la ruta creada previamente
-                await writeFile(pathFile, buffer);
+    //             //Guardar el archivo adjunto en la ruta creada previamente
+    //             await writeFile(pathFile, buffer);
 
-                //Agregar la ruta del archivo a la lista de archivos adjuntos
-                attachment.push(pathFile)
+    //             //Agregar la ruta del archivo a la lista de archivos adjuntos
+    //             attachment.push(pathFile)
 
-                //Devolver la lista de archivos adjuntos
-                return attachment;
+    //             //Devolver la lista de archivos adjuntos
+    //             return attachment;
 
-            }
+    //         }
       
-            return null
-        }
+    //         return null
+    //     }
 
-        //Encolar el proceso de construcción del mensaje
-        queue.enqueue(async () =>{
+    //     //Encolar el proceso de construcción del mensaje
+    //     queue.enqueue(async () =>{
 
-            //Obtener los archivos adjuntos del mensaje enviado
-            const attachments = await getAttachments()
+    //         //Obtener los archivos adjuntos del mensaje enviado
+    //         const attachments = await getAttachments()
 
-            //Configurar los datos del mensaje
-            let message = payload.body
+    //         //Configurar los datos del mensaje
+    //         let message = payload.body
 
-            //Si la lista de archivos adjuntos no está vacía o nula
-            if (attachments?.length) {
+    //         //Si la lista de archivos adjuntos no está vacía o nula
+    //         if (attachments?.length) {
 
-                //Si el mensaje enviado no es nulo
-                if (payload?.message) {
+    //             //Si el mensaje enviado no es nulo
+    //             if (payload?.message) {
 
-                    //Obtener el tipo de mensaje enviado por el cliente
-                    const typeMessage = Object.keys(payload?.message)
-                        .find((key) => ['imageMessage', 'videoMessage', 'documentMessage', 'audioMessage'].includes(key))
+    //                 //Obtener el tipo de mensaje enviado por el cliente
+    //                 const typeMessage = Object.keys(payload?.message)
+    //                     .find((key) => ['imageMessage', 'videoMessage', 'documentMessage', 'audioMessage'].includes(key))
 
-                    //Si el tipo de mensaje no es vacío no nulo
-                    if (typeMessage) {
+    //                 //Si el tipo de mensaje no es vacío no nulo
+    //                 if (typeMessage) {
 
-                        // //Si el tipo de mensaje es diferente a mensaje de audio
-                        // if ('audioMessage' !== typeMessage) {
+    //                     // //Si el tipo de mensaje es diferente a mensaje de audio
+    //                     // if ('audioMessage' !== typeMessage) {
 
-                        //     //Configutar el mensaje a mostrar
-                        //     message = payload.message[typeMessage].caption || "Archivo adjunto :paperclip:. Click en **Descargar** para ver el contenido."
+    //                     //     //Configutar el mensaje a mostrar
+    //                     //     message = payload.message[typeMessage].caption || "Archivo adjunto :paperclip:. Click en **Descargar** para ver el contenido."
 
-                        // } else {
+    //                     // } else {
 
-                        //     message = "Audio adjunto :paperclip:. Click en **Descargar** para escuchar el audio."
+    //                     //     message = "Audio adjunto :paperclip:. Click en **Descargar** para escuchar el audio."
 
-                        // }
+    //                     // }
 
-                        //Si el tipo de mensaje es diferente a mensaje de audio
-                        if (typeMessage == 'imageMessage') {
+    //                     //Si el tipo de mensaje es diferente a mensaje de audio
+    //                     if (typeMessage == 'imageMessage') {
 
-                            //Configutar el mensaje a mostrar
-                            message = payload.message[typeMessage].caption || "Imágen adjunta. Click en **Descargar** para obtener la imágen."
+    //                         //Configutar el mensaje a mostrar
+    //                         message = payload.message[typeMessage].caption || "Imágen adjunta. Click en **Descargar** para obtener la imágen."
 
-                        }
-                        if (typeMessage == 'videoMessage') {
+    //                     }
+    //                     if (typeMessage == 'videoMessage') {
 
-                            //Configutar el mensaje a mostrar
-                            message = payload.message[typeMessage].caption || "Video adjunto. Click en **Descargar** para obtener el video."
+    //                         //Configutar el mensaje a mostrar
+    //                         message = payload.message[typeMessage].caption || "Video adjunto. Click en **Descargar** para obtener el video."
 
-                        }
-                        if (typeMessage == 'documentMessage') {
+    //                     }
+    //                     if (typeMessage == 'documentMessage') {
 
-                            //Configutar el mensaje a mostrar
-                            message = payload.message[typeMessage].caption || "Documento adjunto. Click en **Descargar** para obtener el documento."
+    //                         //Configutar el mensaje a mostrar
+    //                         message = payload.message[typeMessage].caption || "Documento adjunto. Click en **Descargar** para obtener el documento."
 
-                        }
-                        if (typeMessage == 'audioMessage') {
+    //                     }
+    //                     if (typeMessage == 'audioMessage') {
 
-                            //Configutar el mensaje a mostrar
-                            message = payload.message[typeMessage].caption || "Audio adjunto. Click en **Descargar** para obtener el audio."
+    //                         //Configutar el mensaje a mostrar
+    //                         message = payload.message[typeMessage].caption || "Audio adjunto. Click en **Descargar** para obtener el audio."
 
-                        }else {
+    //                     }else {
 
-                            //Configutar el mensaje a mostrar
-                            message = "Archivo adjunto. Click en **Descargar** para obtener el archivo."
+    //                         //Configutar el mensaje a mostrar
+    //                         message = "Archivo adjunto. Click en **Descargar** para obtener el archivo."
 
-                        }
+    //                     }
 
-                    }
-                }
+    //                 }
+    //             }
 
-            }
+    //         }
 
-            //Configurar el manejador de los mensajes
-            await manejadorDeMensajes({
+    //         //Configurar el manejador de los mensajes
+    //         await manejadorDeMensajes({
                 
-                phone: payload.from,
-                name: payload.pushName,
-                //message: payload.body,
-                message: message,
-                mode: 'incoming',
-                attachment: attachments ?? null,
+    //             phone: payload.from,
+    //             name: payload.pushName,
+    //             //message: payload.body,
+    //             message: message,
+    //             mode: 'incoming',
+    //             attachment: attachments ?? null,
 
-            }, chatwoot)
+    //         }, chatwoot)
 
-        })
+    //     })
         
-    })
+    // })
 
-    //Envento que se dispara cuando sale un mensaje
-    bot.on('send_message', (payload) => {
+    // //Envento que se dispara cuando sale un mensaje
+    // bot.on('send_message', (payload) => {
         
-        queue.enqueue(async () =>{
+    //     queue.enqueue(async () =>{
             
-            await manejadorDeMensajes({
+    //         await manejadorDeMensajes({
                 
-                phone: payload.numberOrId,
-                name: payload.pushName,
-                message: payload.answer,
-                mode: 'outgoing'
+    //             phone: payload.numberOrId,
+    //             name: payload.pushName,
+    //             message: payload.answer,
+    //             mode: 'outgoing'
 
-            }, chatwoot)
+    //         }, chatwoot)
             
-        })
+    //     })
         
-    })
+    // })
 
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     QRPortalWeb({port:3004})

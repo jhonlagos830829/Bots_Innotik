@@ -82,8 +82,7 @@ module.exports = flujoReportePagoDiferenteTitular = addKeyword('EVENTS.MEDIA')
                 clientesConsultados.datos.push({consultor: ctx.from, clientes: []})
 
                 //Buscar el cliente por el nombre proporcionado
-                console.log('Buscando a: ' + ctx.body.replaceAll('á', 'a').replaceAll('é', 'e').replaceAll('í', 'i').replaceAll('ó', 'o').replaceAll('ú', 'u').replaceAll('Á', 'A').replaceAll('É', 'E').replaceAll('Í', 'I').replaceAll('Ó', 'o').replaceAll('Ú', 'U').trim().toLowerCase().replace(/\b\w/g, s => s.toUpperCase()))
-                let clientes = await cliente.obtenerCliente('', ctx.body.replaceAll('á', 'a').replaceAll('é', 'e').replaceAll('í', 'i').replaceAll('ó', 'o').replaceAll('ú', 'u').replaceAll('Á', 'A').replaceAll('É', 'E').replaceAll('Í', 'I').replaceAll('Ó', 'o').replaceAll('Ú', 'U').trim().toLowerCase().replace(/\b\w/g, s => s.toUpperCase()), '')
+                let clientes = await cliente.obtenerCliente('', ctx.body.replaceAll('á', 'a').replaceAll('é', 'e').replaceAll('í', 'i').replaceAll('ó', 'o').replaceAll('ú', 'u').replaceAll('Á', 'A').replaceAll('É', 'E').replaceAll('Í', 'I').replaceAll('Ó', 'o').replaceAll('Ú', 'U').trim().toLowerCase().replace(/\b[a-záéíóúñ]+/gi, (palabra) => palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase()), '')
                 
                 //Si la consulta no arrojó resultados
                 if (Object.keys(clientes.data).length == 0){

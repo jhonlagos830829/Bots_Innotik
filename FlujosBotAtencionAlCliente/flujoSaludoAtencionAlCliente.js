@@ -123,6 +123,18 @@ module.exports = flujoSaludoAtencionAlCliente = addKeyword(EVENTS.WELCOME)
                 return ctxFn.fallBack(mensajes.ARGUMENTO_RESPUESTA_INVALIDA + '\n\n' + mensajes.MENSAJE_TEMAS_ATENCION_AL_CLIENTE)
                 
             }
+            else if(ctx.body == '3'){
+
+                // //Solicitar una respuesta valida
+                // return ctxFn.fallBack(mensajes.ARGUMENTO_RESPUESTA_INVALIDA + '\n\n' + mensajes.MENSAJE_TEMAS_ATENCION_AL_CLIENTE)
+                //Enviar al flujo de reporte de pago
+                ctxFn.flowDynamic('Por favor envíe la foto del comprobante de pago')
+
+                //Ir al flujo de despedida
+                ctxFn.gotoFlow(require('./flujoReportePago.js'))
+                
+            }
+            
             
         } catch (error) {
 

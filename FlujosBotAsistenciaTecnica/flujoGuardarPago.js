@@ -20,7 +20,7 @@ const fs = require('fs')
 var codigoCuenta = ''
 
 module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
-/*.addAnswer('A continuación encontrará las cuentas disponibles para el registro de movimientos', null, async (ctx, { fallBack, flowDynamic, gotoFlow }) => {
+.addAnswer('A continuación encontrará las cuentas disponibles para el registro de movimientos', null, async (ctx, { fallBack, flowDynamic, gotoFlow }) => {
     
     //Obtener las cuentas para el registro de los movimientos
     const cuentas = await axios('http://innotik.com.co/proyectos/Innotik/Pagos/clases/listarCuenta.php')
@@ -44,7 +44,7 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
 })
 .addAnswer('Por favor seleccione la cuenta a la cual pertenecen los movimientos que desea registrar', {capture:true}, async (ctx, { fallBack, flowDynamic, gotoFlow }) => {
     codigoCuenta = ctx.body
-})*/
+})
 .addAnswer(['Envíe uno por uno los pantallazos de los movimientos, tenga en cuenta que *no debe enviar el siguiente movimiento antes de recibir la notificación de movimiento guardado*'], {capture:true}, async (ctx, {fallBack, gotoFlow, flowDynamic, state}) => {
     
     //console.log(ctx.body)
@@ -56,7 +56,7 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
         fechaBruta = new Date()
 
         //Elaborar el nombde del directorio donde se guardarán las imagenes
-        const nombreDirectorioComprobantes = 'Pagos/' + fechaBruta.getFullYear() + '-' + (fechaBruta.getMonth() + 1) + '-' + fechaBruta.getDate()
+        const nombreDirectorioComprobantes = 'Archivos/Pagos/' + fechaBruta.getFullYear() + '-' + (fechaBruta.getMonth() + 1) + '-' + fechaBruta.getDate()
 
         //Si el directorio no existe
         if (!fs.existsSync(nombreDirectorioComprobantes)){
