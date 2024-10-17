@@ -163,7 +163,7 @@ async function escanearConGoogle(archivo){
         hallazgos = salida.textAnnotations
 
         //Mostrar en la consola el texto obtenido 
-        console.log('texto' + hallazgos[0].description)
+        console.log('texto\n\n' + hallazgos[0].description)
         
         //Mostrar en consola el proceso
         console.log('-----ESCANEO FINALIZADO CON GOOGLE-----')

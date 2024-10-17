@@ -1,7 +1,10 @@
 //Declaracion de variables
 const fs = require('fs');
 const cuenta = require('./cuenta')
-const cliente = require('./cliente');
+const cliente = require('./cliente')
+const articulo = require('./articulo')
+const elemento = require('./elemento')
+const modelo = require('./modelo')
 const { delay } = require('@whiskeysockets/baileys');
 
 let contenidoArchivo = null;
@@ -30,6 +33,27 @@ const BuscarCliente = async function(identificacion) {
 
 }
 
+const CrearModelo = async function(nombre) {
+    
+  const result = await modelo.Guardar(nombre)
+  console.log(result);
+
+}
+
+const CrearArticulo = async function(nombre, codigoUpc, codigoEan13, tipo_articulo, fabricante, modelo, unidad_medida) {
+    
+  const result = await articulo.Guardar(nombre, codigoUpc, codigoEan13, tipo_articulo, fabricante, modelo, unidad_medida)
+  console.log(result);
+
+}
+
+const CrearElemento = async function(fechaCompra, factura, mac, serial, precio, articulo, proveedor) {
+    
+  const result = await elemento.Guardar(fechaCompra, factura, mac, serial, precio, articulo, proveedor)
+  console.log(result);
+
+}
+
 async function consultarConFor() {
     
     // //console.log('Consultando 91278786')
@@ -37,7 +61,7 @@ async function consultarConFor() {
     // console.log(JSON.stringify(salida))
 
     //Leer el contenido del archivo
-    const clientes = fs.readFileSync('Archivos/clientes-CRM.csv', 'utf8').split(/\r?\n/);
+    const clientes = fs.readFileSync('Archivos/ValidaClientes.csv', 'utf8').split(/\r?\n/);
     
     //Obtener el contenido del archivo
     let contenidoArchivo = clientes;
@@ -50,7 +74,7 @@ async function consultarConFor() {
         try {
 
             //Obtener los campos separados por ,
-            campos = linea.split(',')
+            campos = linea.split(';')
 
             //console.log('Consultando ' + campos[0])
 
@@ -94,39 +118,109 @@ async function consultarConFor() {
     });
   }
 
+  
+const CrearModelos = async function() {
+
+  const datos = fs.readFileSync('Archivos/Modelo.csv', 'utf8').split(/\r?\n/);
+  let campos
+
+  //console.log(data);
+  contenidoArchivo = datos;
+
+  for (const linea of contenidoArchivo){
+
+      campos = linea.split(';')
+
+      await CrearModelo(campos[1])
+
+  }
+}
+
+ 
+const CrearArticulos = async function() {
+
+  const datos = fs.readFileSync('Archivos/Elemento.csv', 'utf8').split(/\r?\n/);
+  let campos
+
+  //console.log(data);
+  contenidoArchivo = datos;
+
+  for (const linea of contenidoArchivo){
+
+      campos = linea.split(';')
+
+      await CrearArticulo(campos[2], campos[0], campos[1], campos[3], campos[4], campos[5], campos[6])
+
+  }
+}
+ 
+const CrearElementos = async function() {
+
+  const datos = fs.readFileSync('Archivos/Articulo.csv', 'utf8').split(/\r?\n/);
+  let campos
+
+  //console.log(data);
+  contenidoArchivo = datos;
+
+  for (const linea of contenidoArchivo){
+
+      campos = linea.split(';')
+
+      let fecha = new Date(campos[1])
+
+      //console.log(fecha)
+
+      await CrearElemento(fecha, campos[2], campos[3], campos[4], campos[5], campos[6], campos[7])
+
+  }
+}
+
 
 try {
 
-    //Leer el contenido del archivo
-    const datos = fs.readFileSync('Archivos/ultimosclientes.csv', 'utf8').split(/\r?\n/);
-    let campos
 
-    //console.log(data);
-    contenidoArchivo = datos;
+  // CrearModelos()
+  
+  // CrearArticulos()
 
-    for (const linea of contenidoArchivo){
+  CrearElementos()
+  
+    // // consultarConFor()
 
-        campos = linea.split(';')
+    // //Leer el contenido del archivo
+    // //const datos = fs.readFileSync('Archivos/Elemento.csv', 'utf8').split(/\r?\n/);
+    // const datos = fs.readFileSync('Archivos/Modelo.csv', 'utf8').split(/\r?\n/);
+    // let campos
 
-        // console.log('La linea ' + linea)
+    // //console.log(data);
+    // contenidoArchivo = datos;
+
+    // for (const linea of contenidoArchivo){
+
+    //     campos = linea.split(';')
+
+    //     // console.log('La linea ' + linea)
         
-        // console.log('Identificacion ' + campos[0])
-        // console.log('Nombre ' + campos[1])
-        // console.log('Whatsapp ' + campos[2])
-        // console.log('Teléfono ' + campos[3])
-        // console.log('Direccion ' + campos[4])
-        // console.log('Correo ' + campos[5])
+    //     // console.log('Identificacion ' + campos[0])
+    //     // console.log('Nombre ' + campos[1])
+    //     // console.log('Whatsapp ' + campos[2])
+    //     // console.log('Teléfono ' + campos[3])
+    //     // console.log('Direccion ' + campos[4])
+    //     // console.log('Correo ' + campos[5])
 
-        CrearCliente(campos[0], campos[1], campos[2], campos[3], campos[4], campos[5])
+    //     await CrearModelo(campos[1])
+    //     //CrearArticulo(campos[2], campos[0], campos[1], campos[3], campos[4], campos[5], campos[6])
+
         
-        //let salida = await BuscarCliente(campos[0])
+        
+    //     //let salida = await BuscarCliente(campos[0])
 
-        //ValidarClientes(campos[0])
+    //     //ValidarClientes(campos[0])
 
-        // console.log('Encontré este')
-        // console.log(salida)
+    //     // console.log('Encontré este')
+    //     // console.log(salida)
 
-    }
+    // }
 
 
 } catch (err) {

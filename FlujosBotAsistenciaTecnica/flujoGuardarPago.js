@@ -62,7 +62,7 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
         if (!fs.existsSync(nombreDirectorioComprobantes)){
 
             //Crear el directorio
-            fs.mkdirSync(nombreDirectorioComprobantes);
+            fs.mkdirSync(nombreDirectorioComprobantes, { recursive: true });
 
         }
 

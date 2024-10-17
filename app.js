@@ -98,10 +98,10 @@ const mainBotServicioAlCliente = async () => {
     // FLUJOS PARA ATENCION AL CLIENTE
     const adapterFlow = createFlow([flujoNotaDeVozEnviadaAtencionAlCliente, flujoSaludoAtencionAlCliente, flujoReportePagoAtencionAlCliente, flujoReportePagoDiferenteTitular, flujoReportePagoEscaneoComprobante, flujoAlgoMasAtencionAlCliente, flujoFacturasPendientesNombrePropio, flujoFacturasPendientesOtroNombre, flujoNumeroNoRegistrado, flujoCuentaParaPagarOtroNombre])
     
-    // // FLUJOS PARA ATENCION AL ASISTENTE
+    // // FLUJOS PARA EL ASISTENTE
     // const adapterFlow = createFlow([flujoPrincipal, flujoNuevoCliente, flujoReportarPagoCliente])
 
-    // // FLUJOS PARA EL ASISTENTE
+    // // FLUJOS PARA ASISTENCIA TECNICA
     // const adapterFlow = createFlow([flujoAsistentePagos])
 
     const adapterProvider = createProvider(BaileysProvider, { name:nombreBot })
@@ -307,7 +307,7 @@ const mainBotAsistente = async () => {
     QRPortalWeb({port:3005})
 }
 
-//mainBotAsistenciaTecnica()
+mainBotAsistenciaTecnica()
 
 mainBotServicioAlCliente()
 

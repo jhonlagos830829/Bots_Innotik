@@ -224,7 +224,7 @@ function registrarPago(codigoCuenta, textoMensaje) {
         }
         
         //Guardar el pago en el archivo
-        fs.appendFileSync('Pagos/' + nombreArchivoPagos, textoMensaje + '\r\n\r\n');
+        fs.appendFileSync('Archivos/Pagos/' + nombreArchivoPagos, textoMensaje + '\r\n\r\n');
 
         console.log(codigoCuenta)
         console.log(conceptoMovimiento)
@@ -268,7 +268,7 @@ function registrarPago(codigoCuenta, textoMensaje) {
         //resumenMovimientosRegistrados = resumenMovimientosRegistrados + 'Total ingresos ' + valorTotalIngresosRegistrados;
 
         //Guardar el log en el archivo
-        fs.appendFileSync('Pagos/' + nombreArchivoLogPagos, Log);
+        fs.appendFileSync('Archivos/Pagos/' + nombreArchivoLogPagos, Log);
 
     } catch (err) {
 

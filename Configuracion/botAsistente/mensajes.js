@@ -56,7 +56,14 @@ module.exports = Object.freeze({
 
     //Mensajes flujo flujoNuevoCliente
     MENSAJE_NUEVO_CLIENTE_NOMBRE: '👩🏻 Por favor envíeme el *nombre completo del cliente*.\n\nEn lo posible los *dos nombres y dos apellidos* con el fin de evitar homónimos.\n\n_O si desea abandonar el proceso responda *Cancelar*_',
-    MENSAJE_NUEVO_CLIENTE_YA_EXISTE: '👩🏻 Ya existe un cliente con el nombre *{NOMBRE_CLIENTE}*.\n\n¿Está seguro que desea crearlo de nuevo?.\n\n_Por favor responda con una de las siguientes opciones:_\n\n👉🏼 Sí\n👉🏼 No\n\n_O si desea abandonar el proceso responda *Cancelar*_',
+    MENSAJE_NUEVO_CLIENTE_YA_EXISTE: '👩🏻 *Ya existe* un cliente con el nombre *{NOMBRE_CLIENTE}* no es posible crear dos clientes con *exactamente el mismo nombre*, por favor corrija el nombre para continuar.\n\n_O si desea abandonar el proceso responda *Cancelar*_',
+    MENSAJE_NUEVO_CLIENTE_IDENTIFICACION: '👩🏻 Ahora envíeme *el número del documento de identidad* del cliente, *sin puntos ni comas*.\n\n_O si desea abandonar el proceso responda *Cancelar*_',
+    MENSAJE_NUEVO_CLIENTE_TELEFONO: '👩🏻 A continuación envíeme *el número de teléfono* del cliente en el cual podremos contactarlo.\n\n_O si desea abandonar el proceso responda *Cancelar*_',
+    MENSAJE_NUEVO_CLIENTE_WHATSAPP: '👩🏻 Para continuar envíeme *el número de Whatsapp* del cliente al cual podremos escribirle.\n\n_O si desea abandonar el proceso responda *Cancelar*_',
+    MENSAJE_NUEVO_CLIENTE_CORREO: '👩🏻 Ahora envíeme *la dirección de correo electrónico* del cliente al cual podremos contactarlo.\n\n_O si desea abandonar el proceso responda *Cancelar*_',
+    MENSAJE_NUEVO_CLIENTE_UBICACION: '👩🏻 A continuación envíeme *la ubicación GPS* del lugar donde se dejará instalado el servicio.\n\n_O si desea abandonar el proceso responda *Cancelar*_',
+    MENSAJE_NUEVO_CLIENTE_TECNOLOGIA: '👩🏻 Por favor indíqueme en *que tecnología* se instaló el servicio del cliente.\n\n 1️⃣ PON\n 2️⃣ Radio\n\n_O si desea abandonar el proceso responda *Cancelar*_',
+    MENSAJE_NUEVO_CLIENTE_FOTO_ONU: '👩🏻 Por favor envíeme *foto de la etiqueta de datos de la ONU* que le instaló al cliente.\n\n_O si desea abandonar el proceso responda *Cancelar*_',
 
     //Mensajes respuesta inválida
     ARGUMENTO_RESPUESTA_INVALIDA: '👩🏻 *No entendí su respuesta*\n\n¿Podría repetirme por favor?',
