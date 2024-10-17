@@ -71,6 +71,55 @@ async function Guardar (idCliente, medio, fecha, cuenta, valor, referencia, conv
  */
 async function obtenerMovimiento(fecha, idCuenta, valor, referencia, cunico, recibo, rrn, apro){
   
+    //Cambiar los valores undefined por vacíos
+    if(fecha == undefined){
+
+      fecha = ''
+
+    }
+
+    if(idCuenta == undefined){
+
+      idCuenta = ''
+
+    }
+
+    if(valor == undefined){
+
+      valor = ''
+
+    }
+
+    if(referencia == undefined){
+
+      referencia = ''
+
+    }
+
+    if(cunico == undefined){
+
+      cunico = ''
+
+    }
+    
+    if(recibo == undefined){
+
+      recibo = ''
+
+    }
+
+    if(rrn == undefined){
+
+      rrn = ''
+
+    }
+
+    if(apro == undefined){
+
+      apro = ''
+
+    }
+
     //Variable para obtener los resultados de la búsqueda
     var datosCliente
     

@@ -871,8 +871,10 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 //Si los datos básicos del movimiento están completos
                 if(fecha != '' && idCuenta != '' && valor != '' && fecha != 'Invalid Date'){
 
-                    //Variale para almacenar los datos del movimiento
+                    //Variable para almacenar los datos del movimiento
                     let datosMovimiento = await movimiento.obtenerMovimiento(fecha, idCuenta, valor, referencia, cunico, recibo, rrn, apro)
+
+                    console.log('La consulta del comprobante resiltó -> ' + JSON.stringify(datosMovimiento))
 
                     //Si el movimiento enviado ya existe
                     if(Object.keys(datosMovimiento.data).length > 0){
