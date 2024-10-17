@@ -19,9 +19,9 @@ const configuracion = require('../Configuracion/configuracion.js');
 
 ////////////////////////// EXPRESIONES REGULARES QUE SE USARAN
 
-const ExpRegRespuestas = new RegExp("^S[íiÍ]$|^N[oóÓ]$", "i")
-const ExpRegRespuestaAfirmativa = new RegExp("^S[íiÍ]$", "i")
-const ExpRegRespuestaNegativa = new RegExp("^N[oóÓ]$", "i")
+const ExpRegRespuestas = new RegExp("^S[íiÍ]|^N[oóÓ]", "i")
+const ExpRegRespuestaAfirmativa = new RegExp("^S[íiÍ]", "i")
+const ExpRegRespuestaNegativa = new RegExp("^N[oóÓ]", "i")
 
 ////////////////////////////////////////////////////////////////////////////////
 
