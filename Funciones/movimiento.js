@@ -23,6 +23,115 @@ const basedatos = require('./basedatos')
  */
 async function Guardar (idCliente, medio, fecha, cuenta, valor, referencia, conversacion, reporta, numeroReporta, descripcion, cUnico, recibo, ter, rrn, apro, comprobante, origen, verificado){
     
+    //Cambiar los valores undefined por vacíos
+    if(idCliente == undefined){
+
+      idCliente = ''
+
+    }
+
+    if(medio == undefined){
+
+      medio = ''
+
+    }
+
+    if(fecha == undefined){
+
+      fecha = ''
+
+    }
+
+    if(cuenta == undefined){
+
+      cuenta = ''
+
+    }
+
+    if(valor == undefined){
+
+      valor = ''
+
+    }
+    
+    if(referencia == undefined){
+
+      referencia = ''
+
+    }
+
+    if(conversacion == undefined){
+
+      conversacion = ''
+
+    }
+
+    if(reporta == undefined){
+
+      reporta = ''
+
+    }
+
+    if(numeroReporta == undefined){
+
+      numeroReporta = ''
+
+    }
+
+    if(descripcion == undefined){
+
+      descripcion = ''
+
+    }
+
+    if(cUnico == undefined){
+
+      cUnico = ''
+
+    }
+
+    if(recibo == undefined){
+
+      recibo = ''
+
+    }
+
+    if(ter == undefined){
+
+      ter = ''
+
+    }
+
+    if(rrn == undefined){
+
+      rrn = ''
+
+    }
+
+    if(apro == undefined){
+
+      apro = ''
+
+    }
+
+    if(comprobante == undefined){
+
+      comprobante = ''
+
+    }
+
+    if(origen == undefined){
+
+      origen = ''
+
+    }
+
+    if(verificado == undefined){
+
+      verificado = ''
+
+    }
+
     //Configurar los datos a almacenar
     try {
 
