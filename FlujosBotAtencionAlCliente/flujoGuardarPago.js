@@ -16,6 +16,8 @@ const { writeFile } = require("node:fs/promises")
 const path = require('path')
 const { createWorker } = require('tesseract.js')
 const fs = require('fs')
+const escanearComprobante = require('../Funciones/comprobante')
+const movimiento = require('../Funciones/movimiento')
 
 var codigoCuenta = ''
 
@@ -71,19 +73,40 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
         const buffer = await downloadMediaMessage(ctx, "buffer")
         await writeFile(nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg", buffer)
 
-        //Mostrar en consola el proceso
-        console.log('Escaneando comrpobante')
+        // //Mostrar en consola el proceso
+        // console.log('Escaneando comrpobante')
 
-        //Crear la instancia que se encargará de extraer el texto de la imagen
-        const worker = await createWorker("spa", 1, {
-            //logger: m => console.log(m),
-        })
+        // //Crear la instancia que se encargará de extraer el texto de la imagen
+        // const worker = await createWorker("spa", 1, {
+        //     //logger: m => console.log(m),
+        // })
 
-        //Extraer el texto de la imagen
-        const { data: { text } } = await worker.recognize(nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg")
+        // //Extraer el texto de la imagen
+        // const { data: { text } } = await worker.recognize(nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg")
 
-        //Mostrar en la consola el texto obtenido 
-        console.log(text)
+        // //Mostrar en la consola el texto obtenido 
+        // console.log(text)
+
+        
+        let contenido = await escanearComprobante.escanearConTesseract(nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg")
+
+        console.log(contenido)
+        
+        
+        let datosComprobante = await escanearComprobante.extraerDatosNequi(contenido)
+
+        console.log(JSON.stringify(datosComprobante))
+
+        //Si no se obtuvo alguno de los datos obligatorios
+        if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta != '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
+
+            
+            let datosMovimiento = await movimiento.obtenerMovimiento(datosComprobante.fecha, codigoCuenta, datosComprobante.valor, datosComprobante.referencia)
+
+            console.log('Movimiento encontrado -> ' + JSON.stringify(datosMovimiento))
+
+
+        }
 
         //Obtener el mensaje
         textoMensaje = text

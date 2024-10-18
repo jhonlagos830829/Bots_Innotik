@@ -22,7 +22,6 @@ const puertoExpress = configuracion.PUERTO_EXPRESS
 
 const flujoSaludo = require('./FlujosBotAsistenciaTecnica/flujoSaludo')
 const flujoReportarFallaTipoFalla = require('./FlujosBotAsistenciaTecnica/flujoReportarFallaTipoFalla')
-const flujoAsistentePagos = require('./FlujosBotAsistenciaTecnica/flujoAsistentePagos')
 const flujoTextoFallaMasiva = require('./FlujosBotAsistenciaTecnica/flujoTextoFallaMasiva')
 const flujoReportePago = require('./FlujosBotAsistenciaTecnica/flujoReportePago')
 const flujoNotaDeVozEnviada = require('./FlujosBotAsistenciaTecnica/flujoNotaDeVozEnviada')
@@ -47,6 +46,8 @@ const flujoFacturasPendientesOtroNombre = require('./FlujosBotAtencionAlCliente/
 const flujoNumeroNoRegistrado = require('./FlujosBotAtencionAlCliente/flujoNumeroNoRegistrado')
 const flujoCuentaParaPagarOtroNombre = require('./FlujosBotAtencionAlCliente/flujoCuentaParaPagarOtroNombre')
 const flujoNotaDeVozEnviadaAtencionAlCliente = require('./FlujosBotAtencionAlCliente/flujoNotaDeVozEnviada')
+const flujoAsistentePagos = require('./FlujosBotAtencionAlCliente/flujoAsistentePagos')
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////// IMPORTACION DE LOS FLUJOS QUE SE USARAN EN EL BOT ASISTENTE /////////////
@@ -307,7 +308,7 @@ const mainBotAsistente = async () => {
     QRPortalWeb({port:3005})
 }
 
-//mainBotAsistenciaTecnica()
+mainBotAsistenciaTecnica()
 
 mainBotServicioAlCliente()
 

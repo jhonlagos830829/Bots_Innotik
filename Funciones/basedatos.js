@@ -57,7 +57,7 @@ async function Buscar (url, campo){
     //Declaracion de variables
     const http = require('http');
     var direccionesCliente;
-    //console.log(configuracion.URL_API + url + campo)
+    console.log(configuracion.URL_API + url + campo)
     try {
       
       //Variable de configuración de los parámetros
