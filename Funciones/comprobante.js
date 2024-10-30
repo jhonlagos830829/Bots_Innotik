@@ -378,6 +378,8 @@ async function extraerDatosNequi(texto){
         const ExpRegRetiroNequi = new RegExp("Retiro[en ]{2,}[\n]+[cajero]{4,}", "i")
         const ExpRegTipoEnvioNequi = new RegExp("[Tipo denví]{8,}[\n]+[a-z 0-9]{4,}", "i")
         const ExpRegTransfiyaDeNequi = new RegExp("[Transfiy]{6,}[ de]{2,}[a-z -9]{4,}", "i")
+        const ExpRegEnvioRecibidoNequi = new RegExp("Env[íi]+o[ Recibdo]{4,}[\n]+[De]{2,}[\n]+[a-z 0-9]{4,}", "i")
+        const ExpRegEnvioRecibidoDeNequi = new RegExp("[De]{2,}[a-z 0-9]{4,}", "i")
 
         //Variables donde se guardarán los datos extraidos de las líneas de texto
         const ExpRegReferencia = new RegExp("[MS]+[0-9]{4,}", "i")
@@ -571,6 +573,17 @@ async function extraerDatosNequi(texto){
             
             //Configurar la descripción el comprobante
             comprobante.origen = lineaTransfiyaDeNequi.substring(lineaTransfiyaDeNequi.indexOf(' ')).trim()
+            
+        }
+
+        //Si encontró que es un pago
+        if (ExpRegEnvioRecibidoNequi.test(texto) == true){
+            
+            //Extraer la cuenta de la linea de cuenta encontrada
+            let lineaEnvioRecibidoNequi = texto.match(ExpRegEnvioRecibidoNequi)[0].replaceAll('\n', ' ')
+            console.log('LA LINEA DE RECIBIDO ES ' + lineaEnvioRecibidoNequi)
+            //Configurar la descripción el comprobante
+            comprobante.origen = lineaEnvioRecibidoNequi.match(ExpRegEnvioRecibidoDeNequi)[0].trim()
             
         }
 
