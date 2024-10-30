@@ -376,6 +376,7 @@ async function extraerDatosNequi(texto){
         const ExpRegPago = new RegExp("[Pago cnQARelizd]{4,}[\n]+[Pago en]{4,}[\n]+[a-z 0-9]{4,}", "i")
         const ExpRegImpuesto = new RegExp("[Movient ]{4,}[Impuesto dlgobrn]{12,}", "i")
         const ExpRegRetiro = new RegExp("Retiro[en ]{2,}[\n]+[cajero]{4,}", "i")
+        const ExpRegTipoEnvio = new RegExp("[Tipo denví]{8,}[\n]+[a-z 0-9]{4,}", "i")
 
         //Variables donde se guardarán los datos extraidos de las líneas de texto
         const ExpRegReferencia = new RegExp("[MS]+[0-9]{4,}", "i")
@@ -547,6 +548,17 @@ async function extraerDatosNequi(texto){
             
             //Configurar la descripción el comprobante
             comprobante.descripcion = lineaRetiro
+            
+        }
+
+        //Si encontró que es un pago
+        if (ExpRegTipoEnvio.test(texto) == true){
+            
+            //Extraer la cuenta de la linea de cuenta encontrada
+            let lineaTipoEnvio = texto.match(ExpRegTipoEnvio)[0].replaceAll('\n', ' ')
+            
+            //Configurar la descripción el comprobante
+            comprobante.medio = lineaTipoEnvio.substring(lineaTipoEnvio.lastIndexOf(' ')).trim()
             
         }
 
