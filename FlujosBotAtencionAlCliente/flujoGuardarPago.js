@@ -122,7 +122,8 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
         if(datosComprobante.fecha != '' && datosComprobante.fecha != undefined && datosComprobante.fecha != 'Invalid Date' && /*datosComprobante.cuenta != '' && datosComprobante.cuenta != undefined && */datosComprobante.valor != '' && datosComprobante.valor != undefined){
             
             //Buscar el movimiento en la base de datos
-            let datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.medio, datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, datosComprobante.referencia, datosComprobante.conversacion, datosComprobante.reporta, datosComprobante.numeroReporta, datosComprobante.descripcion, false, datosComprobante.ter, datosComprobante.rrn, datosComprobante.apro, datosComprobante.cUnico, datosComprobante.recibo, datosComprobante.comprobante, datosComprobante.origen, datosComprobante.idCliente, datosComprobante.idCaja, datosComprobante.tipo, datosComprobante.archivo, datosComprobante.idConcepto)
+            //let datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.medio, datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, datosComprobante.referencia, datosComprobante.conversacion, datosComprobante.reporta, datosComprobante.numeroReporta, datosComprobante.descripcion, false, datosComprobante.ter, datosComprobante.rrn, datosComprobante.apro, datosComprobante.cUnico, datosComprobante.recibo, datosComprobante.comprobante, datosComprobante.origen, datosComprobante.idCliente, datosComprobante.idCaja, datosComprobante.tipo, datosComprobante.archivo, datosComprobante.idConcepto)
+            let datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor)
             
             //Si se encontró el movimiento
             if (Object.keys(datosMovimiento.data).length > 0){
