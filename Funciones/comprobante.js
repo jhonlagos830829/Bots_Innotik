@@ -372,11 +372,12 @@ async function extraerDatosNequi(texto){
         const ExpRegFechaNequi = new RegExp("[Fecha ]{3,}[\n]*[ -a-z]*[0-9]+ de [a-z]+ de [0-9]{4}[, als]*[0-9]{1,}:[0-9]{2}[amp .\n]+", "i")
         const ExpRegValorNequi = new RegExp("[Cuaánto\\?]{6}[\n]*\\$[0-9 .]+", "i")
         const ExpRegConversacionNequi = new RegExp("[Conversaió]{10,}[\na-záéíóúÁÉÏÓÚ,. 0-9]+\\¿", "i")
-        const ExpRegEnvio = new RegExp("Env[íi]+o[ abncorelizd]{4,}[\n]+Para[\n]+[a-z ]{2,}", "i")
-        const ExpRegPago = new RegExp("[Pago cnQARelizd]{4,}[\n]+[Pago en]{4,}[\n]+[a-z 0-9]{4,}", "i")
-        const ExpRegImpuesto = new RegExp("[Movient ]{4,}[Impuesto dlgobrn]{12,}", "i")
-        const ExpRegRetiro = new RegExp("Retiro[en ]{2,}[\n]+[cajero]{4,}", "i")
-        const ExpRegTipoEnvio = new RegExp("[Tipo denví]{8,}[\n]+[a-z 0-9]{4,}", "i")
+        const ExpRegEnvioNequi = new RegExp("Env[íi]+o[ abncorelizd]{4,}[\n]+Para[\n]+[a-z ]{2,}", "i")
+        const ExpRegPagoNequi = new RegExp("[Pago cnQARelizd]{4,}[\n]+[Pago en]{4,}[\n]+[a-z 0-9]{4,}", "i")
+        const ExpRegImpuestoNequi = new RegExp("[Movient ]{4,}[Impuesto dlgobrn]{12,}", "i")
+        const ExpRegRetiroNequi = new RegExp("Retiro[en ]{2,}[\n]+[cajero]{4,}", "i")
+        const ExpRegTipoEnvioNequi = new RegExp("[Tipo denví]{8,}[\n]+[a-z 0-9]{4,}", "i")
+        const ExpRegTransfiyaDeNequi = new RegExp("[Transfiy]{6,}[ de]{2,}[a-z -9]{4,}", "i")
 
         //Variables donde se guardarán los datos extraidos de las líneas de texto
         const ExpRegReferencia = new RegExp("[MS]+[0-9]{4,}", "i")
@@ -454,10 +455,10 @@ async function extraerDatosNequi(texto){
         }
 
         //Si encontró que es un envío
-        if (ExpRegEnvio.test(texto) == true){
+        if (ExpRegEnvioNequi.test(texto) == true){
             
             //Extraer la cuenta de la linea del envío y reemplazar los saltos de línea por espacios
-            let lineaEnvio = texto.match(ExpRegEnvio)[0].replaceAll('\n', ' ')
+            let lineaEnvio = texto.match(ExpRegEnvioNequi)[0].replaceAll('\n', ' ')
 
             //Configurar la descripción el comprobante
             comprobante.descripcion = lineaEnvio
@@ -519,10 +520,10 @@ async function extraerDatosNequi(texto){
         }
 
         //Si encontró que es un pago
-        if (ExpRegPago.test(texto) == true){
+        if (ExpRegPagoNequi.test(texto) == true){
             
             //Extraer la cuenta de la linea de cuenta encontrada
-            let lineaPago = texto.match(ExpRegPago)[0].replaceAll('\n', ' ')
+            let lineaPago = texto.match(ExpRegPagoNequi)[0].replaceAll('\n', ' ')
             
             //Configurar la descripción el comprobante
             comprobante.descripcion = lineaPago.match(ExpRegPagoEn)[0]
@@ -530,10 +531,10 @@ async function extraerDatosNequi(texto){
         }
 
         //Si encontró que es un pago
-        if (ExpRegImpuesto.test(texto) == true){
+        if (ExpRegImpuestoNequi.test(texto) == true){
             
             //Extraer la cuenta de la linea de cuenta encontrada
-            let lineaImpuesto = texto.match(ExpRegImpuesto)[0].replaceAll('\n', ' ')
+            let lineaImpuesto = texto.match(ExpRegImpuestoNequi)[0].replaceAll('\n', ' ')
             
             //Configurar la descripción el comprobante
             comprobante.descripcion = lineaImpuesto.match(ExpRegImpuestoGobierno)[0]
@@ -541,10 +542,10 @@ async function extraerDatosNequi(texto){
         }
 
         //Si encontró que es un pago
-        if (ExpRegRetiro.test(texto) == true){
+        if (ExpRegRetiroNequi.test(texto) == true){
             
             //Extraer la cuenta de la linea de cuenta encontrada
-            let lineaRetiro = texto.match(ExpRegRetiro)[0].replaceAll('\n', ' ')
+            let lineaRetiro = texto.match(ExpRegRetiroNequi)[0].replaceAll('\n', ' ')
             
             //Configurar la descripción el comprobante
             comprobante.descripcion = lineaRetiro
@@ -552,13 +553,24 @@ async function extraerDatosNequi(texto){
         }
 
         //Si encontró que es un pago
-        if (ExpRegTipoEnvio.test(texto) == true){
+        if (ExpRegTipoEnvioNequi.test(texto) == true){
             
             //Extraer la cuenta de la linea de cuenta encontrada
-            let lineaTipoEnvio = texto.match(ExpRegTipoEnvio)[0].replaceAll('\n', ' ')
+            let lineaTipoEnvio = texto.match(ExpRegTipoEnvioNequi)[0].replaceAll('\n', ' ')
             
             //Configurar la descripción el comprobante
             comprobante.medio = lineaTipoEnvio.substring(lineaTipoEnvio.lastIndexOf(' ')).trim()
+            
+        }
+
+        //Si encontró que es un pago
+        if (ExpRegTransfiyaDeNequi.test(texto) == true){
+            
+            //Extraer la cuenta de la linea de cuenta encontrada
+            let lineaTransfiyaDeNequi = texto.match(ExpRegTransfiyaDeNequi)[0].replaceAll('\n', ' ')
+            
+            //Configurar la descripción el comprobante
+            comprobante.origen = lineaTransfiyaDeNequi.substring(lineaTransfiyaDeNequi.indexOf(' ')).trim()
             
         }
 
