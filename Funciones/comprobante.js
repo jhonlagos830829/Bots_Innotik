@@ -20,7 +20,7 @@ async function clasificar(archivo){
     try {
         
         //Declaración de variables para identificar datos de corresponsal
-        const ExpRegCorresponsal = new RegExp("[Redban]{7,}|[CORESPNAL]{10,}|[RBMDES]{6,}", "i")
+        const ExpRegCorresponsal = new RegExp("^[Redban]{7,}|[CORESPNAL]{10,}|[RBMDES]{6,}", "i")
         
         //Declaración de variables para identificar datos de Nequi
         const ExpRegNequi = new RegExp("[Enviío ]{4,}[Realizdo]{7,}|De d[óo]nde sali[óo] la plata|Movimiento[ hecon:]+[\na-z]+[Nequi]*|Detalle del[\n ]+movimiento|[movement\\W]{6,}[receipt\\W]{5,}[bpody\\W]{3,}[title]{3,}", "i")
@@ -80,7 +80,7 @@ async function clasificar(archivo){
         console.error(err);
 
     }
-
+    console.log('ENCONTRE QUE EL COMPROBANTE ES DE ' + resultado)
     return resultado;
     
 }
