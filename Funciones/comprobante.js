@@ -581,7 +581,7 @@ async function extraerDatosNequi(texto){
             
             //Extraer la cuenta de la linea de cuenta encontrada
             let lineaEnvioRecibidoNequi = texto.match(ExpRegEnvioRecibidoNequi)[0].replaceAll('\n', ' ')
-            console.log('LA LINEA DE RECIBIDO ES ' + lineaEnvioRecibidoNequi)
+            
             //Configurar la descripción el comprobante
             comprobante.origen = lineaEnvioRecibidoNequi.match(ExpRegEnvioRecibidoDeNequi)[0].trim()
             

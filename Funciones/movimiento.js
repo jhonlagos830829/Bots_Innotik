@@ -684,9 +684,6 @@ async function ObtenerMovimiento(fecha, idCuenta, valor){
       fechaInicial.setMinutes(fechaInicial.getMinutes() - 2)
       fechaFinal.setMinutes(fechaFinal.getMinutes() + 2)
 
-      console.log('Fecha inicial ' + fechaInicial)
-      console.log('Fecha final ' + fechaFinal)
-
       // //Agregar al filtro la fecha
       // filtros = filtros + '&filters[fecha][$eq]=' + fecha
 
@@ -972,7 +969,7 @@ async function VerificarMovimiento (idMovimiento, medio, fecha, idCuenta, valor,
               "concepto": idConcepto
           }
       });
-      console.log('Así vamos a verificar ' + JSON.stringify(datos))
+      
       //Guardar en la base de datos
       salida = await basedatos.Actualizar(datos, configuracion.TABLA_MOVIMIENTOS, idMovimiento)
 
