@@ -403,7 +403,7 @@ async function extraerDatosNequi(texto){
             
             //Extraer la conversación de la línea de conversación
             let lineaConversacion = texto.match(ExpRegConversacionNequi)[0].replaceAll('\n', ' ').replaceAll('¿', '')
-            comprobante.conversacion = lineaConversacion.substring(lineaConversacion.indexOf(' ')).trim()
+            comprobante.conversacion = lineaConversacion.substring(lineaConversacion.indexOf(' ')).replaceAll('  ', ' ').trim()
 
         }
         
