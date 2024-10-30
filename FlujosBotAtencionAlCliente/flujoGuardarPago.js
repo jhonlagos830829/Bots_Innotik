@@ -98,7 +98,8 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
         ////////////////////////// METODOLOGÍA NUEVA //////////////////////////
         
         //Obtener el contenido del comprobante
-        let contenido = await escanearComprobante.escanearConTesseract(nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg")
+        //let contenido = await escanearComprobante.escanearConTesseract(nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg")
+        let contenido = await escanearComprobante.escanearConGoogle(nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg")
 
         //Inicializar la variable de egreso como falsa
         let unEgreso = false
