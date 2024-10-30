@@ -258,7 +258,7 @@ async function ObtenerMovimiento(medio, fecha, idCuenta, valor, referencia, conv
     if(idCuenta != '' && idCuenta != undefined){
 
       //Agregar el filtro de medio de pago
-      filtros = filtros + '&filters[cuenta][$eq]=' + idCuenta
+      filtros = filtros + '&filters[cuenta][id][$eq]=' + idCuenta
 
     }
     
@@ -376,7 +376,7 @@ async function ObtenerMovimiento(medio, fecha, idCuenta, valor, referencia, conv
     if(idCliente != '' && idCliente != undefined){
 
       //Agregar el filtro de recibo
-      filtros = filtros + '&filters[cliente][$eq]=' + idCliente
+      filtros = filtros + '&filters[cliente][id][$eq]=' + idCliente
 
     }
 
@@ -384,7 +384,7 @@ async function ObtenerMovimiento(medio, fecha, idCuenta, valor, referencia, conv
     if(idCaja != '' && idCaja != undefined){
 
       //Agregar el filtro de recibo
-      filtros = filtros + '&filters[caja][$eq]=' + idCaja
+      filtros = filtros + '&filters[caja][id][$eq]=' + idCaja
 
     }
 
@@ -408,7 +408,7 @@ async function ObtenerMovimiento(medio, fecha, idCuenta, valor, referencia, conv
     if(idConcepto != '' && idConcepto != undefined){
 
       //Agregar el filtro de tipo
-      filtros = filtros + '&filters[concepto][$eq]=' + idConcepto
+      filtros = filtros + '&filters[concepto][id][$eq]=' + idConcepto
 
     }
 
