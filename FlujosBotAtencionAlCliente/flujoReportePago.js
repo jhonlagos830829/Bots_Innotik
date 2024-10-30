@@ -568,7 +568,7 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
     //                     // console.log('La cuenta es: |' + cuenta + '|')
                         
     //                     //Buscar en la base de datos la cuenta en la cual se realizó el pago
-    //                     datosCuenta = await cuentaBancaria.obtenerCuenta(cuenta)
+    //                     datosCuenta = await cuentaBancaria.ObtenerCuenta(cuenta)
 
     //                     //Si la búsqueda de la cuenta no arrojó resultados
     //                     if (Object.keys(datosCuenta.data).length == 0){
@@ -753,7 +753,7 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
     //                     //console.log('Cuenta:|'+ cuenta + '|')
 
     //                     //Buscar en la base de datos la cuenta en la cual se realizó el pago
-    //                     datosCuenta = await cuentaBancaria.obtenerCuenta(cuenta)
+    //                     datosCuenta = await cuentaBancaria.ObtenerCuenta(cuenta)
 
     //                     //Si la búsqueda de la cuenta no arrojó resultados
     //                     if (Object.keys(datosCuenta.data).length == 0){
@@ -857,7 +857,7 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
     //                     console.log('Cuenta:|'+ cuenta + '|')
 
     //                     //Buscar en la base de datos la cuenta en la cual se realizó el pago
-    //                     datosCuenta = await cuentaBancaria.obtenerCuenta(cuenta)
+    //                     datosCuenta = await cuentaBancaria.ObtenerCuenta(cuenta)
 
     //                     //Si la búsqueda de la cuenta no arrojó resultados
     //                     if (Object.keys(datosCuenta.data).length == 0){
@@ -893,7 +893,7 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
     //             if(fecha != '' && idCuenta != '' && valor != '' && fecha != 'Invalid Date'){
 
     //                 //Variale para almacenar los datos del movimiento
-    //                 let datosMovimiento = await movimiento.obtenerMovimiento(fecha, idCuenta, valor, referencia, cunico, recibo, rrn, apro)
+    //                 let datosMovimiento = await movimiento.ObtenerMovimiento(fecha, idCuenta, valor, referencia, cunico, recibo, rrn, apro)
 
     //                 //Si el movimiento enviado ya existe
     //                 if(Object.keys(datosMovimiento.data).length > 0){

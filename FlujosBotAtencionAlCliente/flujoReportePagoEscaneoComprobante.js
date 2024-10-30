@@ -149,18 +149,18 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 
                 //Si el comprobante es de un corresponsal
                 if(contenido.includes('CORRESPONSAL')){
-
+                    
                     contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
                     datosComprobante = await escanearComprobante.extraerDatosCorresponsal(contenido)
 
                 }
                 else if(contenido.includes('NEQUI')){
-
+                    
                     contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
                     datosComprobante = await escanearComprobante.extraerDatosNequi(contenido)
 
                     //Si no se obtuvo alguno de los datos obligatorios
-                    if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta != '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
+                    if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta == '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
 
                         //Informar que alguno datos obligatorios no se obtuvo
                         console.log('NO SE OBTUVO ALGUNO DE LOS DATOS OBLIGATORIOS, SE PROBARÁ ESCANEANDO EL COMPROBANTE CON GOOGLE')
@@ -193,7 +193,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
 
                 }
                 else if(contenido.includes('DAVIPLATA')){
-
+                    
                     contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
                     datosComprobante = await escanearComprobante.extraerDatosDaviplata(contenido)
 
@@ -218,7 +218,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 if(datosComprobante.cuenta != '' && datosComprobante.cuenta != undefined){
 
                     //Buscar en la base de datos la cuenta en la cual se realizó el pago
-                    datosCuenta = await cuentaBancaria.obtenerCuenta(bancoCuenta, datosComprobante.cuenta)
+                    datosCuenta = await cuentaBancaria.ObtenerCuenta(bancoCuenta, datosComprobante.cuenta)
 
                     //Si la búsqueda de la cuenta no arrojó resultados
                     if (Object.keys(datosCuenta.data).length == 0){
@@ -416,7 +416,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 //         cuenta = lineaCuenta.substring(lineaCuenta.indexOf(' ') + 1).replaceAll(' ', '').trim()
 
                 //         //Buscar en la base de datos la cuenta en la cual se realizó el pago
-                //         datosCuenta = await cuentaBancaria.obtenerCuenta('', cuenta)
+                //         datosCuenta = await cuentaBancaria.ObtenerCuenta('', cuenta)
 
                 //         //Si la búsqueda de la cuenta no arrojó resultados
                 //         if (Object.keys(datosCuenta.data).length == 0){
@@ -582,7 +582,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 //         cuenta = lineaCuenta.match(ExpRegCuenta)[0].replaceAll(' ', '')
 
                 //         //Buscar en la base de datos la cuenta en la cual se realizó el pago
-                //         datosCuenta = await cuentaBancaria.obtenerCuenta('', cuenta)
+                //         datosCuenta = await cuentaBancaria.ObtenerCuenta('', cuenta)
 
                 //         //Si la búsqueda de la cuenta no arrojó resultados
                 //         if (Object.keys(datosCuenta.data).length == 0){
@@ -693,7 +693,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 //         cuenta = lineaCuenta.match(ExpRegCuenta)[0].replaceAll(' ', '').replaceAll('-', '')
 
                 //         //Buscar en la base de datos la cuenta en la cual se realizó el pago
-                //         datosCuenta = await cuentaBancaria.obtenerCuenta('', cuenta)
+                //         datosCuenta = await cuentaBancaria.ObtenerCuenta('', cuenta)
 
                 //         //Si la búsqueda de la cuenta no arrojó resultados
                 //         if (Object.keys(datosCuenta.data).length == 0){
@@ -788,7 +788,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 //         cuenta = lineaCuenta.match(ExpRegCuenta)[0].replaceAll(' ', '')
 
                 //         //Buscar en la base de datos la cuenta en la cual se realizó el pago
-                //         datosCuenta = await cuentaBancaria.obtenerCuenta('Daviplata', cuenta)
+                //         datosCuenta = await cuentaBancaria.ObtenerCuenta('Daviplata', cuenta)
 
                 //         //Si la búsqueda de la cuenta no arrojó resultados
                 //         if (Object.keys(datosCuenta.data).length == 0){
@@ -833,6 +833,8 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 //     }
                     
                 // }
+
+                // console.log('Los datos obtenidos ' + JSON.stringify(datosComprobante))
                 
                 console.log('Los datos necesarios son:')
                 console.log(datosComprobante.fecha)
@@ -870,11 +872,11 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
 
                 //Si los datos básicos del movimiento están completos
                 if(fecha != '' && idCuenta != '' && valor != '' && fecha != 'Invalid Date'){
-
+                    
                     //Variable para almacenar los datos del movimiento
-                    let datosMovimiento = await movimiento.obtenerMovimiento(fecha, idCuenta, valor, referencia, cunico, recibo, rrn, apro)
+                    let datosMovimiento = await movimiento.ObtenerMovimiento(medio, fecha.toISOString(), idCuenta, valor, referencia, conversacion, '', '', '', false, ter, rrn, apro, cunico, recibo, '', '', '', '', '', '', '')
 
-                    console.log('La consulta del comprobante resiltó -> ' + JSON.stringify(datosMovimiento))
+                    console.log('La consulta del comprobante resultó -> ' + JSON.stringify(datosMovimiento))
 
                     //Si el movimiento enviado ya existe
                     if(Object.keys(datosMovimiento.data).length > 0){
@@ -973,7 +975,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 if(ExpRegConfirmarPagoSi.test(ctx.body) == true){
 
                     //Guardar el movimiento en la base de datos
-                    await movimiento.Guardar(ctxFn.state.get('idCliente'), medio, fecha, idCuenta, valor, referencia, conversacion, 'Cliente', ctx.from, '', cunico, recibo, ter, rrn, apro, comprobante, origen, false)
+                    await movimiento.Guardar(medio, fecha, idCuenta, valor, referencia, conversacion, 'Cliente', ctx.from, '', false, ter, rrn, apro, cunico, recibo, comprobante, origen, ctxFn.state.get('idCliente'), '', '', '', '')
 
                     //Mostrar las opciones de nuevo
                     ctxFn.flowDynamic(mensajes.MENSAJE_COMPROBANTE_RECIBIDO)

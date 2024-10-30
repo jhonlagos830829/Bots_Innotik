@@ -45,7 +45,7 @@ async function Guardar (banco, tipo, numero, titular, identificacion){
  * @param {*} numero - Número de la cuenta
  * @returns 
  */
-async function obtenerCuenta(banco, numero){
+async function ObtenerCuenta(banco, numero){
     
     //Variable para obtener los resultados de la búsqueda
     var datosCliente
@@ -70,5 +70,34 @@ async function obtenerCuenta(banco, numero){
   
   }
   
+/**
+ * Obtiene las cuentas existentes en a base de datos
+ * @returns 
+ */
+async function ListarCuentas(){
+    
+  //Variable para obtener los resultados de la búsqueda
+  var datosCliente
+  
+  //Configurar los datos a almacenar
+  try {
 
-module.exports = { Guardar, obtenerCuenta}
+    //Guardar en la base de datos
+    datosCliente = await basedatos.Buscar(configuracion.URL_LISTAR_CUENTAS, '')
+
+    //console.log('Dele -> ' + datosCliente)
+
+  } catch (err) {
+
+    //Mostrar el mensaje de error
+    console.error(err);
+
+  }
+
+  //Retornar los datos
+  return datosCliente;
+
+}
+
+
+module.exports = { Guardar, ObtenerCuenta, ListarCuentas}

@@ -102,4 +102,126 @@ async function ObtenerFacturasCliente (id){
     return facturas;
   }
 
-module.exports = {Guardar, ObtenerFacturasCliente}
+/**
+ * Guarda un pago en la base de datos a partir del id del cliente
+ * @param {JSON} idCliente - Id del cliente en el CRM
+ * @param {JSON} idMetodo - Id del método de pago // La lista me métodos de pago se puede cosultar con https://ameizyn.unmsapp.com/crm/api/v1.0/payment-methods?visible=1&isSystem=1
+ * @param {JSON} fechaCreacion - Fecha de la creación del pago
+ * @param {JSON} valor - Valor pagado
+ * @param {JSON} nota - Nota aclaratoria
+ * @param {JSON} idUsuario - Id del usuario que realizó el pago
+ * @returns 
+ */
+async function RegistrarPago (idCliente, idMetodo, fechaCreacion, valor, nota, idUsuario){
+
+  //Declaracion de variables
+  const http = require('http');
+  var datosPago;
+  //Armar la estructura JSON con los datos a almacenar
+  let datos = `{
+        "currencyCode": "COP",
+        "applyToInvoicesAutomatically": true,
+        "clientId": ${idCliente},
+        "methodId": "${idMetodo}",
+        "createdDate": "${fechaCreacion}",
+        "amount": ${valor},
+        "note": "${nota}",
+        "userId": ${idUsuario}
+    }
+  `;
+
+  //let datos = JSON.parse(datosCadena)
+
+  //console.log('Esto es lo que va a enviar: ' + datos)
+  
+  try {
+    
+    //Variable de configuración de los parámetros
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: configuracion.URL_API_CRM + 'payments',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'X-Auth-App-Key': configuracion.API_KEY_CRM
+      },
+      data : datos
+    };
+    
+    //Realizar la consulta
+    await axios.request(config)
+    .then((response) => {
+      
+      //Obtener en la variable los datos retornados
+      datosPago = response.data;
+
+    })
+    .catch((error) => {
+      
+      //Mostrar el mensaje de error
+      console.log('Error al consultar los datos,  el sistema despondió\n\n' + error);
+
+    });
+
+  } catch (err) {
+
+    //Mostrar el mensaje de error
+    console.error(err);
+
+  }
+  
+  //Devolver las direcciones del cliente
+  return datosPago;
+}
+
+/**
+ * Envía un recibo de pago a partir de su id
+ * @param {JSON} id - Id del recibo de pago en el CRM
+ * @returns 
+ */
+async function EnviarRecibo (id){
+
+  //Declaracion de variables
+  const http = require('http');
+  var facturas;
+  
+  try {
+    
+    //Variable de configuración de los parámetros
+    let config = {
+      method: 'patch',
+      maxBodyLength: Infinity,
+      url: configuracion.URL_API_CRM + 'payments/' + id + '/send-receipt',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'X-Auth-App-Key': configuracion.API_KEY_CRM
+      }
+    };
+    
+    //Realizar la consulta
+    await axios.request(config)
+    .then((response) => {
+      
+      //Obtener en la variable los datos retornados
+      facturas = response.data;
+
+    })
+    .catch((error) => {
+      
+      //Mostrar el mensaje de error
+      console.log('Error al consultar los datos,  el sistema despondió\n\n' + error);
+
+    });
+
+  } catch (err) {
+
+    //Mostrar el mensaje de error
+    console.error(err);
+
+  }
+  
+  //Devolver las direcciones del cliente
+  return facturas;
+}
+
+module.exports = {Guardar, ObtenerFacturasCliente, RegistrarPago, EnviarRecibo}

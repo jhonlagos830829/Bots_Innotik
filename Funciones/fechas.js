@@ -56,7 +56,7 @@ function extraerFecha(texto) {
     texto = texto.replaceAll('Nov', '11');
     texto = texto.replaceAll('Dic', '12');
 
-    console.log('Aqui tamos ->' + texto);
+    //console.log('Aqui tamos ->' + texto);
 
     //Obtener los datos de la fecha a partir de la expresión regular
     var datosFecha = texto.matchAll(ExpRegFecha);
