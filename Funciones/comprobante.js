@@ -626,6 +626,9 @@ async function extraerDatosNequi(texto){
 
             //Obtener la plataforma desde la cual se realizó la recarga
             let plataformaRecarga = lineaRecarga.match(ExpRegRecargaPlataforma)[0]
+            
+            //Configurar la descripción el comprobante
+            comprobante.origen = plataformaRecarga
 
             //Si la plataforma es Bancolombia
             if(plataformaRecarga.toLowerCase().includes('bancolombia')){
