@@ -123,10 +123,27 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
         //Si no se obtuvo alguno de los datos obligatorios
         if(datosComprobante.fecha != '' && datosComprobante.fecha != undefined && datosComprobante.fecha != 'Invalid Date' && /*datosComprobante.cuenta != '' && datosComprobante.cuenta != undefined && */datosComprobante.valor != '' && datosComprobante.valor != undefined){
             
-            //Buscar el movimiento en la base de datos
-            let datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.medio, datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, datosComprobante.referencia, datosComprobante.conversacion, datosComprobante.reporta, datosComprobante.numeroReporta, datosComprobante.descripcion, false, datosComprobante.ter, datosComprobante.rrn, datosComprobante.apro, datosComprobante.cUnico, datosComprobante.recibo, datosComprobante.comprobante, '', datosComprobante.idCliente, datosComprobante.idCaja, datosComprobante.tipo, datosComprobante.archivo, datosComprobante.idConcepto)
-            //let datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor)
+            //Variable donde se guardarán los datos del movimiento
+            var datosMovimiento
+
+            //Si va a bucar en la base de datos
+            if(datosComprobante.tipodocumento == 'INGRESO_POR_CORRESPONSAL'){
+                
+                //Buscar el movimiento en la base de datos
+                //let datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.medio, datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, datosComprobante.referencia, datosComprobante.conversacion, datosComprobante.reporta, datosComprobante.numeroReporta, datosComprobante.descripcion, false, datosComprobante.ter, datosComprobante.rrn, datosComprobante.apro, datosComprobante.cUnico, datosComprobante.recibo, datosComprobante.comprobante, '', datosComprobante.idCliente, datosComprobante.idCaja, datosComprobante.tipo, datosComprobante.archivo, datosComprobante.idConcepto)
+                datosMovimiento = await movimiento.ObtenerMovimiento('', datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
             
+            }
+            else{
+
+                //Buscar el movimiento en la base de datos
+                datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.medio, datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, datosComprobante.referencia, datosComprobante.conversacion, datosComprobante.reporta, datosComprobante.numeroReporta, datosComprobante.descripcion, false, datosComprobante.ter, datosComprobante.rrn, datosComprobante.apro, datosComprobante.cUnico, datosComprobante.recibo, datosComprobante.comprobante, '', datosComprobante.idCliente, datosComprobante.idCaja, datosComprobante.tipo, datosComprobante.archivo, datosComprobante.idConcepto)
+                //let datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor)
+            
+            }
+
+            console.log('CONVENIDO DEL COMPROBANTE ' + JSON.stringify(datosMovimiento))
+
             //Si se encontró el movimiento
             if (Object.keys(datosMovimiento.data).length > 0){
                 //console.log('LOS DATOS DEL COMPROBANTE ENCONTRADO SON ' + JSON.stringify(datosMovimiento))

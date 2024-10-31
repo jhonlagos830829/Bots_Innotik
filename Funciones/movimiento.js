@@ -237,7 +237,7 @@ async function Guardar (medio, fecha, idCuenta, valor, referencia, conversacion,
 async function ObtenerMovimiento(medio, fecha, idCuenta, valor, referencia, conversacion, reporta, numeroReporta, descripcion, verificado, ter, rrn, apro, cunico, recibo, comprobante, origen, idCliente, idCaja, tipo, archivo, idConcepto){
   
     let filtros = '?'   
-
+    
     //Si el medio no es vacío o indefinido
     if(medio != '' && medio != undefined){
 
