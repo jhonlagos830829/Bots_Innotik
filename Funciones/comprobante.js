@@ -372,14 +372,15 @@ async function extraerDatosNequi(texto){
         const ExpRegFechaNequi = new RegExp("[Fecha ]{3,}[\n]*[ -a-z]*[0-9]+ de [a-z]+ de [0-9]{4}[, als]*[0-9]{1,}:[0-9]{2}[amp .\n]+", "i")
         const ExpRegValorNequi = new RegExp("[Cuaánto\\?]{6}[\n]*\\$[0-9 .]+", "i")
         const ExpRegConversacionNequi = new RegExp("[Conversaió]{10,}[\na-záéíóúÁÉÏÓÚ,. 0-9]+\\¿", "i")
-        const ExpRegEnvioNequi = new RegExp("Env[íi]+o[ abncorelizd]{4,}[\n]+Para[\n]+[a-z ]{2,}", "i")
+        const ExpRegEnvioRealizadoNequi = new RegExp("Env[íi]+o[ abncorelizd]{4,}[\n]+Para[\n]+[a-z ]{2,}", "i")
         const ExpRegPagoNequi = new RegExp("[Pago cnQARelizd]{4,}[\n]+[Pago en]{4,}[\n]+[a-z 0-9]{4,}", "i")
-        const ExpRegImpuestoNequi = new RegExp("[Movient ]{4,}[Impuesto dlgobrn]{12,}", "i")
+        const ExpRegImpuestoNequi = new RegExp("[Movient ]{4,}[Impuesto dlgobrn]{18,}", "i")
         const ExpRegRetiroNequi = new RegExp("Retiro[en ]{2,}[\n]+[cajero]{4,}", "i")
         const ExpRegTipoEnvioNequi = new RegExp("[Tipo denví]{8,}[\n]+[a-z 0-9]{4,}", "i")
         const ExpRegTransfiyaDeNequi = new RegExp("[Transfiy]{6,}[ de]{2,}[a-z -9]{4,}", "i")
         const ExpRegEnvioRecibidoNequi = new RegExp("Env[íi]+o[ Recibdo]{4,}[\n]+[De]{2,}[\n]+[a-z 0-9]{4,}", "i")
         const ExpRegEnvioRecibidoDeNequi = new RegExp("[De]{2,}[a-z 0-9]{4,}", "i")
+        const ExpRegMovimientoRealizadoCuanto = new RegExp("[Moviment]{6,}[ realizdo]{6,}[\n]+[¿Cuáanto?]{4,}", "i")
 
         //Variables donde se guardarán los datos extraidos de las líneas de texto
         const ExpRegReferencia = new RegExp("[MS]+[0-9]{4,}", "i")
@@ -457,10 +458,10 @@ async function extraerDatosNequi(texto){
         }
 
         //Si encontró que es un envío
-        if (ExpRegEnvioNequi.test(texto) == true){
+        if (ExpRegEnvioRealizadoNequi.test(texto) == true){
             
             //Extraer la cuenta de la linea del envío y reemplazar los saltos de línea por espacios
-            let lineaEnvio = texto.match(ExpRegEnvioNequi)[0].replaceAll('\n', ' ')
+            let lineaEnvio = texto.match(ExpRegEnvioRealizadoNequi)[0].replaceAll('\n', ' ')
 
             //Configurar la descripción el comprobante
             comprobante.descripcion = lineaEnvio
@@ -584,6 +585,20 @@ async function extraerDatosNequi(texto){
             
             //Configurar la descripción el comprobante
             comprobante.origen = lineaEnvioRecibidoNequi.match(ExpRegEnvioRecibidoDeNequi)[0].trim()
+            
+        }
+
+        //Si encontró que es un pago
+        if (ExpRegMovimientoRealizadoCuanto.test(texto) == true){
+            
+            // //Extraer la cuenta de la linea de cuenta encontrada
+            // let lineaEnvioRecibidoNequi = texto.match(ExpRegMovimientoRealizadoCuanto)[0].replaceAll('\n', ' ')
+            
+            //Configurar la descripción el comprobante
+            comprobante.medio = ''
+            
+            //Configurar la descripción el comprobante
+            comprobante.referencia = ''
             
         }
 
