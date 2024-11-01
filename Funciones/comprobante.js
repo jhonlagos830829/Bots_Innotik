@@ -377,7 +377,6 @@ async function extraerDatosNequi(texto){
         const ExpRegEnvioRealizadoNequi = new RegExp("Env[íi]+o[ abncorelizd]{4,}[\n]+Para[\n]+[a-z ]{2,}", "i")
         const ExpRegPagoNequi = new RegExp("[Pago cnQARelizd]{4,}[\n]+[Pago en]{4,}[\n]+[a-z 0-9]{4,}", "i")
         const ExpRegImpuestoNequi = new RegExp("[Movient ]{4,}[Impuesto dlgobrn]{18,}", "i")
-        //const ExpRegRetiroNequi = new RegExp("Retiro[en ]{2,}[\n]+[cajero]{4,}", "i")
         const ExpRegRetiroNequi = new RegExp("Retiro[en ]{2,}[\n]+[cajero]{4,}|Sacaste[en ]{2,}[\n]+[corespnsal ]{4,}[a-z 0-9]{4,}", "i")
         const ExpRegTipoEnvioNequi = new RegExp("[Tipo denvíi]{8,}[\n]+[a-z 0-9]{4,}", "i")
         const ExpRegTransfiyaDeNequi = new RegExp("[Transfiy]{6,}[ de]{2,}[a-z -9]{4,}", "i")
@@ -386,6 +385,7 @@ async function extraerDatosNequi(texto){
         const ExpRegMovimientoRealizadoCuanto = new RegExp("[Moviment]{6,}[ realizdo]{6,}[\n]+[¿Cuáanto?]{4,}", "i")
         const ExpRegRecarga = new RegExp("[Recag]{5,}[ realizd]{4,}[\n]+[Recag]{5,}[a-z 0-9]{4,}[\n+][a-z 0-9]{2,}", "i")
         const ExpRegPagoIntereses = new RegExp("[Moviment]{4,}[ Pago]{3,}[ de]{2,}[\n]+[¿Doónde?]{4,}[\n][Inters]{4,}", "i")
+        const ExpRegIngresoOtrosBancos = new RegExp("[Moviment]{6,}[\n]+[¿Dóonde?]{4,}[\n]+[a-z 0-9]{4,}", "i")
 
         //Variables donde se guardarán los datos extraidos de las líneas de texto
         const ExpRegReferencia = new RegExp("[MS]+[0-9]{4,}", "i")
@@ -670,6 +670,20 @@ async function extraerDatosNequi(texto){
             
             //Clasificar el documento
             comprobante.tipodocumento = 'INGRESO_PAGO_INTERESES'
+
+        }
+
+        //Si encontró que es un pago
+        if (ExpRegIngresoOtrosBancos.test(texto) == true){
+            
+            //Extraer la cuenta de la linea de cuenta encontrada
+            let lineaIngresoOtrosBancos = texto.match(ExpRegIngresoOtrosBancos)[0].replaceAll('\n', ' ').replaceAll('  ', ' ')
+            
+            //Configurar la descripción el comprobante
+            comprobante.origen = lineaIngresoOtrosBancos.replace(/(Movimiento )|(¿Dónde\? )/gmi, '').replaceAll('  ', ' ').trim()
+            
+            //Clasificar el documento
+            comprobante.tipodocumento = 'INGRESO_DESDE_OTROS_BANCOS'
 
         }
 
