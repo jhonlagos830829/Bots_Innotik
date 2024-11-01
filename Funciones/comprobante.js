@@ -650,6 +650,12 @@ async function extraerDatosNequi(texto){
                 comprobante.tipodocumento = 'RECARGA_DESDE_PSE'
 
             }
+            else if(plataformaRecarga.toLowerCase().includes('punto red')){
+
+                //Clasificar el documento
+                comprobante.tipodocumento = 'RECARGA_DESDE_PUNTO_RED'
+
+            }
             
         }
         
