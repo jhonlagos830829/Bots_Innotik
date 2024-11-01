@@ -385,6 +385,7 @@ async function extraerDatosNequi(texto){
         const ExpRegEnvioRecibidoDeNequi = new RegExp("[De]{2,}[a-z 0-9]{4,}", "i")
         const ExpRegMovimientoRealizadoCuanto = new RegExp("[Moviment]{6,}[ realizdo]{6,}[\n]+[¿Cuáanto?]{4,}", "i")
         const ExpRegRecarga = new RegExp("[Recag]{5,}[ realizd]{4,}[\n]+[Recag]{5,}[a-z 0-9]{4,}[\n+][a-z 0-9]{2,}", "i")
+        const ExpRegPagoIntereses = new RegExp("[Moviment]{4,}[ Pago]{3,}[ de]{2,}[\n]+[¿Doónde?]{4,}[\n][Inters]{4,}", "i")
 
         //Variables donde se guardarán los datos extraidos de las líneas de texto
         const ExpRegReferencia = new RegExp("[MS]+[0-9]{4,}", "i")
@@ -650,6 +651,20 @@ async function extraerDatosNequi(texto){
 
             }
             
+        }
+        
+        //Si encontró que es un pago
+        if (ExpRegPagoIntereses.test(texto) == true){
+            
+            //Extraer la cuenta de la linea de cuenta encontrada
+            let lineaPagoIntereses = texto.match(ExpRegPagoIntereses)[0].replaceAll('\n', ' ').replaceAll('  ', ' ')
+            
+            //Configurar la descripción el comprobante
+            comprobante.origen = lineaPagoIntereses.replace(/(Movimiento )|(¿Dónde\? )/gmi, '').trim()
+            
+            //Clasificar el documento
+            comprobante.tipodocumento = 'INGRESO_PAGO_INTERESES'
+
         }
 
   
