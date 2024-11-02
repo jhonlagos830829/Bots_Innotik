@@ -7,7 +7,7 @@ module.exports = Object.freeze({
     MOVIMIENTO_ENCONTRADO: '👩🏻 *Encontré un pago* con los siguientes datos:\n\n*Desde:* {MEDIO}\n*Fecha:* {FECHA}\n*Valor:* {VALOR}\n*Referencia:* {REFERENCIA}\n*Cliente:* {NOMBRE_CLIENTE}\n*Conversación:* {CONVERSACION}\n\nVoy a registrarla en el CRM.',
     ENVIAR_RECIBO_PAGO: '👩🏻 *He registrado el pago* en el CRM, *enviaré el recibo de pago* al cliente.',
     RECIBO_PAGO_ENVIADO: '👩🏻 Recibo de pago *{ID_RECIBO}* enviado al correo del cliente cliente.',
-    PAGO_VERIFICADO: '👩🏻 Apreciado usuario le informamos que *hemos recibido satisfactoriamente el pago* reportado por usted a nombre de *{CLIENTE}*, realizado a través de *{MEDIO}* el *{FECHA}* en la cuenta *{CUENTA}* perteneciente a *{TITULAR}* por valor de *{VALOR}*.\n\nGracias por su pago oportuno.',
+    PAGO_VERIFICADO: '👩🏻 Apreciado usuario le informamos que *hemos recibido satisfactoriamente el pago* reportado por usted a nombre de *{CLIENTE}* realizado a través de *{MEDIO}* el *{FECHA}* en la cuenta *{CUENTA}* perteneciente a *{TITULAR}* por valor de *{VALOR}*.\n\nGracias por su pago oportuno.',
     CLIENTE_NOTIFICADO: '👩🏻 He *notificado al cliente* que recibimos su pago.',
     PAGO_NO_ENCONTRADO: '👩🏻 *No encontré* un pago reportado que coincida con el comprobante proporcionado, lo ingresaré como uno nuevo.',
 
