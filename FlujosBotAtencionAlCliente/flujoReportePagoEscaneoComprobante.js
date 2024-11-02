@@ -877,7 +877,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     let datosMovimiento = await movimiento.ObtenerMovimiento(medio, fecha.toISOString(), idCuenta, valor, referencia, conversacion, '', '', '', false, ter, rrn, apro, cunico, recibo, '', '', '', '', '', '', '')
                     //let datosMovimiento = await movimiento.ObtenerMovimiento(fecha.toISOString(), idCuenta, valor)
 
-                    console.log('La consulta del comprobante resultó -> ' + JSON.stringify(datosMovimiento))
+                    //console.log('La consulta del comprobante resultó -> ' + JSON.stringify(datosMovimiento))
 
                     //Si el movimiento enviado ya existe
                     if(Object.keys(datosMovimiento.data).length > 0){
