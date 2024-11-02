@@ -389,7 +389,7 @@ async function extraerDatosNequi(texto){
         const ExpRegPagoPaqueteCelular = new RegExp("[Pago]{2,}[ de]{2,}[ Paquetdcl]{4,}", "i")
 
         //Variables donde se guardarán los datos extraidos de las líneas de texto
-        const ExpRegReferencia = new RegExp("[MS]+[0-9]{4,}", "i")
+        const ExpRegReferencia = new RegExp("[MS1]+[0-9]{4,}", "i")
         const ExpRegCuenta = new RegExp("3[0-9 ]{9,}", "i")
         const ExpRegFecha = new RegExp("[0-9]+ de [a-z]+ de [0-9]{4}[, als]*[0-9]{1,}:[0-9]{2}[amp .]+", "i")
         const ExpRegValor = new RegExp("\\$[0-9 .]+", "i")
@@ -405,7 +405,30 @@ async function extraerDatosNequi(texto){
             
             //Extraer la referencia de la línea de referencia
             let lineaReferencia = texto.match(ExpRegReferenciaNequi)[0].replaceAll('\n', ' ')
-            comprobante.referencia = lineaReferencia.match(ExpRegReferencia)[0]
+
+            //console.log('LA LINEA DE REFERENCIA ES: ' + lineaReferencia)
+
+            //Si la referencia POR ERROR EL TESERACT DETECTA LA PRIMERA M COMO 1
+            if(lineaReferencia.match(ExpRegReferencia)[0].startsWith('11')){
+
+                //console.log('SI COMIENZA CON EL 11')
+
+                //console.log('ESTO ES LO QUE VAMOS A CONFIGURAR EN LA REFERENCIA: ' + 'M' + lineaReferencia.match(ExpRegReferencia)[0].substring(2))
+
+                //Configurar la referencia tal cual fue extraída
+                comprobante.referencia = 'M' + lineaReferencia.match(ExpRegReferencia)[0].substring(2)
+
+                //console.log('LISTA LA REFERENCIA')
+
+            }
+            else{
+
+                //console.log('NO LO DEJÉ PASAR')
+
+                //Configurar la referencia tal cual fue extraída
+                comprobante.referencia = lineaReferencia.match(ExpRegReferencia)[0]
+
+            }
 
         }
         
