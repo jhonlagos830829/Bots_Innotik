@@ -10,4 +10,4 @@ let fechaCadena = "2024-10-03T23:08:51.299Z"
 // console.log('La fecha es')
 // console.log(fecha)
 let nuevaFecha = new Date(fechaCadena)
-console.log(nuevaFecha.toLocaleString('es-ES', { hour12: true }))
+console.log(nuevaFecha.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }))
