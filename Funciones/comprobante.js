@@ -386,6 +386,7 @@ async function extraerDatosNequi(texto){
         const ExpRegRecarga = new RegExp("[Recag]{5,}[ realizd]{4,}[\n]+[Recag]{5,}[a-z 0-9]{4,}[\n+][a-z 0-9]{2,}", "i")
         const ExpRegPagoIntereses = new RegExp("[Moviment]{4,}[ Pago]{3,}[ de]{2,}[\n]+[¿Doónde?]{4,}[\n][Inters]{4,}", "i")
         const ExpRegIngresoOtrosBancos = new RegExp("[Moviment]{6,}[\n]+[¿Dóonde?]{4,}[\n]+[a-z 0-9]{4,}", "i")
+        const ExpRegPagoPaqueteCelular = new RegExp("[Pago]{2,}[ de]{2,}[ Paquetdcl]{4,}", "i")
 
         //Variables donde se guardarán los datos extraidos de las líneas de texto
         const ExpRegReferencia = new RegExp("[MS]+[0-9]{4,}", "i")
@@ -684,6 +685,23 @@ async function extraerDatosNequi(texto){
             
             //Clasificar el documento
             comprobante.tipodocumento = 'INGRESO_DESDE_OTROS_BANCOS'
+
+        }
+
+        //Si encontró que es un pago
+        if (ExpRegPagoPaqueteCelular.test(texto) == true){
+            
+            //Expresión regular para obtener la linea de compra del paquete de celular
+            const ExpPagoPaqueteCelular = new RegExp("[Compra]{4,}[ de]{2,}[ paquete]{6,}[\n]+[a-z 0-9]{8,}[\n]+[Cel]{2,}[\n]+[0-9]{8,}", "i")
+
+            //Extraer la cuenta de la linea de cuenta encontrada
+            let lineaPagoPaqueteCelular = texto.match(ExpPagoPaqueteCelular)[0].replaceAll('\n', ' ').replaceAll('  ', ' ')
+            
+            //Configurar la descripción el comprobante
+            comprobante.descripcion = lineaPagoPaqueteCelular
+            
+            //Clasificar el documento
+            comprobante.tipodocumento = 'EGRESO_COMPRA_PAQUETE_CELULAR'
 
         }
 

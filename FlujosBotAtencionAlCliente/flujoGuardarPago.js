@@ -98,28 +98,36 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
         ////////////////////////// METODOLOGÍA NUEVA //////////////////////////
         
         //Obtener el contenido del comprobante
-        //let contenido = await escanearComprobante.escanearConTesseract(nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg")
-        let contenido = await escanearComprobante.escanearConGoogle(nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg")
+        let contenido = await escanearComprobante.escanearConTesseract(nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg")
+        //let contenido = await escanearComprobante.escanearConGoogle(nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg")
 
         //Inicializar la variable de egreso como falsa
         let unEgreso = false
 
-        //Expresión regular para evaluar si el comprobante es una salida de dinero
-        const ExpRegEnvio = new RegExp("Env[íi]+o[ abncorelizd]{4,}[\n]+Para[\n]+[a-z ]{2,}|[Pago cnQARelizd]{4,}[\n]+[Pago en]{4,}[\n]+[a-z 0-9]{4,}|[Movient ]{4,}[Impuesto dlgobrn]{12,}|Retiro[en ]{2,}[\n]+[cajero]{4,}", "i")
+        // //Expresión regular para evaluar si el comprobante es una salida de dinero
+        // const ExpRegEnvio = new RegExp("Env[íi]+o[ abncorelizd]{4,}[\n]+Para[\n]+[a-z ]{2,}|[Pago cnQARelizd]{4,}[\n]+[Pago en]{4,}[\n]+[a-z 0-9]{4,}|[Movient ]{4,}[Impuesto dlgobrn]{12,}|Retiro[en ]{2,}[\n]+[cajero]{4,}", "i")
 
-        //Si el comprobante es un envío
-        if (ExpRegEnvio.test(contenido) == true){
+        // //Si el comprobante es un envío
+        // if (ExpRegEnvio.test(contenido) == true){
 
-            //Marcarlo como un egreso
-            unEgreso = true 
+        //     //Marcarlo como un egreso
+        //     unEgreso = true 
 
-        }
+        // }
 
         //Extraer los datos del text del comprobante
         let datosComprobante = await escanearComprobante.extraerDatosNequi(contenido)
 
         console.log('DATOS EXTRAIDOS DEL COMPROBANTE ' + JSON.stringify(datosComprobante))
         
+        //Si el comprobante es un envío
+        if (datosComprobante.tipodocumento.includes('RETIRO') || datosComprobante.tipodocumento.includes('EGRESO')){
+
+            //Marcarlo como un egreso
+            unEgreso = true 
+
+        }
+
         //Si no se obtuvo alguno de los datos obligatorios
         if(datosComprobante.fecha != '' && datosComprobante.fecha != undefined && datosComprobante.fecha != 'Invalid Date' && /*datosComprobante.cuenta != '' && datosComprobante.cuenta != undefined && */datosComprobante.valor != '' && datosComprobante.valor != undefined){
             
