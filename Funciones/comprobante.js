@@ -370,12 +370,12 @@ async function extraerDatosNequi(texto){
         const ExpRegReferenciaNequi = new RegExp("[Rfencia ]{6,}[\n| ]*[MS]*[0-9]{4,}|[movement\\W]{6,}[receipt\\W]{5,}[bpody\\W]{3,}[reference\\W]{6,}[MS]*[0-9]{4,}", "i")
         const ExpRegCuentaNequi = new RegExp("[Núumeroeqi ]{4,}[\n]*3[0-9 ]{9,}", "i")
         const ExpRegFechaNequi = new RegExp("[Fecha yora]{3,}[\n]*[ -a-z]*[0-9]+ de [a-z]+ de [0-9]{4}[, als]*[0-9]{1,}:[0-9]{2}[amp .\n]+", "i")
-        const ExpRegValorNequi = new RegExp("[Cuaánto\\?]{6}[\n]*\\$[0-9 .]+", "i")
+        const ExpRegValorNequi = new RegExp("[Cuaánto a-z\\?]{6}[\n]*\\$[0-9 .]+", "i")
         const ExpRegConversacionNequi = new RegExp("[Conversaió]{10,}[\na-záéíóúÁÉÏÓÚ,. 0-9]+\\¿", "i")
 
         //Expresiones regulares clasificadoras de documento
         const ExpRegEnvioRealizadoNequi = new RegExp("Env[íi]+o[ abncorelizd]{4,}[\n]+Para[\n]+[a-z ]{2,}", "i")
-        const ExpRegPagoNequi = new RegExp("[Pago cnQARelizd]{4,}[\n]+[Pago en]{4,}[\n]+[a-z 0-9]{4,}", "i")
+        const ExpRegPagoNequi = new RegExp("[Pago cnQARelizd]{4,}[\n]+[Pago en]{4,}[\n]+[a-z 0-9]{4,}|[Pago en]{4,}[\na-záéíóúÁÉÍÓÚ 0-9]+[¿]", "i")
         const ExpRegImpuestoNequi = new RegExp("[Movient ]{4,}[Impuesto]{4,}[ delgobirn]{6,}", "i")
         const ExpRegRetiroNequi = new RegExp("Retiro[en ]{2,}[\n]+[cajero]{4,}|Sacaste[en ]{2,}[\n]+[corespnsal ]{4,}[a-z 0-9]{4,}", "i")
         const ExpRegTipoEnvioNequi = new RegExp("[Tipo denvíi]{8,}[\n]+[a-z 0-9]{4,}", "i")
@@ -389,7 +389,7 @@ async function extraerDatosNequi(texto){
         const ExpRegPagoPaqueteCelular = new RegExp("[Pago]{2,}[ de]{2,}[ Paquetdcl]{4,}", "i")
 
         //Variables donde se guardarán los datos extraidos de las líneas de texto
-        const ExpRegReferencia = new RegExp("[MS1]+[0-9]{4,}", "i")
+        const ExpRegReferencia = new RegExp("[MS15]+[0-9]{4,}", "i")
         const ExpRegCuenta = new RegExp("3[0-9 ]{9,}", "i")
         const ExpRegFecha = new RegExp("[0-9]+ de [a-z]+ de [0-9]{4}[, als]*[0-9]{1,}:[0-9]{2}[amp .]+", "i")
         const ExpRegValor = new RegExp("\\$[0-9 .]+", "i")
@@ -568,13 +568,19 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un pago
         if (ExpRegPagoNequi.test(texto) == true){
-            
+
+            //Expresión regular para extraer los datos del pago
+            const ExpRegDatosPagoNequi = new RegExp("[Pago en]{4,}[\na-záéíóúÁÉÍÓÚ 0-9]+[¿]", "i")
+
             //Extraer la cuenta de la linea de cuenta encontrada
-            let lineaPago = texto.match(ExpRegPagoNequi)[0].replaceAll('\n', ' ')
+            let lineaPago = texto.match(ExpRegDatosPagoNequi)[0].replaceAll('\n', ' ').replaceAll('  ', ' ')
             
             //Configurar la descripción el comprobante
-            comprobante.descripcion = lineaPago.match(ExpRegPagoEn)[0]
+            comprobante.descripcion = lineaPago.replace(' ¿', '')
             
+            //Clasificar el documento
+            comprobante.tipodocumento = 'EGRESO_POR_PAGO'
+
         }
 
         //Si encontró que es un pago
