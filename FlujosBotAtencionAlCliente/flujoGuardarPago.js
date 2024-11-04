@@ -127,10 +127,10 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
             unEgreso = true 
 
         }
-
+        
         //Si no se obtuvo alguno de los datos obligatorios
         if(datosComprobante.fecha != '' && datosComprobante.fecha != undefined && datosComprobante.fecha != 'Invalid Date' && /*datosComprobante.cuenta != '' && datosComprobante.cuenta != undefined && */datosComprobante.valor != '' && datosComprobante.valor != undefined){
-            
+            console.log('ENTRÓ POR AQUÍ...')
             //Variable donde se guardarán los datos del movimiento
             var datosMovimiento
 
@@ -154,7 +154,7 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
 
             //Si se encontró el movimiento
             if (Object.keys(datosMovimiento.data).length > 0){
-                //console.log('LOS DATOS DEL COMPROBANTE ENCONTRADO SON ' + JSON.stringify(datosMovimiento))
+                
                 //Enviar el mensaje de resumen de las clientes
                 await ctxFn.flowDynamic(mensajes.MOVIMIENTO_ENCONTRADO.replace('{MEDIO}', datosMovimiento.data[0].attributes.medio).replace('{FECHA}', datosComprobante.fecha.toLocaleString().replace(',', '')).replace('{VALOR}', parseInt(datosComprobante.valor).toLocaleString("es-CO", {style: "currency", currency: "COP", minimumFractionDigits: 0, maximumFractionDigits: 0,})).replace('{REFERENCIA}', datosComprobante.referencia).replace('{VALOR}', datosComprobante.valor).replace('{NOMBRE_CLIENTE}', datosMovimiento.data[0].attributes.cliente.data.attributes.nombre).replace('{CONVERSACION}', datosComprobante.conversacion))
 
