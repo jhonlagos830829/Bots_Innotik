@@ -135,7 +135,7 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
             var datosMovimiento
 
             //Si va a bucar en la base de datos
-            if(datosComprobante.tipodocumento == 'INGRESO_POR_CORRESPONSAL' || datosComprobante.tipodocumento.includes('RECARGA_DESDE') || datosComprobante.tipodocumento == 'INGRESO_DESDE_OTROS_BANCOS'){
+            if(datosComprobante.tipodocumento.includes == 'INGRESO_POR_CORRESPONSAL' || datosComprobante.tipodocumento.includes('RECARGA_DESDE') || datosComprobante.tipodocumento == 'INGRESO_DESDE_OTROS_BANCOS'){
                 
                 //Buscar el movimiento en la base de datos
                 //let datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.medio, datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, datosComprobante.referencia, datosComprobante.conversacion, datosComprobante.reporta, datosComprobante.numeroReporta, datosComprobante.descripcion, false, datosComprobante.ter, datosComprobante.rrn, datosComprobante.apro, datosComprobante.cUnico, datosComprobante.recibo, datosComprobante.comprobante, '', datosComprobante.idCliente, datosComprobante.idCaja, datosComprobante.tipo, datosComprobante.archivo, datosComprobante.idConcepto)
@@ -145,7 +145,7 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
             else{
 
                 //Buscar el movimiento en la base de datos
-                datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.medio, datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, datosComprobante.referencia, datosComprobante.conversacion, datosComprobante.reporta, datosComprobante.numeroReporta, datosComprobante.descripcion, false, datosComprobante.ter, datosComprobante.rrn, datosComprobante.apro, datosComprobante.cUnico, datosComprobante.recibo, datosComprobante.comprobante, '', datosComprobante.idCliente, datosComprobante.idCaja, datosComprobante.tipo, datosComprobante.archivo, datosComprobante.idConcepto)
+                datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.medio, datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, datosComprobante.referencia, datosComprobante.conversacion, datosComprobante.reporta, datosComprobante.numeroReporta, '', false, datosComprobante.ter, datosComprobante.rrn, datosComprobante.apro, datosComprobante.cUnico, datosComprobante.recibo, datosComprobante.comprobante, '', datosComprobante.idCliente, datosComprobante.idCaja, datosComprobante.tipo, datosComprobante.archivo, datosComprobante.idConcepto)
                 //let datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor)
             
             }
