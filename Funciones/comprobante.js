@@ -421,6 +421,18 @@ async function extraerDatosNequi(texto){
                 //console.log('LISTA LA REFERENCIA')
 
             }
+            if(lineaReferencia.match(ExpRegReferencia)[0].startsWith('1')){
+
+                //console.log('SI COMIENZA CON EL 11')
+
+                //console.log('ESTO ES LO QUE VAMOS A CONFIGURAR EN LA REFERENCIA: ' + 'M' + lineaReferencia.match(ExpRegReferencia)[0].substring(2))
+
+                //Configurar la referencia tal cual fue extraída
+                comprobante.referencia = 'M' + lineaReferencia.match(ExpRegReferencia)[0].substring(1)
+
+                //console.log('LISTA LA REFERENCIA')
+
+            }
             else if(lineaReferencia.match(ExpRegReferencia)[0].startsWith('5')){
 
                 //console.log('SI COMIENZA CON EL 11')
