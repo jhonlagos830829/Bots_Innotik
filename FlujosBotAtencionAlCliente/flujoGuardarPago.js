@@ -130,7 +130,7 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
         
         //Si no se obtuvo alguno de los datos obligatorios
         if(datosComprobante.fecha != '' && datosComprobante.fecha != undefined && datosComprobante.fecha != 'Invalid Date' && /*datosComprobante.cuenta != '' && datosComprobante.cuenta != undefined && */datosComprobante.valor != '' && datosComprobante.valor != undefined){
-            console.log('ENTRÓ POR AQUÍ...')
+            
             //Variable donde se guardarán los datos del movimiento
             var datosMovimiento
 

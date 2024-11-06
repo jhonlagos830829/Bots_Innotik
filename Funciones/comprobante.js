@@ -406,48 +406,26 @@ async function extraerDatosNequi(texto){
             //Extraer la referencia de la línea de referencia
             let lineaReferencia = texto.match(ExpRegReferenciaNequi)[0].replaceAll('\n', ' ')
 
-            //console.log('LA LINEA DE REFERENCIA ES: ' + lineaReferencia)
-
             //Si la referencia POR ERROR EL TESERACT DETECTA LA PRIMERA M COMO 1
             if(lineaReferencia.match(ExpRegReferencia)[0].startsWith('11')){
-
-                //console.log('SI COMIENZA CON EL 11')
-
-                //console.log('ESTO ES LO QUE VAMOS A CONFIGURAR EN LA REFERENCIA: ' + 'M' + lineaReferencia.match(ExpRegReferencia)[0].substring(2))
 
                 //Configurar la referencia tal cual fue extraída
                 comprobante.referencia = 'M' + lineaReferencia.match(ExpRegReferencia)[0].substring(2)
 
-                //console.log('LISTA LA REFERENCIA')
-
             }
             if(lineaReferencia.match(ExpRegReferencia)[0].startsWith('1')){
-
-                //console.log('SI COMIENZA CON EL 11')
-
-                //console.log('ESTO ES LO QUE VAMOS A CONFIGURAR EN LA REFERENCIA: ' + 'M' + lineaReferencia.match(ExpRegReferencia)[0].substring(2))
 
                 //Configurar la referencia tal cual fue extraída
                 comprobante.referencia = 'M' + lineaReferencia.match(ExpRegReferencia)[0].substring(1)
 
-                //console.log('LISTA LA REFERENCIA')
-
             }
             else if(lineaReferencia.match(ExpRegReferencia)[0].startsWith('5')){
-
-                //console.log('SI COMIENZA CON EL 11')
-
-                //console.log('ESTO ES LO QUE VAMOS A CONFIGURAR EN LA REFERENCIA: ' + 'M' + lineaReferencia.match(ExpRegReferencia)[0].substring(2))
 
                 //Configurar la referencia tal cual fue extraída
                 comprobante.referencia = 'S' + lineaReferencia.match(ExpRegReferencia)[0].substring(1)
 
-                //console.log('LISTA LA REFERENCIA')
-
             }
             else{
-
-                //console.log('NO LO DEJÉ PASAR')
 
                 //Configurar la referencia tal cual fue extraída
                 comprobante.referencia = lineaReferencia.match(ExpRegReferencia)[0]
@@ -467,7 +445,7 @@ async function extraerDatosNequi(texto){
         
         //Si encontró la fecha
         if (ExpRegFechaNequi.test(texto) == true){
-            console.log('EXTRAYENDO FECHA')
+            
             //Extraer la fecha de la línea de fecha
             let lineaFecha = texto.match(ExpRegFechaNequi)[0].replaceAll('\n', ' ')
             let fechaCadena = lineaFecha.match(ExpRegFecha)[0].replaceAll('a. m.', 'a.m.').replaceAll('p. m.', 'p.m.').replaceAll(' Mm.', 'm.').trim()
@@ -604,6 +582,9 @@ async function extraerDatosNequi(texto){
             //Configurar la descripción el comprobante
             comprobante.descripcion = lineaImpuesto.match(ExpRegImpuestoGobierno)[0]
             
+            //Clasificar el documento
+            comprobante.tipodocumento = 'EGRESO_POR_IMPUESTO'
+
         }
 
         //Si encontró que es un pago
