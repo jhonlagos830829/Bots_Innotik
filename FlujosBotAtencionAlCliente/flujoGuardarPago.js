@@ -136,7 +136,7 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
 
             //Si va a bucar en la base de datos
             if(datosComprobante.tipodocumento == 'INGRESO_POR_CORRESPONSAL' || datosComprobante.tipodocumento.includes('RECARGA_DESDE') || datosComprobante.tipodocumento == 'INGRESO_DESDE_OTROS_BANCOS'){
-                console.log('ES UN INGRESO POR CORRESPONSAL')
+                
                 //Buscar el movimiento en la base de datos
                 //let datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.medio, datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, datosComprobante.referencia, datosComprobante.conversacion, datosComprobante.reporta, datosComprobante.numeroReporta, datosComprobante.descripcion, false, datosComprobante.ter, datosComprobante.rrn, datosComprobante.apro, datosComprobante.cUnico, datosComprobante.recibo, datosComprobante.comprobante, '', datosComprobante.idCliente, datosComprobante.idCaja, datosComprobante.tipo, datosComprobante.archivo, datosComprobante.idConcepto)
                 datosMovimiento = await movimiento.ObtenerMovimiento('', datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')

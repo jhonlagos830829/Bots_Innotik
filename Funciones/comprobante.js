@@ -375,7 +375,7 @@ async function extraerDatosNequi(texto){
 
         //Expresiones regulares clasificadoras de documento
         const ExpRegEnvioRealizadoNequi = new RegExp("Env[íi]+o[ abncorelizd]{4,}[\n]+Para[\n]+[a-z ]{2,}", "i")
-        const ExpRegPagoNequi = new RegExp("[Pago cnQARelizd]{4,}[\n]+[Pago en]{4,}[\n]+[a-z 0-9]{4,}|[Pago en]{4,}[\n\wáéíóúÁÉÍÓÚ -]{4,}[¿]+", "i")
+        const ExpRegPagoNequi = new RegExp("[Pago cnQARelizd]{4,}[\n]+[Pago en]{4,}[\n]+[a-z 0-9]{4,}|[Pago en]{4,}[\n\\wáéíóúÁÉÍÓÚ -]{4,}[¿]+", "i")
         const ExpRegImpuestoNequi = new RegExp("[Movient ]{4,}[Impuesto]{4,}[ delgobirn]{6,}", "i")
         const ExpRegRetiroNequi = new RegExp("Retiro[en ]{2,}[\n]+[cajero]{4,}|Sacaste[en ]{2,}[\n]+[corespnsal ]{4,}[a-z 0-9]{4,}", "i")
         const ExpRegTipoEnvioNequi = new RegExp("[Tipo denvíi]{8,}[\n]+[a-z 0-9]{4,}", "i")
@@ -558,7 +558,7 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un pago
         if (ExpRegPagoNequi.test(texto) == true){
-
+            
             //Expresión regular para extraer los datos del pago
             const ExpRegDatosPagoNequi = new RegExp("[Pago en]{4,}[\n\\wáéíóúÁÉÍÓÚ -]{4,}[¿]+", "i")
 
