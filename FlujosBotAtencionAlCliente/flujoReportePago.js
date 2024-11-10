@@ -46,7 +46,7 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
             
             //Obtener la fecha del sistema
             fechaBruta = new Date()
-
+            
             //Elaborar el nombde del directorio donde se guardarán las imagenes
             const nombreDirectorioComprobantes = 'Archivos/Pagos/' + fechaBruta.getFullYear() + '-' + (fechaBruta.getMonth() + 1) + '-' + fechaBruta.getDate()
             
@@ -60,16 +60,16 @@ module.exports = flujoReportePago = addKeyword(EVENTS.MEDIA)
             
             //Elaborar el nombre  con el cual se guardará el comprobante
             const nombreComprobante = 'Comprobante_WP_' + ctx.from + '_' + Date.now()
-
+            console.log('CHAMO PASO POR AQUI..')
             //ALmacenar en buffer la imagen
             const buffer = await downloadMediaMessage(ctx, "buffer")
-
+            console.log('PERO AQUI YA NO..')
             //Guardar la imagen
             await writeFile(nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg", buffer)
-
+            
             //Guardar en una variable de estado el nombre del archivo del comprobante
             ctxFn.state.update({archivoComprobante: nombreDirectorioComprobantes + "/" + nombreComprobante + ".jpg"})
-
+            
             //Consultar si ya está registrado en el cliente en el sistema
             let datosCliente = await cliente.obtenerCliente('', '', ctx.from)
             
