@@ -54,7 +54,7 @@ module.exports = Object.freeze({
     MENSAJE_NOTIFICAR_TEXTO_ESCANEADO: '👩🏻 El texto escaneado es el siguiente:\n\n',
     MENSAJE_NOTIFICAR_DATOS_IDENTIFICADOS: '👩🏻 Los datos identificados son los siguientes:\n\n',
     MENSAJE_COMPROBANTE_YA_EXISTE: '👩🏻 El comprobante que está enviando *no podemos recibirlo debido a que ya lo recibimos anteriormente*.\n\nSi cree que se trata de un error por favor *tome una nueva foto y envíela de nuevo*.\n\nSin embargo le sugerimos tener precaución con los comprobantes que envía, ya que se podría interpretar como un *intento de fraude* y perdería el beneficio de *reactivación inmediata* de su servicio.\n\nDe esa forma tendría que *esperar a que nuestro personal en horario de oficina verifique su pago* para que procedan con la *reactivación del servicio*.',
-    MENSAJE_SIN_DATOS_NECESARIOS: '👩🏻 Si lo que está enviando es *el comprobante de pago* de un servicio *no podré cargarlo en el sistema*.\n\nDebido a que *no me ha proporcionado los datos necesarios*.',
+    MENSAJE_SIN_DATOS_NECESARIOS: '👩🏻 Si está enviando un comprobante de pago *NO PODRÉ CAGARLO EN EL SISTEMA YA QUE NO ME HA PROPORCIONADO LOS DATO NECESARIOS*, de esa forma su pago *QUEDARÁ COMO NO REPORTADO Y NUESTRA PLATAFORMA SUSPENDERÁ SU SERVICIO* al momento de vencerse el plazo máximo para el pago.',
 
     //Mensajes flujo flujoInformacionServicios
     MENSAJE_SERVICIOS_PRESTADOS: '👩🏻 Prestamos servicios de *internet, telefonía fija y televisión* haciendo uso tecnologías en *fibra óptica y microondas* en zonas donde los proveedores como Movistar, Claro o Tigo no prestan sus servicios.\n\n¿Podría indicarme su *nombre completo* por favor?',
