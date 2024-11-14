@@ -369,7 +369,7 @@ async function extraerDatosNequi(texto){
         const ExpRegNequi = new RegExp("De d[óo]nde sali[óo] la plata|Movimiento[ hecon:]+[\na-z]+[Nequi]*|Detalle del[\n ]+movimiento|[movement\\W]{6,}[receipt\\W]{5,}[bpody\\W]{3,}[title]{3,}", "i")
         const ExpRegReferenciaNequi = new RegExp("[Rfencia ]{6,}[\n| ]*[MS]*[0-9]{4,}|[movement\\W]{6,}[receipt\\W]{5,}[bpody\\W]{3,}[reference\\W]{6,}[MS]*[0-9]{4,}", "i")
         const ExpRegCuentaNequi = new RegExp("[Núumeroeqi ]{4,}[\n]*3[0-9 ]{9,}", "i")
-        const ExpRegFechaNequi = new RegExp("[Fecha yora]{3,}[\n]*[ -a-z]*[0-9]+ de [a-z]+ de [0-9]{4}[, als]*[0-9]{1,}:[0-9]{2}[amp .\n]+", "i")
+        const ExpRegFechaNequi = new RegExp("[Fecha yora]{3,}[\n]*[ -a-z]*[0-9]+ de [a-z]+ de [0-9]{4}[, als\n]*[0-9]{1,}:[0-9]{2}[amp .\n]+", "i")
         const ExpRegValorNequi = new RegExp("[Cuaánto a-z\\?]{6}[\n]*\\$[0-9 .]+", "i")
         const ExpRegConversacionNequi = new RegExp("[Conversaió]{10,}[\na-záéíóúÁÉÏÓÚ,. 0-9]+\\¿", "i")
 
@@ -391,7 +391,7 @@ async function extraerDatosNequi(texto){
         //Variables donde se guardarán los datos extraidos de las líneas de texto
         const ExpRegReferencia = new RegExp("[MS15]+[0-9]{4,}", "i")
         const ExpRegCuenta = new RegExp("3[0-9 ]{9,}", "i")
-        const ExpRegFecha = new RegExp("[0-9]+ de [a-z]+ de [0-9]{4}[, als]*[0-9]{1,}:[0-9]{2}[amp .]+", "i")
+        const ExpRegFecha = new RegExp("[0-9]+ de [a-z]+ de [0-9]{4}[, als\n]*[0-9]{1,}:[0-9]{2}[amp .]+", "i")
         const ExpRegValor = new RegExp("\\$[0-9 .]+", "i")
         const ExpRegConversacion = new RegExp("\\$[0-9 .]+", "i")
         const ExpRegPagoEn = new RegExp("Pago en[a-z 0-9]{4,}", "i")
