@@ -385,7 +385,7 @@ async function extraerDatosNequi(texto){
         const ExpRegEnvioRecibidoNequi = new RegExp("Env[íi]+o[ Recibdo]{4,}[\n]+[De]{2,}[\n]+[a-z 0-9]{4,}", "i")
         const ExpRegEnvioRecibidoDeNequi = new RegExp("[De]{2,}[a-z 0-9]{4,}", "i")
         const ExpRegMovimientoRealizadoCuanto = new RegExp("[Moviment]{6,}[ realizdo]{6,}[\n]+[¿Cuáanto?]{4,}", "i")
-        const ExpRegRecarga = new RegExp("[Recag]{5,}[ realizd]{4,}[\n]+[Recag]{5,}[a-z 0-9]{4,}[\n+][a-z 0-9]{2,}", "i")
+        const ExpRegRecarga = new RegExp("[Recag]{5,}[ realizd]{4,}[\n]+[Recag]{5,}[a-z 0-9]{4,}[\n]+[a-z 0-9]{2,}", "i")
         const ExpRegPagoIntereses = new RegExp("[Moviment]{4,}[ Pago]{3,}[ de]{2,}[\n]+[¿Doónde?]{4,}[\n][Inters]{4,}", "i")
         const ExpRegIngresoOtrosBancos = new RegExp("[Moviment]{6,}[\n]+[¿Dóonde?]{4,}[\n]+[a-z 0-9]{4,}", "i")
         const ExpRegPagoPaqueteCelular = new RegExp("[Pago]{2,}[ de]{2,}[ Paquetdcl]{4,}", "i")
