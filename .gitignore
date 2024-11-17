@@ -1,5 +1,6 @@
 *_sessions
 *.png
+.jpeg
 *.csv
 *.log
 Archivos/*.json
