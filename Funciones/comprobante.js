@@ -462,7 +462,7 @@ async function extraerDatosNequi(texto){
             
             //Extraer la fecha de la línea de fecha
             let lineaFecha = texto.match(ExpRegFechaNequi)[0].replaceAll('\n', ' ')
-            let fechaCadena = lineaFecha.match(ExpRegFecha)[0].replaceAll('a. m.', 'a.m.').replaceAll('p. m.', 'p.m.').replaceAll(' Mm.', 'm.').replaceAll('a.m.', ' a.m.').replaceAll('p.m.', ' p.m.').replaceAll('  ', ' ').trim()
+            let fechaCadena = lineaFecha.match(ExpRegFecha)[0].replaceAll('a. m.', 'a.m.').replaceAll('p. m.', 'p.m.').replaceAll(' Mm.', 'm.').replaceAll('a.m.', ' a.m.').replaceAll('p.m.', ' p.m.').replaceAll('  ', ' ').trim() //Linea modificada
             let horaAmPm = ''
 
             //Otener la hora de la fecha
