@@ -26,10 +26,15 @@ async function clasificar(archivo){
         const ExpRegNequi = new RegExp("[Enviío ]{4,}[Realizdo]{7,}|De d[óo]nde sali[óo] la plata|Movimiento[ hecon:]+[\na-z]+[Nequi]*|Detalle del[\n ]+movimiento|[movement\\W]{6,}[receipt\\W]{5,}[bpody\\W]{3,}[title]{3,}", "i")
         
         //Declaración de variables para identificar datos de Bancolombia
-        const ExpRegBancolombia = new RegExp("[Transfeci Exto]{20,}|[¡Transfeci lzd!]{20,}|[Comprbante .0-9]{20,}|[Productigen ]{15,}|[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")
+        //const ExpRegBancolombia = new RegExp("[Transfeci Exto]{20,}|[¡Transfeci lzd!]{20,}|[Comprbante .0-9]{20,}|[Productigen ]{15,}|[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")
+        //const ExpRegBancolombia = new RegExp("Transferencia[ Exitosa]{6,}|Transferencia[ Realizd]{8,}|[Comprbante .0-9]{20,}|Producto[origen ]{6,}|Producto[destino ]{6,}", "i")
+        const ExpRegBancolombia = new RegExp("(?=.*\\bTransferencia exitosa\\b|\\bTransferencia realizada\\b)(?=.*\\bComprobante N[oO0]\b)(?=.*\\bProducto origen\b)(?=.*\\bProducto destino\\b)", "i")
         
         //Declaración de variables para identificar datos de Bancolombia
         const ExpRegDaviplata = new RegExp("[WViplat?]{8,}|[Transacción exitosa]{15,}|[Código QRparcnfmarsutc]{25,}|[Pasó lt]{6,}|[*+6136]{6,}|[Motiv]{5,}", "i")
+
+        //Declaración de variables para identificar datos de Bancolombia
+        const ExpRegTransfiya = new RegExp("Transf[i1l]ya", "i")
 
         //Mostrar en consola el proceso
         console.log('-----INICIANDO ESCANEO CON TESSERACT-----')
@@ -73,6 +78,12 @@ async function clasificar(archivo){
             resultado = 'DAVIPLATA'
             
         }
+        else if(ExpRegTransfiya.test(texto) == true){
+
+            //Si el comprobante es de un corresponsal
+            resultado = 'TRANSFIYA'
+            
+        }
 
     } catch (err) {
 
@@ -80,7 +91,8 @@ async function clasificar(archivo){
         console.error(err);
 
     }
-    console.log('ENCONTRE QUE EL COMPROBANTE ES DE ' + resultado)
+    
+    //Devolver resultado
     return resultado;
     
 }
@@ -404,7 +416,7 @@ async function extraerDatosNequi(texto){
         
         //Si encontró al referencia de pago
         if (ExpRegReferenciaNequi.test(texto) == true){
-            console.log('ENTRÓ A ExpRegReferenciaNequi')
+            
             //Extraer la referencia de la línea de referencia
             let lineaReferencia = texto.match(ExpRegReferenciaNequi)[0].replaceAll('\n', ' ')
 
@@ -438,7 +450,7 @@ async function extraerDatosNequi(texto){
         
         //Si encontró la conversación
         if (ExpRegConversacionNequi.test(texto) == true){
-            console.log('ENTRÓ A ExpRegConversacionNequi')
+            
             //Extraer la conversación de la línea de conversación
             let lineaConversacion = texto.match(ExpRegConversacionNequi)[0].replaceAll('\n', ' ').replaceAll('¿', '')
             comprobante.conversacion = lineaConversacion.substring(lineaConversacion.indexOf(' ')).toLowerCase().replaceAll('  ', ' ').trim()
@@ -447,7 +459,7 @@ async function extraerDatosNequi(texto){
         
         //Si encontró la fecha
         if (ExpRegFechaNequi.test(texto) == true){
-            console.log('ENTRÓ A ExpRegFechaNequi')
+            
             //Extraer la fecha de la línea de fecha
             let lineaFecha = texto.match(ExpRegFechaNequi)[0].replaceAll('\n', ' ')
             let fechaCadena = lineaFecha.match(ExpRegFecha)[0].replaceAll('a. m.', 'a.m.').replaceAll('p. m.', 'p.m.').replaceAll(' Mm.', 'm.').trim()
@@ -474,7 +486,7 @@ async function extraerDatosNequi(texto){
         
         //Si encontró el valor del movimiento
         if (ExpRegValorNequi.test(texto) == true){
-            console.log('ENTRÓ A ExpRegValorNequi')
+            
             //Extraer el valor de la linea de valor encontrada
             let lineaValor = texto.match(ExpRegValorNequi)[0].replaceAll('\n', ' ')
             comprobante.valor = lineaValor.match(ExpRegValor)[0].replaceAll('$', '').replaceAll('.', '').trim()
@@ -483,7 +495,7 @@ async function extraerDatosNequi(texto){
         
         //Si encontró el número de la cuenta
         if (ExpRegCuentaNequi.test(texto) == true){
-            console.log('ENTRÓ A ExpRegCuentaNequi')
+            
             //Extraer la cuenta de la linea de cuenta encontrada
             let lineaCuenta = texto.match(ExpRegCuentaNequi)[0].replaceAll('\n', ' ')
             comprobante.cuenta = lineaCuenta.match(ExpRegCuenta)[0].replaceAll(' ', '')
@@ -492,7 +504,7 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un envío
         if (ExpRegEnvioRealizadoNequi.test(texto) == true){
-            console.log('ENTRÓ A ExpRegEnvioRealizadoNequi')
+            
             //Extraer la cuenta de la linea del envío y reemplazar los saltos de línea por espacios
             let lineaEnvio = texto.match(ExpRegEnvioRealizadoNequi)[0].replaceAll('\n', ' ')
 
@@ -560,7 +572,7 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un pago
         if (ExpRegPagoNequi.test(texto) == true){
-            console.log('ENTRÓ A ExpRegPagoNequi')
+            
             //Expresión regular para extraer los datos del pago
             const ExpRegDatosPagoNequi = new RegExp("[Pago en]{4,}[\n\\wáéíóúÁÉÍÓÚ -]{4,}", "i")
 
@@ -577,7 +589,7 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un pago
         if (ExpRegImpuestoNequi.test(texto) == true){
-            console.log('ENTRÓ A ExpRegImpuestoNequi')
+            
             //Extraer la cuenta de la linea de cuenta encontrada
             let lineaImpuesto = texto.match(ExpRegImpuestoNequi)[0].replaceAll('\n', ' ')
             
@@ -591,7 +603,7 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un pago
         if (ExpRegRetiroNequi.test(texto) == true){
-            console.log('ENTRÓ A ExpRegRetiroNequi')
+            
             //Extraer la cuenta de la linea de cuenta encontrada
             let lineaRetiro = texto.match(ExpRegRetiroNequi)[0].replaceAll('\n', ' ')
             
@@ -605,7 +617,7 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un pago
         if (ExpRegTipoEnvioNequi.test(texto) == true){
-            console.log('ENTRÓ A ExpRegTipoEnvioNequi')
+            
             //Extraer la cuenta de la linea de cuenta encontrada
             let lineaTipoEnvio = texto.match(ExpRegTipoEnvioNequi)[0].replaceAll('\n', ' ')
             
@@ -616,7 +628,7 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un pago
         if (ExpRegTransfiyaDeNequi.test(texto) == true){
-            console.log('ENTRÓ A ExpRegTransfiyaDeNequi')
+            
             //Extraer la cuenta de la linea de cuenta encontrada
             let lineaTransfiyaDeNequi = texto.match(ExpRegTransfiyaDeNequi)[0].replaceAll('\n', ' ')
             
@@ -630,7 +642,7 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un pago
         if (ExpRegEnvioRecibidoNequi.test(texto) == true){
-            console.log('ENTRÓ A ExpRegEnvioRecibidoNequi')
+            
             //Extraer la cuenta de la linea de cuenta encontrada
             let lineaEnvioRecibidoNequi = texto.match(ExpRegEnvioRecibidoNequi)[0].replaceAll('\n', ' ')
             
@@ -644,7 +656,7 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un pago
         if (ExpRegMovimientoRealizadoCuanto.test(texto) == true){
-            console.log('ENTRÓ A ExpRegMovimientoRealizadoCuanto')
+            
             // //Extraer la cuenta de la linea de cuenta encontrada
             // let lineaEnvioRecibidoNequi = texto.match(ExpRegMovimientoRealizadoCuanto)[0].replaceAll('\n', ' ')
             
@@ -655,7 +667,7 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un pago
         if (ExpRegRecarga.test(texto) == true){
-            console.log('ENTRÓ A ExpRegRecarga')
+            
             //Extraer la cuenta de la linea de cuenta encontrada
             let lineaRecarga = texto.match(ExpRegRecarga)[0].replaceAll('\n', ' ').replaceAll('  ', ' ')
             
@@ -698,7 +710,7 @@ async function extraerDatosNequi(texto){
         
         //Si encontró que es un pago
         if (ExpRegPagoIntereses.test(texto) == true){
-            console.log('ENTRÓ A ExpRegPagoIntereses')
+            
             //Extraer la cuenta de la linea de cuenta encontrada
             let lineaPagoIntereses = texto.match(ExpRegPagoIntereses)[0].replaceAll('\n', ' ').replaceAll('  ', ' ')
             
@@ -712,7 +724,7 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un pago
         if (ExpRegIngresoOtrosBancos.test(texto) == true){
-            console.log('ENTRÓ A ExpRegIngresoOtrosBancos')
+            
             //Extraer la cuenta de la linea de cuenta encontrada
             let lineaIngresoOtrosBancos = texto.match(ExpRegIngresoOtrosBancos)[0].replaceAll('\n', ' ').replaceAll('  ', ' ')
             
@@ -726,7 +738,7 @@ async function extraerDatosNequi(texto){
 
         //Si encontró que es un pago
         if (ExpRegPagoPaqueteCelular.test(texto) == true){
-            console.log('ENTRÓ A ExpRegPagoPaqueteCelular')
+            
             //Expresión regular para obtener la linea de compra del paquete de celular
             const ExpPagoPaqueteCelular = new RegExp("[Compra]{4,}[ de]{2,}[ paquete]{6,}[\n]+[a-z 0-9]{8,}[\n]+[Cel]{2,}[\n]+[0-9]{8,}", "i")
 
@@ -983,4 +995,104 @@ async function extraerDatosDaviplata(texto){
   
 }
 
-module.exports = {clasificar, escanearConTesseract, escanearConGoogle, extraerDatosCorresponsal, extraerDatosNequi, extraerDatosBancolombia, extraerDatosDaviplata}
+/**
+ * Extrae los datos de un comprobante de pago del Banco de Bogota
+ * @param {*} texto - Ruta del archivo que se va a escanear
+ * @returns 
+ */
+async function extraerDatosTransfiya(texto){
+    
+    //Variable donde se almacerarán los datos encontrados
+    const comprobante = JSON.parse('{}')
+    
+    console.log('Extrayendo datos de un comprobante de Transfiya')
+
+    //Configurar los datos a almacenar
+    try {
+
+        //Declaración de variables para identificar datos de Daviplata
+        const ExpRegFechaTransfiya = new RegExp("[\\w ]*(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)[\\w ,:.-]*", "i")
+        const ExpRegValorTransfiya = new RegExp("Valor([ transfeido]{10,}|[ delnvíioO0]{7,})[\n]+[\\$ 0-9.]{4,}", "i")
+        const ExpRegCuentaTransfiya = new RegExp("(Destino: |[AhorLibetóo0n ]{12,})[0-9 ]{6,}", "i")
+        const ExpRegReferenciaTransfiya = new RegExp("(C[óÓoO0]digo CUS|N[oO0]. de autorizaci[óÓoO0]n:)[\n][0-9a-z]{4,}", "i")
+        
+        //Variables donde se guardarán los datos extraidos de las líneas de texto
+        const ExpRegCuenta = new RegExp("[0-9 ]{4,}", "i")
+        
+        //Configurar el medio por el cual realizaron el pago
+        comprobante.medio = 'Transfiya'
+                            
+        //Si encontró la fecha
+        if (ExpRegFechaTransfiya.test(texto) == true){
+            
+            //Extraer la fecha de la línea de fecha
+            let lineaFecha = texto.match(ExpRegFechaTransfiya)[0].replaceAll('\n', ' ').replaceAll(', ', ' a las ')
+            
+            //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
+            let fecha = new Date(fechas.extraerFecha(lineaFecha))
+
+            //Configurar la fecha del comprobante
+            comprobante.fecha = fecha
+
+        }
+        
+        //Si encontró el valor del movimiento
+        if (ExpRegValorTransfiya.test(texto) == true){
+            
+            //Extraer el valor de la linea de valor encontrada
+            let lineaValor = texto.match(ExpRegValorTransfiya)[0].replaceAll('\n', ' ')
+
+            //Configurar el valor del comprobante
+            comprobante.valor = lineaValor.substring(lineaValor.indexOf('$')).replaceAll('$', '').replaceAll('.', '')
+
+        }
+        
+        //Si encontró el número de la cuenta
+        if (ExpRegCuentaTransfiya.test(texto) == true){
+            
+            //Extraer la cuenta de la linea de cuenta encontrada
+            let lineaCuenta = texto.match(ExpRegCuentaTransfiya)[0].replaceAll('\n', ' ')
+
+            //Configurar la cuenta del comprobante
+            comprobante.cuenta = lineaCuenta.match(ExpRegCuenta)[0].replaceAll(' ', '')
+
+        }
+
+        //Si encontró la referencia
+        if (ExpRegReferenciaTransfiya.test(texto) == true){
+            
+            //Extraer la conversación de la línea de conversación
+            let lineaReferencia = texto.match(ExpRegReferenciaTransfiya)[0].replaceAll('\n', ' ')
+
+            //Obtener el motivo del pago en el comprobante
+            comprobante.referencia = lineaReferencia.substring(lineaReferencia.lastIndexOf(' ')).trim()
+
+        }
+        
+        //Si encontró el origen de la transferencia
+        if (texto.includes('BBVA') == true){
+            
+            //Configurar el origen de la transferencia
+            comprobante.origen = 'BBVA'
+            
+        }
+        else if (texto.includes('Banco de Bogotá') == true){
+            
+            //Configurar el origen de la transferencia
+            comprobante.origen = 'Banco de Bogotá'
+            
+        }
+        
+    } catch (err) {
+  
+      //Mostrar el mensaje de error
+      console.error(err);
+  
+    }
+  
+    //Retornar los datos
+    return comprobante;
+  
+}
+
+module.exports = {clasificar, escanearConTesseract, escanearConGoogle, extraerDatosCorresponsal, extraerDatosNequi, extraerDatosBancolombia, extraerDatosDaviplata, extraerDatosTransfiya}

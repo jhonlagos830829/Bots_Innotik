@@ -1,13 +1,50 @@
-let fechaCadena = "2024-10-03T23:08:51.299Z"
-// fechaCadena = fechaCadena.replaceAll('-', ' ')
-// console.log('Dia:|' + fechaCadena.split(' ')[0] + '|')
-// console.log('Mes:|' + fechaCadena.split(' ')[1] + '|')
-// console.log('Año:|' + fechaCadena.split(' ')[2] + '|')
+const texto = `texto
 
-// let fecha = new Date(fechaCadena)
-// fecha.setDate(fechaCadena.split(' ')[0])
-// fecha.setMonth(fechaCadena.split(' ')[1] - 1)
-// console.log('La fecha es')
-// console.log(fecha)
-let nuevaFecha = new Date(fechaCadena)
-console.log(nuevaFecha.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }))
+10:30
+El dinero que enviaste ya llegó
+4G 71
+Ahora
+BBVA ¡Transferencia desde Transfiya EXITOSA!
+El número 3016312051 acaba de aceptar...
+Transferencia en proceso
+7 de noviembre de 2024, 10:30 a.m.
+Valor transferido
+$50.000,00
+Comisión: $ 0,00 IVA incluido
+Más impuesto GMF
+Ahorro Libretón 301631 2051
+•8707
+Tipo de operación
+Transferencia por Transfiya
+Concepto
+Sin concepto
+Código CUS
+OORbqEOt2fnGIWM38
+Recibirás el comprobante de la operación en
+este correo:
+⚫014@hotmail.com
+`;
+
+const ExpRegReferenciaTransfiya = new RegExp("(C[óÓoO0]digo CUS|N[oO0]. de autorizaci[óÓoO0]n:)[\n][0-9a-z]{4,}", "i")
+
+
+if (ExpRegReferenciaTransfiya.test(texto) == true){
+
+    let lineaValor = texto.match(ExpRegReferenciaTransfiya)[0].replaceAll('\n', ' ')
+    console.log('ESTA ES LA LINEA DE LA CUENTA: ' + lineaValor)
+    console.log('ASÍ QUEDARÁ PROCESADA:' + lineaValor.substring(lineaValor.lastIndexOf(' ')).trim())
+    
+}
+
+
+// //const regex = /(?=.*\bTransferencia exitosa\b)(?=.*\bComprobante No\.\b)(?=.*\bProducto origen\b)(?=.*\bProducto destino\b)/;
+// //const regex = new RegExp("Transferencia exitosa", "i")
+// const regex = /(?=.*\bTransferencia exitosa\b|\bTransferencia realizada\b)(?=.*\bComprobante N[oO0]\b)(?=.*\bProducto origen\b)(?=.*\bProducto destino\b)/;
+
+// console.log(texto.match(regex)[0])
+
+// if (regex.test(texto)) {
+//     console.log("Todas las frases están presentes.");
+// } else {
+//     console.log("Faltan una o más frases.");
+// }

@@ -145,7 +145,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 let contenido = await escanearComprobante.clasificar(ctxFn.state.get('archivoComprobante'))
 
                 //Mostrar el mediod el comprobante
-                console.log('El comprobante es de: ' + contenido)
+                console.log('Procesando comprobante de: ' + contenido)
                 
                 //Si el comprobante es de un corresponsal
                 if(contenido.includes('CORRESPONSAL')){
@@ -211,6 +211,27 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
 
                     //Configurar el nombre del banco de la cuenta
                     bancoCuenta = 'Daviplata'
+
+                }
+                else if(contenido.includes('TRANSFIYA')){
+                    
+                    contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
+                    datosComprobante = await escanearComprobante.extraerDatosTransfiya(contenido)
+
+                    //Si no se obtuvo alguno de los datos obligatorios
+                    if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta == '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
+
+                        //Informar que alguno datos obligatorios no se obtuvo
+                        console.log('NO SE OBTUVO ALGUNO DE LOS DATOS OBLIGATORIOS, SE PROBARÁ ESCANEANDO EL COMPROBANTE CON GOOGLE')
+                        
+                        contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
+                        datosComprobante = await escanearComprobante.extraerDatosDaviplata(contenido)
+
+
+                    }
+
+                    //Configurar el nombre del banco de la cuenta
+                    bancoCuenta = ''
 
                 }
                 
