@@ -1001,6 +1001,9 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
 
                     //Mostrar las opciones de nuevo
                     ctxFn.flowDynamic(mensajes.MENSAJE_COMPROBANTE_RECIBIDO)
+
+                    //Hacer una pausa
+                    await delay(1000)
                     
                     //Iniciar el temporizador de espera de respuesta del cliente
                     temporizador.detenerTemporizador(ctx)

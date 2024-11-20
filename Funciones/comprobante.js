@@ -740,7 +740,7 @@ async function extraerDatosNequi(texto){
         if (ExpRegPagoPaqueteCelular.test(texto) == true){
             
             //Expresión regular para obtener la linea de compra del paquete de celular
-            const ExpPagoPaqueteCelular = new RegExp("[Compra]{4,}[ de]{2,}[ paquete]{6,}[\n]+[a-z 0-9]{8,}[\n]+[Cel]{2,}[\n]+[0-9]{8,}", "i")
+            const ExpPagoPaqueteCelular = new RegExp("[Compra]{4,}[ de]{2,}[ paquete]{6,}[\n]+[a-z 0-9]{4,}[\n]+[Cel]{2,}[\n]+[0-9]{8,}", "i")
 
             //Extraer la cuenta de la linea de cuenta encontrada
             let lineaPagoPaqueteCelular = texto.match(ExpPagoPaqueteCelular)[0].replaceAll('\n', ' ').replaceAll('  ', ' ')
