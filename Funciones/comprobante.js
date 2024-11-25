@@ -27,8 +27,8 @@ async function clasificar(archivo){
         
         //Declaración de variables para identificar datos de Bancolombia
         //const ExpRegBancolombia = new RegExp("[Transfeci Exto]{20,}|[¡Transfeci lzd!]{20,}|[Comprbante .0-9]{20,}|[Productigen ]{15,}|[Productdesin ]{15,}[\n]+[a-z]+[\n]+[0-9]{10}[\n]+", "i")
-        //const ExpRegBancolombia = new RegExp("Transferencia[ Exitosa]{6,}|Transferencia[ Realizd]{8,}|[Comprbante .0-9]{20,}|Producto[origen ]{6,}|Producto[destino ]{6,}", "i")
-        const ExpRegBancolombia = new RegExp("(?=.*\\bTransferencia exitosa\\b|\\bTransferencia realizada\\b)(?=.*\\bComprobante N[oO0]\b)(?=.*\\bProducto origen\b)(?=.*\\bProducto destino\\b)", "i")
+        const ExpRegBancolombia = new RegExp("Transferencia[ Exitosa]{6,}|Transferencia[ Realizd]{8,}|[Comprbante .0-9]{20,}|Producto[origen ]{6,}|Producto[destino ]{6,}", "gmi")
+        //const ExpRegBancolombia = new RegExp("(?=.*\\bTransferencia exitosa\\b|\\bTransferencia realizada\\b)(?=.*\\bComprobante N[oO0]\b)(?=.*\\bProducto origen\b)(?=.*\\bProducto destino\\b)", "i")
         
         //Declaración de variables para identificar datos de Bancolombia
         const ExpRegDaviplata = new RegExp("[WViplat?]{8,}|[Transacción exitosa]{15,}|[Código QRparcnfmarsutc]{25,}|[Pasó lt]{6,}|[*+6136]{6,}|[Motiv]{5,}", "i")
@@ -657,8 +657,8 @@ async function extraerDatosNequi(texto){
         //Si encontró que es un pago
         if (ExpRegMovimientoRealizadoCuanto.test(texto) == true){
             
-            // //Extraer la cuenta de la linea de cuenta encontrada
-            // let lineaEnvioRecibidoNequi = texto.match(ExpRegMovimientoRealizadoCuanto)[0].replaceAll('\n', ' ')
+            //Configurar el medio por el cual realizaron el pago
+            comprobante.medio = 'Corresponsal'
             
             //Clasificar el documento
             comprobante.tipodocumento = 'INGRESO_POR_CORRESPONSAL'
