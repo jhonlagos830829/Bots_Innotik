@@ -56,7 +56,7 @@ function extraerFecha(texto) {
     texto = texto.replaceAll('Nov', '11');
     texto = texto.replaceAll('Dic', '12');
 
-    //console.log('Aqui tamos ->' + texto);
+    console.log('Aqui tamos ->' + texto);
 
     //Obtener los datos de la fecha a partir de la expresión regular
     var datosFecha = texto.matchAll(ExpRegFecha);
@@ -66,7 +66,7 @@ function extraerFecha(texto) {
     var año = '';
     var tiempo = '';
 
-    
+    console.log('Los datos de la fecha: ' + datosFecha)
 
     //Recorrer las coincidencias de la fecha
     for (const dato of datosFecha) {
@@ -83,7 +83,7 @@ function extraerFecha(texto) {
         // console.log('El tiempo -> ' + tiempo);
 
     }
-    //console.log('El tiempo -> ' + tiempo);
+    console.log('El tiempo -> ' + tiempo);
 
     //Extraer los datos de la hora a partir de la expresion regular
     var horas = Number(tiempo.match(/^(\d+)/)[1]);

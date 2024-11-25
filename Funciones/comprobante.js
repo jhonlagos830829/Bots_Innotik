@@ -824,8 +824,10 @@ async function extraerDatosBancolombia(texto){
         if (ExpRegFechaBancolombia.test(texto) == true){
 
             //Extraer la fecha de la línea de fecha
-            let lineaFecha = texto.match(ExpRegFechaBancolombia)[0].replaceAll('\n', ' ')
+            let lineaFecha = texto.match(ExpRegFechaBancolombia)[0].replaceAll('\n', ' ').replaceAll('-', ' - ').replaceAll('  ', ' ')
+            console.log('LA LINEA DE LA FECHA QUEDO:' + lineaFecha)
             let fechaCadena = lineaFecha.match(ExpRegFecha)[0].trim().replace(' - ', ' ')
+            console.log('LA FECHA CADENA QUEDO:' + fechaCadena)
             let horaAmPm = ''
             
             //Otener la hora de la fecha
