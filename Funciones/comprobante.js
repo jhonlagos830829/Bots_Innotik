@@ -398,7 +398,7 @@ async function extraerDatosNequi(texto){
         const ExpRegEnvioRecibidoDeNequi = new RegExp("[De]{2,}[a-z 0-9]{4,}", "i")
         const ExpRegMovimientoRealizadoCuanto = new RegExp("[Moviment]{6,}[ realizdo]{6,}[\n]+[¿Cuáanto?]{4,}", "i")
         const ExpRegRecarga = new RegExp("[Recag]{5,}[ realizd]{4,}[\n]+[Recag]{5,}[a-z 0-9]{4,}[\n]+[a-z 0-9]{2,}", "i")
-        const ExpRegPagoIntereses = new RegExp("[Moviment]{4,}[ Pago]{3,}[ de]{2,}[\n]+[¿Doónde?]{4,}[\n][Inters]{4,}", "i")
+        const ExpRegPagoIntereses = new RegExp("[Moviment]{4,}[ Pago]{3,}[ de]{2,}[\n]+[¿Doónde?]{4,}[\n]+[Inters]{4,}", "i")
         const ExpRegIngresoOtrosBancos = new RegExp("[Moviment]{6,}[\n]+[¿Dóonde?]{4,}[\n]+[a-z 0-9]{4,}", "i")
         const ExpRegPagoPaqueteCelular = new RegExp("[Pago]{2,}[ de]{2,}[ Paquetdcl]{4,}", "i")
 
@@ -825,9 +825,7 @@ async function extraerDatosBancolombia(texto){
 
             //Extraer la fecha de la línea de fecha
             let lineaFecha = texto.match(ExpRegFechaBancolombia)[0].replaceAll('\n', ' ').replaceAll('-', ' - ').replaceAll('  ', ' ')
-            console.log('LA LINEA DE LA FECHA QUEDO:' + lineaFecha)
             let fechaCadena = lineaFecha.match(ExpRegFecha)[0].trim().replace(' - ', ' ')
-            console.log('LA FECHA CADENA QUEDO:' + fechaCadena)
             let horaAmPm = ''
             
             //Otener la hora de la fecha
@@ -860,7 +858,7 @@ async function extraerDatosBancolombia(texto){
         
         //Si encontró el valor del movimiento
         if (ExpRegDescripcionBancolombia.test(texto) == true){
-            console.log('Entró en conversacion')
+            
             //Extraer el valor de la linea de valor encontrada
             let lineaDescripcion = texto.match(ExpRegDescripcionBancolombia)[0].replaceAll('\n', ' ')
             //console.log('lineaDescripcion:|' + lineaDescripcion + '|')
