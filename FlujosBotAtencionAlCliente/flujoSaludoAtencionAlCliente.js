@@ -136,6 +136,12 @@ module.exports = flujoSaludoAtencionAlCliente = addKeyword(EVENTS.WELCOME)
                     return ctxFn.gotoFlow(require('./flujoDespedida.js'))
 
                 }
+                else if(ctx.body.includes('3') == true){
+
+                    //Informar al cliente que en el momento no se pueden procesar sus notas de voz
+                    await ctxFn.flowDynamic(mensajes.MENSAJE_ENVIE_FOTO_COMPROBANTE)
+
+                }
 
             }
             
