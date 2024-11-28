@@ -31,7 +31,10 @@ async function clasificar(archivo){
         //const ExpRegBancolombia = new RegExp("(?=.*\\bTransferencia exitosa\\b|\\bTransferencia realizada\\b)(?=.*\\bComprobante N[oO0]\b)(?=.*\\bProducto origen\b)(?=.*\\bProducto destino\\b)", "i")
         
         //Declaración de variables para identificar datos de Bancolombia
-        const ExpRegDaviplata = new RegExp("[WViplat?]{8,}|[Transacción exitosa]{15,}|[Código QRparcnfmarsutc]{25,}|[Pasó lt]{6,}|[*+6136]{6,}|[Motiv]{5,}", "i")
+        const ExpRegBancolombiaALaMano = new RegExp("Tu contacto debe aceptar la plata|La plata llegar[áa] a:|La plata se envi[óo] desde:|Bancolombia A la mano", "gmi")
+
+        //Declaración de variables para identificar datos de Bancolombia
+        const ExpRegDaviplata = new RegExp("[WViplat?]{8,}|[Transacción exitosa]{15,}|[Código QRparcnfmarsutc]{25,}|[Pasó lt]{6,}|[*+6136]{6,}|[Motiv]{5,}", "gmi")
 
         //Declaración de variables para identificar datos de Bancolombia
         const ExpRegTransfiya = new RegExp("Transf[i1l]ya", "i")
@@ -70,6 +73,12 @@ async function clasificar(archivo){
             
             //Si el comprobante es de un corresponsal
             resultado = 'BANCOLOMBIA'
+
+        }
+        else if(ExpRegBancolombiaALaMano.test(texto) == true){
+            
+            //Si el comprobante es de un corresponsal
+            resultado = 'BANCOLOMBIA A LA MANO'
 
         }
         else if(ExpRegDaviplata.test(texto) == true){
@@ -889,6 +898,124 @@ async function extraerDatosBancolombia(texto){
 }
 
 /**
+ * Extrae los datos de un comprobante de pago de Bancolombia
+ * @param {*} texto - Ruta del archivo que se va a escanear
+ * @returns 
+ */
+async function extraerDatosBancolombiaALaMano(texto){
+    
+    //Variable donde se almacerarán los datos encontrados
+    const comprobante = JSON.parse('{}')
+    
+    console.log('Extrayendo datos de un comprobante de Bancolombia a la mano')
+
+    //Configurar los datos a almacenar
+    try {
+
+        //Declaración de variables para identificar datos de Bancolombia
+        const ExpRegComprobanteBancolombiaALaMano = new RegExp("[Comprbante N.0-9]{20,}\n", "i")
+        const ExpRegOrigenBancolombiaALaMano = new RegExp("La plata se envi[óoÓO0] desde:[\n<]+Bancolombia A la mano[\n]*[0-9-]{12,}", "i")
+        const ExpRegFechaBancolombiaALaMano = new RegExp("[0-9 ]{2,}[ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic]{3}[0-9 ]{5}[-]*[0-9]{2}:[0-9]{2}", "i")
+        const ExpRegValorBancolombiaALaMano = new RegExp("Plata a enviar[\n]*[\\$0-9,]{2,}", "i")
+        const ExpRegCuentaBancolombiaALaMano = new RegExp("La plata llegará a:[\n]*Número de celular[\n]*[0-9 ]{8,}", "i")
+
+        //Variables donde se guardarán los datos extraidos de las líneas de texto
+        const ExpRegComprobante = new RegExp("[0-9]+", "i")
+        const ExpRegOrigen = new RegExp("Bancolombia A la mano[0-9 -]{12,}", "i")
+        const ExpRegFecha = new RegExp("[0-9]{1,2}[a-z ]{5}[0-9]{4}[ -]{2,}[0-9]{2}:[0-9]{2}[ amp.]{4,}", "i")
+        const ExpRegValor = new RegExp("[0-9,]+", "i")
+        const ExpRegCuenta = new RegExp("[0-9 ]{10,}", "i")
+        
+        //Configurar el medio por el cual realizaron el pago
+        comprobante.medio = 'Bancolombia a la mano'
+        
+        //Si encontró el comprobante de pago
+        if (ExpRegComprobanteBancolombiaALaMano.test(texto) == true){
+            
+            //Extraer la referencia de la línea de referencia
+            let lineaComprobante = texto.match(ExpRegComprobanteBancolombiaALaMano)[0].replaceAll('\n', ' ')
+            comprobante.comprobante = lineaComprobante.match(ExpRegComprobante)[0]
+
+        }
+        
+        //Si encontró la conversación
+        if (ExpRegOrigenBancolombiaALaMano.test(texto) == true){
+            
+            //Extraer el origen de la línea de origen
+            let lineaOrigen = texto.match(ExpRegOrigenBancolombiaALaMano)[0].replaceAll('\n', ' ').replaceAll('¿', '').trim()
+            
+            //Obtener la cuenta origen
+            comprobante.origen = lineaOrigen.match(ExpRegOrigen)[0]
+            
+        }
+        
+        //Si encontró la fecha
+        if (ExpRegFechaBancolombiaALaMano.test(texto) == true){
+
+            //Extraer la fecha de la línea de fecha
+            let lineaFecha = texto.match(ExpRegFechaBancolombiaALaMano)[0].replaceAll('\n', ' ').replaceAll('-', ' - ').replaceAll('  ', ' ')
+            //let fechaCadena = lineaFecha.match(ExpRegFecha)[0].trim().replace(' - ', ' ')
+            let fechaCadena = lineaFecha
+            let horaAmPm = ''
+
+            console.log("LA LINEA DE LA FECHA ES:" + lineaFecha)
+
+            //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
+            comprobante.fecha = new Date( fechas.extraerFecha(fechaCadena))
+            
+            // //Otener la hora de la fecha
+            // horaAmPm = fechaCadena.substring(fechaCadena.lastIndexOf(' '))
+            
+            // //Si la hora incluye a.
+            // if(horaAmPm.includes('a.')){
+
+            //     //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
+            //     comprobante.fecha = new Date( fechas.extraerFecha(fechaCadena.replaceAll(horaAmPm, ' a.m.')))
+
+            // }
+            // else if(horaAmPm.includes('p.')){
+
+            //     //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
+            //     comprobante.fecha = new Date( fechas.extraerFecha(fechaCadena.replaceAll(horaAmPm, ' p.m.')))
+
+            // }
+            console.log('LA FECHA ES:' + comprobante.fecha)
+        }
+        
+        //Si encontró el valor del movimiento
+        if (ExpRegValorBancolombiaALaMano.test(texto) == true){
+            
+            //Extraer el valor de la linea de valor encontrada
+            let lineaValor = texto.match(ExpRegValorBancolombiaALaMano)[0].replaceAll('\n', ' ')
+            
+            //Configurar el valor del comprobante
+            comprobante.valor = lineaValor.match(ExpRegValor)[0].replaceAll('$', '').replaceAll(',', '').trim()
+
+        }
+        
+        //Si encontró el número de la cuenta
+        if (ExpRegCuentaBancolombiaALaMano.test(texto) == true){
+            
+            //Extraer la cuenta de la linea de cuenta encontrada
+            let lineaCuenta = texto.match(ExpRegCuentaBancolombiaALaMano)[0].replaceAll('\n', ' ')
+            comprobante.cuenta = lineaCuenta.match(ExpRegCuenta)[0].replaceAll(' ', '').replaceAll('-', '')
+
+        }
+
+  
+    } catch (err) {
+  
+      //Mostrar el mensaje de error
+      console.error(err);
+  
+    }
+  
+    //Retornar los datos
+    return comprobante;
+  
+}
+
+/**
  * Extrae los datos de un comprobante de pago de Daviplata
  * @param {*} texto - Ruta del archivo que se va a escanear
  * @returns 
@@ -1095,4 +1222,4 @@ async function extraerDatosTransfiya(texto){
   
 }
 
-module.exports = {clasificar, escanearConTesseract, escanearConGoogle, extraerDatosCorresponsal, extraerDatosNequi, extraerDatosBancolombia, extraerDatosDaviplata, extraerDatosTransfiya}
+module.exports = {clasificar, escanearConTesseract, escanearConGoogle, extraerDatosCorresponsal, extraerDatosNequi, extraerDatosBancolombia, extraerDatosBancolombiaALaMano, extraerDatosDaviplata, extraerDatosTransfiya}

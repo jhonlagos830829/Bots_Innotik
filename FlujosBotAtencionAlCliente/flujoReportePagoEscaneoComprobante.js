@@ -148,13 +148,13 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 console.log('Procesando comprobante de: ' + contenido)
                 
                 //Si el comprobante es de un corresponsal
-                if(contenido.includes('CORRESPONSAL')){
+                if(contenido == 'CORRESPONSAL'){
                     
                     contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
                     datosComprobante = await escanearComprobante.extraerDatosCorresponsal(contenido)
 
                 }
-                else if(contenido.includes('NEQUI')){
+                else if(contenido == 'NEQUI'){
                     
                     contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
                     datosComprobante = await escanearComprobante.extraerDatosNequi(contenido)
@@ -172,7 +172,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     }
 
                 }
-                else if(contenido.includes('BANCOLOMBIA')){
+                else if(contenido == 'BANCOLOMBIA'){
                     
                     contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
                     datosComprobante = await escanearComprobante.extraerDatosBancolombia(contenido)
@@ -192,7 +192,27 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     }
 
                 }
-                else if(contenido.includes('DAVIPLATA')){
+                else if(contenido == 'BANCOLOMBIA A LA MANO'){
+                    
+                    contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
+                    datosComprobante = await escanearComprobante.extraerDatosBancolombiaALaMano(contenido)
+
+                    console.log('Los datosComprobante son: ' + JSON.stringify(datosComprobante))
+
+                    //Si no se obtuvo alguno de los datos obligatorios
+                    if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta == '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
+
+                        //Informar que alguno datos obligatorios no se obtuvo
+                        console.log('NO SE OBTUVO ALGUNO DE LOS DATOS OBLIGATORIOS, SE PROBARÁ ESCANEANDO EL COMPROBANTE CON GOOGLE')
+                        
+                        contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
+                        datosComprobante = await escanearComprobante.extraerDatosBancolombiaALaMano(contenido)
+
+
+                    }
+
+                }
+                else if(contenido == 'DAVIPLATA'){
                     
                     contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
                     datosComprobante = await escanearComprobante.extraerDatosDaviplata(contenido)
@@ -213,7 +233,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     bancoCuenta = 'Daviplata'
 
                 }
-                else if(contenido.includes('TRANSFIYA')){
+                else if(contenido == 'TRANSFIYA'){
                     
                     contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
                     datosComprobante = await escanearComprobante.extraerDatosTransfiya(contenido)
