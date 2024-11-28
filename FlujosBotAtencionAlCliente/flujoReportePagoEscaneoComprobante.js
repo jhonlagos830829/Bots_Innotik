@@ -254,7 +254,30 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                     bancoCuenta = ''
 
                 }
+                else if(contenido == 'NEQUI RECARGAS'){
+                    
+                    contenido = await escanearComprobante.escanearConTesseract(ctxFn.state.get('archivoComprobante'))
+                    datosComprobante = await escanearComprobante.extraerDatosNequiRecargas(contenido)
+
+                    //Si no se obtuvo alguno de los datos obligatorios
+                    if(datosComprobante.fecha == '' || datosComprobante.fecha == undefined || datosComprobante.fecha == 'Invalid Date' || datosComprobante.cuenta == '' || datosComprobante.cuenta == undefined || datosComprobante.valor == '' || datosComprobante.valor == undefined){
+
+                        //Informar que alguno datos obligatorios no se obtuvo
+                        console.log('NO SE OBTUVO ALGUNO DE LOS DATOS OBLIGATORIOS, SE PROBARÁ ESCANEANDO EL COMPROBANTE CON GOOGLE')
+                        
+                        contenido = await escanearComprobante.escanearConGoogle(ctxFn.state.get('archivoComprobante'))
+                        datosComprobante = await escanearComprobante.extraerDatosNequiRecargas(contenido)
+
+
+                    }
+
+                    //Configurar el nombre del banco de la cuenta
+                    bancoCuenta = ''
+
+                }
                 
+                console.log('DATOS DEL COMPROBANTE: ' + JSON.stringify(datosComprobante))
+
                 //Si se obtuvo una cuenta del comprobante
                 if(datosComprobante.cuenta != '' && datosComprobante.cuenta != undefined){
 

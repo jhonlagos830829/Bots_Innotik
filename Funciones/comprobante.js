@@ -39,6 +39,9 @@ async function clasificar(archivo){
         //Declaración de variables para identificar datos de Bancolombia
         const ExpRegTransfiya = new RegExp("Transf[i1l]ya", "i")
 
+        //Declaración de variables para identificar datos de Bancolombia
+        const ExpRegNequiRecargas = new RegExp("COMPROBANTE DE RECARGA|NEQUI[ -]{2,}RECARGAS|C[óoÓO0]digo de autorizaci[óoÓO0]n", "i")
+
         //Mostrar en consola el proceso
         console.log('-----INICIANDO ESCANEO CON TESSERACT-----')
 
@@ -91,6 +94,12 @@ async function clasificar(archivo){
 
             //Si el comprobante es de un corresponsal
             resultado = 'TRANSFIYA'
+            
+        }
+        else if(ExpRegNequiRecargas.test(texto) == true){
+
+            //Si el comprobante es de un corresponsal
+            resultado = 'NEQUI RECARGAS'
             
         }
 
@@ -1222,4 +1231,135 @@ async function extraerDatosTransfiya(texto){
   
 }
 
-module.exports = {clasificar, escanearConTesseract, escanearConGoogle, extraerDatosCorresponsal, extraerDatosNequi, extraerDatosBancolombia, extraerDatosBancolombiaALaMano, extraerDatosDaviplata, extraerDatosTransfiya}
+/**
+ * Extrae los datos de un comprobante de pago de Bancolombia
+ * @param {*} texto - Ruta del archivo que se va a escanear
+ * @returns 
+ */
+async function extraerDatosNequiRecargas(texto){
+    
+    //Variable donde se almacerarán los datos encontrados
+    const comprobante = JSON.parse('{}')
+    
+    console.log('Extrayendo datos de un comprobante de Nequi Recargas')
+
+    //Configurar los datos a almacenar
+    try {
+
+        //Declaración de variables para identificar datos de Bancolombia
+        const ExpRegCodigoAutorizacionNequiRecargas = new RegExp("C[óoÓO0]digo de autorizaci[óoÓO0]n[\n]+[M0-9]{8}", "i")
+        const ExpRegOrigenNequiRecargas = new RegExp("C[Oo0]MPR[Oo0]B[A4]NTE DE REC[A4]RG[A4][\n]+[a-z ]{2,}[\n]+D[i1]recc[i1][óoÓO]n[\n]+[a-z 0-9-]{4,}[\n]+Teléf[oO0]n[oO0][\n][0-9]{4,}", "i")
+        const ExpRegFechaNequiRecargas = new RegExp("Fecha[\n]+[0-9\/ :]{18,}", "i")
+        const ExpRegValorNequiRecargas = new RegExp("Valor recarga[\n]+[$ 0-9,]{4,}", "i")
+        const ExpRegCuentaNequiRecargas = new RegExp("Número de celular[\n]+[0-9]{8,}", "i")
+        const ExpRegCUnicoNequiRecargas = new RegExp("C.UNICO[\n]+[0-9]{2,}", "i")
+
+        //Variables donde se guardarán los datos extraidos de las líneas de texto
+        const ExpRegComprobante = new RegExp("[M0-9]{8}", "i")
+        //const ExpRegOrigen = new RegExp("Bancolombia A la mano[0-9 -]{12,}", "i")
+        //const ExpRegFecha = new RegExp("[0-9\/ :]{18,}", "i")
+        const ExpRegValor = new RegExp("[$ 0-9,]{4,}", "i")
+        const ExpRegCuenta = new RegExp("[0-9]{8,}", "i")
+        
+        //Configurar el medio por el cual realizaron el pago
+        comprobante.medio = 'Nequi Recargas'
+        
+        //Si encontró el comprobante de pago
+        if (ExpRegCodigoAutorizacionNequiRecargas.test(texto) == true){
+            
+            //Extraer la referencia de la línea de referencia
+            let lineaComprobante = texto.match(ExpRegCodigoAutorizacionNequiRecargas)[0].replaceAll('\n', ' ')
+            comprobante.comprobante = lineaComprobante.match(ExpRegComprobante)[0]
+
+        }
+        
+        //Si encontró la conversación
+        if (ExpRegOrigenNequiRecargas.test(texto) == true){
+            
+            //Extraer el origen de la línea de origen
+            let lineaOrigen = texto.match(ExpRegOrigenNequiRecargas)[0]
+            
+            //Obtener la cuenta origen
+            comprobante.origen = lineaOrigen.substring(lineaOrigen.indexOf('\n')).replaceAll('\n', ' ').replaceAll('¿', '').trim()
+            
+        }
+        
+        //Si encontró la fecha
+        if (ExpRegFechaNequiRecargas.test(texto) == true){
+
+            //Extraer la fecha de la línea de fecha
+            let lineaFecha = texto.match(ExpRegFechaNequiRecargas)[0]
+            let fechaCadena = lineaFecha.substring(lineaFecha.indexOf('\n')).replaceAll('\n', ' ').replaceAll('-', ' - ').replaceAll('  ', ' ')
+            //let horaAmPm = ''
+
+            //console.log("LA LINEA DE LA FECHA ES:" + lineaFecha)
+
+            //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
+            comprobante.fecha = new Date( fechas.extraerFecha(fechaCadena))
+            
+            // //Otener la hora de la fecha
+            // horaAmPm = fechaCadena.substring(fechaCadena.lastIndexOf(' '))
+            
+            // //Si la hora incluye a.
+            // if(horaAmPm.includes('a.')){
+
+            //     //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
+            //     comprobante.fecha = new Date( fechas.extraerFecha(fechaCadena.replaceAll(horaAmPm, ' a.m.')))
+
+            // }
+            // else if(horaAmPm.includes('p.')){
+
+            //     //Crear la fecha que se ingresará en el movimiento a partir de la fecha encontrada
+            //     comprobante.fecha = new Date( fechas.extraerFecha(fechaCadena.replaceAll(horaAmPm, ' p.m.')))
+
+            // }
+            //console.log('LA FECHA ES:' + comprobante.fecha)
+        }
+        
+        //Si encontró el valor del movimiento
+        if (ExpRegValorNequiRecargas.test(texto) == true){
+            
+            //Extraer el valor de la linea de valor encontrada
+            let lineaValor = texto.match(ExpRegValorNequiRecargas)[0].replaceAll('\n', ' ')
+            
+            //Configurar el valor del comprobante
+            comprobante.valor = lineaValor.match(ExpRegValor)[0].replaceAll('$', '').replaceAll(',', '').trim()
+
+        }
+        
+        //Si encontró el número de la cuenta
+        if (ExpRegCuentaNequiRecargas.test(texto) == true){
+            
+            //Extraer la cuenta de la linea de cuenta encontrada
+            let lineaCuenta = texto.match(ExpRegCuentaNequiRecargas)[0].replaceAll('\n', ' ')
+
+            //Configurar la cuenta destino de la recarga
+            comprobante.cuenta = lineaCuenta.match(ExpRegCuenta)[0].replaceAll(' ', '').replaceAll('-', '')
+
+        }
+
+        //Si encontró el número de la cuenta
+        if (ExpRegCUnicoNequiRecargas.test(texto) == true){
+            
+            //Extraer la cuenta de la linea de cuenta encontrada
+            let lineaCUnico = texto.match(ExpRegCUnicoNequiRecargas)[0]
+            
+            //Configurar el código único
+            comprobante.cunico = lineaCUnico.substring(lineaCUnico.indexOf('\n')).replaceAll('\n', ' ').replaceAll('-', ' - ').replaceAll('  ', ' ').trim()
+
+        }
+
+  
+    } catch (err) {
+  
+      //Mostrar el mensaje de error
+      console.error(err);
+  
+    }
+  
+    //Retornar los datos
+    return comprobante;
+  
+}
+
+module.exports = {clasificar, escanearConTesseract, escanearConGoogle, extraerDatosCorresponsal, extraerDatosNequi, extraerDatosBancolombia, extraerDatosBancolombiaALaMano, extraerDatosDaviplata, extraerDatosTransfiya, extraerDatosNequiRecargas}

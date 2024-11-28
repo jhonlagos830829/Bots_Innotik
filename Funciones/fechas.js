@@ -1,15 +1,13 @@
 //Funcion para leer el mensaje de caidas
 function extraerFecha(texto) {
 
-    //texto = "1 oct 2024 - 11:20"
-    
     //const ExpRegFecha = /(\d{1,2}) (\d{1,2}) *([a-z]*) *(\d{4}) *([0-9: .amp]+)/gmi;
-    const ExpRegFecha = /(\d{1,2}) (\d{1,2}) *([a-z]*) *(\d{4})[ -]*([0-9]{1,2}:[0-9]{1,2}[ .amp]*)/gmi;
+    const ExpRegFecha = /(\d{1,4})[ \/]*(\d{1,2})[ \/]*(\d{1,4})[ -]*([0-9]{1,2}:[0-9]{1,2}[ .amp]*)/gmi;
 
     //Convertir el texto a minúsculas
-    texto = texto.toLowerCase()
+    texto = texto.toLowerCase().trim()
     
-    //console.log('Aqui esta ->' + texto);
+    console.log('Aqui esta la FECHA ->' + texto);
 
     //Reemplazar los datos que no hacen parte de la fecha y los nombres de los meses por numeros
     texto = texto.replaceAll('Fecha y hora', '');
@@ -36,32 +34,6 @@ function extraerFecha(texto) {
     texto = texto.replaceAll('noviembre', '11');
     texto = texto.replaceAll('diciembre', '12');
 
-    // texto = texto.replaceAll('ENE', '01');
-    // texto = texto.replaceAll('FEB', '02');
-    // texto = texto.replaceAll('MAR', '03');
-    // texto = texto.replaceAll('ABR', '04');
-    // texto = texto.replaceAll('MAY', '05');
-    // texto = texto.replaceAll('JUN', '06');
-    // texto = texto.replaceAll('JUL', '07');
-    // texto = texto.replaceAll('AGO', '08');
-    // texto = texto.replaceAll('SEP', '09');
-    // texto = texto.replaceAll('OCT', '10');
-    // texto = texto.replaceAll('NOV', '11');
-    // texto = texto.replaceAll('DIC', '12');
-
-    // texto = texto.replaceAll('Ene', '01');
-    // texto = texto.replaceAll('Feb', '02');
-    // texto = texto.replaceAll('Mar', '03');
-    // texto = texto.replaceAll('Abr', '04');
-    // texto = texto.replaceAll('May', '05');
-    // texto = texto.replaceAll('Jun', '06');
-    // texto = texto.replaceAll('Jul', '07');
-    // texto = texto.replaceAll('Ago', '08');
-    // texto = texto.replaceAll('Sep', '09');
-    // texto = texto.replaceAll('Oct', '10');
-    // texto = texto.replaceAll('Nov', '11');
-    // texto = texto.replaceAll('Dic', '12');
-
     texto = texto.replaceAll('ene', '01');
     texto = texto.replaceAll('feb', '02');
     texto = texto.replaceAll('mar', '03');
@@ -85,21 +57,33 @@ function extraerFecha(texto) {
     var año = '';
     var tiempo = '';
 
-    console.log('Los datos de la fecha: ' + JSON.stringify(datosFecha))
-
     //Recorrer las coincidencias de la fecha
     for (const dato of datosFecha) {
         
-        //Obtener en cada variable cada dato de la fecha
-        año = dato[4];
-        mes = dato[2];
-        dia = dato[1];
-        tiempo = dato[5];
+        //Si el año está en la primera posición
+        if(dato[1].toString().length > 2){
 
-        console.log('El año -> ' + año);
-        console.log('El mes -> ' + mes);
-        console.log('El dia -> ' + dia);
-        console.log('El tiempo -> ' + tiempo);
+            //Obtener en cada variable cada dato de la fecha
+            año = dato[1];
+            mes = dato[2];
+            dia = dato[3];
+            tiempo = dato[4];
+
+        }
+        else{
+
+            //Obtener en cada variable cada dato de la fecha
+            año = dato[3];
+            mes = dato[2];
+            dia = dato[1];
+            tiempo = dato[4];
+
+        }
+
+        // console.log('El año -> ' + año);
+        // console.log('El mes -> ' + mes);
+        // console.log('El dia -> ' + dia);
+        // console.log('El tiempo -> ' + tiempo);
 
     }
 
@@ -155,5 +139,5 @@ function extraerFecha(texto) {
     //Retornar si lo incluye
     return fecha;
 }
-//extraerFecha("");
+
 module.exports.extraerFecha = extraerFecha;
