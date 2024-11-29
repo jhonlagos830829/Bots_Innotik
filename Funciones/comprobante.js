@@ -421,7 +421,7 @@ async function extraerDatosNequi(texto){
         const ExpRegPagoPaqueteCelular = new RegExp("[Pago]{2,}[ de]{2,}[ Paquetdcl]{4,}", "i")
 
         //Variables donde se guardarán los datos extraidos de las líneas de texto
-        const ExpRegReferencia = new RegExp("[MS15]+[0-9]{4,}", "i")
+        const ExpRegReferencia = new RegExp("[MS158]+[0-9]{4,}", "i")
         const ExpRegCuenta = new RegExp("3[0-9 ]{9,}", "i")
         const ExpRegFecha = new RegExp("[0-9]+ de [a-z]+ de [0-9]{4}[, als\n]*[0-9]{1,}:[0-9]{2}[amp .]+", "i")
         const ExpRegValor = new RegExp("\\$[0-9 .]+", "i")
