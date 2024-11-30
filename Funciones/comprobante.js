@@ -439,6 +439,9 @@ async function extraerDatosNequi(texto){
             //Extraer la referencia de la línea de referencia
             let lineaReferencia = texto.match(ExpRegReferenciaNequi)[0].replaceAll('\n', ' ')
             console.log('LA LINEA DE LA REFERENCIA ES:' + lineaReferencia)
+            //Obtener el resultado después del salto de línea
+            lineaReferencia = lineaReferencia.substring(lineaReferencia.indexOf('\n')).trim()
+            console.log('LA REFERENCIA ES:' + lineaReferencia)
             //Si la referencia POR ERROR EL TESERACT DETECTA LA PRIMERA M COMO 1
             if(lineaReferencia.match(ExpRegReferencia)[0].startsWith('11')){
 
@@ -461,8 +464,8 @@ async function extraerDatosNequi(texto){
             else{
 
                 //Configurar la referencia tal cual fue extraída
-                comprobante.referencia = lineaReferencia.match(ExpRegReferencia)[0]
-
+                //comprobante.referencia = lineaReferencia.match(ExpRegReferencia)[0]
+                comprobante.referencia = lineaReferencia
             }
 
         }
