@@ -437,7 +437,8 @@ async function extraerDatosNequi(texto){
         if (ExpRegReferenciaNequi.test(texto) == true){
             
             //Extraer la referencia de la línea de referencia
-            let lineaReferencia = texto.match(ExpRegReferenciaNequi)[0].replaceAll('\n', ' ')
+            //let lineaReferencia = texto.match(ExpRegReferenciaNequi)[0].replaceAll('\n', ' ')
+            let lineaReferencia = texto.match(ExpRegReferenciaNequi)[0]
             console.log('LA LINEA DE LA REFERENCIA ES:' + lineaReferencia)
             //Obtener el resultado después del salto de línea
             lineaReferencia = lineaReferencia.substring(lineaReferencia.indexOf('\n')).trim()
