@@ -292,7 +292,8 @@ async function ObtenerMovimiento(medio, fecha, idCuenta, valor, referencia, conv
     if(referencia != '' && referencia != undefined){
 
       //Agregar el filtro de medio de pago
-      filtros = filtros + '&filters[referencia][$eq]=' + referencia
+      //filtros = filtros + '&filters[referencia][$eq]=' + referencia //PARA ENCONTRAR EL REFERENCIA EXACTA PERO TIENE PROBLEMAS AL NO ENCONTRAR EL CARAACTER INICIAL
+      filtros = filtros + '&filters[referencia][$contains]=' + referencia
 
     }
 
