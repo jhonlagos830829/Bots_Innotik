@@ -938,7 +938,7 @@ module.exports = flujoReportePagoEscaneoComprobante = addKeyword('EVENTS.MEDIA')
                 if(fecha != '' && idCuenta != '' && valor != '' && fecha != 'Invalid Date'){
                     
                     //Variable para almacenar los datos del movimiento
-                    let datosMovimiento = await movimiento.ObtenerMovimiento(medio, fecha.toISOString(), idCuenta, valor, referencia, conversacion, '', '', '', false, ter, rrn, apro, cunico, recibo, '', '', '', '', '', '', '')
+                    let datosMovimiento = await movimiento.ObtenerMovimiento(medio, fecha.toISOString(), idCuenta, valor, referencia, "", '', '', '', false, ter, rrn, apro, cunico, recibo, '', '', '', '', '', '', '')
                     //let datosMovimiento = await movimiento.ObtenerMovimiento(fecha.toISOString(), idCuenta, valor)
 
                     //console.log('La consulta del comprobante resultó -> ' + JSON.stringify(datosMovimiento))
