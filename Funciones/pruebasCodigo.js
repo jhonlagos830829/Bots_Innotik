@@ -1,24 +1,20 @@
-const texto = `"Nequi
-COMPROBANTE DE RECARGA
-CLAUDIA GISELA BAUTISTA GOMEZ
-Dirección
-CI 35 4 35-45
-Teléfono
-6324262
-Fecha
-2024/09/02 16:43:36
-Concepto
-NEQUI - RECARGAS
-Nro de transacción
-912528337
-C.UNICO
-61382
-Código de autorización
-M8812586
-Número de celular
-3169247459
-Valor recarga
-$ 50,000
+const texto = `¡Genial! La reserva ha sido confirmada.
+
+Los datos de la reserva son:
+
+{
+"nombrecliente": "Juan Carlos Gómez Vázquez",
+"fechahora": "2024-12-02T20:00:00Z",
+"sucursal": "Cabecera",
+"plan": "Mesa de los navegantes",
+"cantidadpersonas": 6,
+"celebracion": "Cumpleaños",
+"nombrehomenajeado": "",
+"sexohomenajeado": "mujer",
+"dificultadsubirescaleras": false
+}
+
+¡Hasta pronto!
 `;
 
 // const ExpRegReferenciaTransfiya = new RegExp("(C[óÓoO0]digo CUS|N[oO0]. de autorizaci[óÓoO0]n:)[\n][0-9a-z]{4,}", "i")
@@ -33,8 +29,8 @@ $ 50,000
 // }
 
 
-const regex = /(?=.*\bCOMPROBANTE DE RECARGA\b)(?=.*\bNEQUI - RECARGAS\b)(?=.*\bCódigo de autorización\b)/;
-//const regex = new RegExp("Transferencia exitosa", "i")
+//const regex = /(?=.*\bCOMPROBANTE DE RECARGA\b)(?=.*\bNEQUI - RECARGAS\b)(?=.*\bCódigo de autorización\b)/;
+const regex = new RegExp("{[\\wáéíóúüñÁÉÍÓÚÜÑ ,-:\"\n]*}", "i")
 //const regex = /(?=.*\bTransferencia exitosa\b|\bTransferencia realizada\b)(?=.*\bComprobante N[oO0]\b)(?=.*\bProducto origen\b)(?=.*\bProducto destino\b)/;
 //const regex = new RegExp(`(?=.*\bCOMPROBANTE DE RECARGA\b)(?=.*\bNEQUI - RECARGAS\b)(?=.*\bCódigo de autorización\b)`, "gmi")
 //const regex = new RegExp("(?=.*\\bTransferencia exitosa\\b|\\bTransferencia realizada\\b)", "i")

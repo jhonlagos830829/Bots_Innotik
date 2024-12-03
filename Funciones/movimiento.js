@@ -263,10 +263,11 @@ async function ObtenerMovimiento(medio, fecha, idCuenta, valor, referencia, conv
       fechaInicial.setMinutes(fechaInicial.getMinutes() - 2)
       fechaFinal.setMinutes(fechaFinal.getMinutes() + 2)
 
-      // //Agregar al filtro la fecha
-      // filtros = filtros + '&filters[fecha][$eq]=' + fecha
+      //Agregar al filtro la fecha
+      filtros = filtros + '&filters[fecha][$eq]=' + fecha
 
-      filtros = filtros + '&filters[fecha][$between]=' + fechaInicial.toISOString() + '&filters[fecha][$between]=' + fechaFinal.toISOString()
+      //filtros = filtros + '&filters[fecha][$between]=' + fechaInicial.toISOString() + '&filters[fecha][$between]=' + fechaFinal.toISOString()
+      
 
       //'http://192.168.0.104:1338/api/movimientos?filters[fecha][$between]=2024-10-01T15:52:00.000Z&filters[fecha][$between]=2024-10-01T15:58:00.000Z&populate=*'
 
