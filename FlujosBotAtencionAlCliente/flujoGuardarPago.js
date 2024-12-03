@@ -145,7 +145,7 @@ module.exports = flujoGuardarPago = addKeyword(['Ok', 'Si', 'Sí'])
             else{
 
                 //Buscar el movimiento en la base de datos
-                datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.medio, datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, datosComprobante.referencia, datosComprobante.conversacion, datosComprobante.reporta, datosComprobante.numeroReporta, '', false, datosComprobante.ter, datosComprobante.rrn, datosComprobante.apro, datosComprobante.cUnico, datosComprobante.recibo, datosComprobante.comprobante, '', datosComprobante.idCliente, datosComprobante.idCaja, datosComprobante.tipo, datosComprobante.archivo, datosComprobante.idConcepto)
+                datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.medio, datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor, datosComprobante.referencia, "", datosComprobante.reporta, datosComprobante.numeroReporta, '', false, datosComprobante.ter, datosComprobante.rrn, datosComprobante.apro, datosComprobante.cUnico, datosComprobante.recibo, datosComprobante.comprobante, '', datosComprobante.idCliente, datosComprobante.idCaja, datosComprobante.tipo, datosComprobante.archivo, datosComprobante.idConcepto)
                 //let datosMovimiento = await movimiento.ObtenerMovimiento(datosComprobante.fecha.toISOString(), codigoCuenta, datosComprobante.valor)
             
             }
