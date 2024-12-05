@@ -232,8 +232,9 @@ async function extraerDatosCorresponsal(texto){
         const ExpRegValorCorresponsal = new RegExp("[Valor]{3,}[\n]*[$ 0-9.]{4,}|\\$[\n]*[ 0-9.]{4,}", "i")
         
         //Expresiones regulares para encontrar los datos de la consignación en el comprobante                    
-        const ExpRegFecha = new RegExp('[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}', "i")
-        const ExpRegCuenta = new RegExp('[Prducto:]{8,}[\\w]*[\\W]*[0-9]{10}', "i")
+        //const ExpRegFecha = new RegExp('[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}', "i")
+        const ExpRegFecha = new RegExp('[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}', "i")
+        const ExpRegCuenta = new RegExp('[Prducto:]{8,}[\\w]*[\\W]*[0-9]{10,}', "i")
         const ExpRegValor = new RegExp('[0-9.]{4,}[\n]*', "i")
         const ExpRegCodigoUnico = new RegExp('[ .UNICO:]{4,}[\\w]*[\\W]*[0-9]{9,}', "i")
         const ExpRegRecibo = new RegExp('[RECIBO: ]{6,}[0-9]{6}', "i")
@@ -275,6 +276,14 @@ async function extraerDatosCorresponsal(texto){
 
             //Obtener la cuenta
             cuenta = lineaCuenta.substring(lineaCuenta.indexOf(' ') + 1).replaceAll(' ', '').trim()
+
+            //Si la cuenta comienza con cero
+            if(cuenta.startsWith('0')){
+
+                //Remover el cero al inicio de la cadena
+                cuenta = cuenta.substring(1)
+                
+            }
 
             //Configurar la fecha del pago
             comprobante.cuenta = cuenta
