@@ -20,7 +20,8 @@ async function clasificar(archivo){
     try {
         
         //Declaración de variables para identificar datos de corresponsal
-        const ExpRegCorresponsal = new RegExp("[Redban]{6,}|[CORESPNAL]{8,}|[RBMDES]{6,}|[servico\n]{7,} [prestado]{6,}|[prestar]{5,} [servico]{6,} [ fimnaceros]{8,}|TER:|RECIBO:", "i")
+        //const ExpRegCorresponsal = new RegExp("[Redban]{6,}|[CORESPNAL]{8,}|[RBMDES]{6,}|[servico\n]{7,} [prestado]{6,}|[prestar]{5,} [servico]{6,} [ fimnaceros]{8,}|TER:|RECIBO:", "i")
+        const ExpRegCorresponsal = new RegExp("R[e8]d[e8]b[a8]n|C[Oo0]RRESP[Oo0]NS[A4]L|[RBMDES]{6,}|[servico\n]{7,} [prestado]{6,}|[prestar]{5,} [servico]{6,} [ fimnaceros]{8,}|TER:|RECIBO:", "i")
         
         //Declaración de variables para identificar datos de Nequi
         const ExpRegNequi = new RegExp("[Enviío ]{4,}[Realizdo]{7,}|De d[óo]nde sali[óo] la plata|Movimiento[ hecon:]+[\na-z]+[Nequi]*|Detalle del[\n ]+movimiento|[movement\\W]{6,}[receipt\\W]{5,}[bpody\\W]{3,}[title]{3,}", "i")
