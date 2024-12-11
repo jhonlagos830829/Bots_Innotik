@@ -41,7 +41,7 @@ async function clasificar(archivo){
         const ExpRegTransfiya = new RegExp("Transf[i1l]ya", "i")
 
         //Declaración de variables para identificar datos de Bancolombia
-        const ExpRegNequiRecargas = new RegExp("COMPROBANTE DE RECARGA|NEQUI[ -]{2,}RECARGAS|C[óoÓO0]digo de autorizaci[óoÓO0]n", "i")
+        const ExpRegNequiRecargas = new RegExp("COMPROBANTE DE[ :]*RECARGA|NEQUI[ -]{2,}RECARGAS|C[óoÓO0]digo de autorizaci[óoÓO0]n", "i")
 
         //Mostrar en consola el proceso
         console.log('-----INICIANDO ESCANEO CON TESSERACT-----')
