@@ -235,7 +235,7 @@ async function extraerDatosCorresponsal(texto){
         //Expresiones regulares para encontrar los datos de la consignación en el comprobante                    
         //const ExpRegFecha = new RegExp('[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}', "i")
         const ExpRegFecha = new RegExp('[ENFBMARYJULGOSPCTVDI]{3} [0-9]{2} [0-9]{4} [0-9]{2}:[0-9]{2}', "i")
-        const ExpRegCuenta = new RegExp('[Prducto:]{8,}[\\w]*[\\W]*[0-9]{10,}', "i")
+        const ExpRegCuenta = new RegExp('[Prductao:]{8,}[\\w]*[\\W]*[0-9]{10,}', "i")
         const ExpRegValor = new RegExp('[0-9.]{4,}[\n]*', "i")
         const ExpRegCodigoUnico = new RegExp('[ .UNICO:]{4,}[\\w]*[\\W]*[0-9]{9,}', "i")
         const ExpRegRecibo = new RegExp('[RECIBO: ]{6,}[0-9]{6}', "i")

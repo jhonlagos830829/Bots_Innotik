@@ -183,9 +183,9 @@ try {
   
   // CrearArticulos()
 
-  CrearElementos()
+  // CrearElementos()
   
-    // // consultarConFor()
+  consultarConFor()
 
     // //Leer el contenido del archivo
     // //const datos = fs.readFileSync('Archivos/Elemento.csv', 'utf8').split(/\r?\n/);
